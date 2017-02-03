@@ -1,0 +1,83 @@
+{
+	"_locale": "en-US",
+	"_namespace": "common",
+	"navbar": {
+		"userName": "User name",
+		"Language": "Language",
+		"enUS": "English - U.S.",
+		"jaJP": "Japanese",
+		"deDE": "German",
+		"frFR": "French",
+		"Index": "Index",
+		"Documents": "Documents",
+		"Signup": "Sign Up",
+		"Login": "Log In",
+		"Logout": "Logout",
+		"production_status": "Production Status",
+		"admin": "Admin",
+        "productionstatus": "Production Status",
+        "changelanguage": "Change Language"
+	},
+"main": {
+	"title": "Kubota Production Monitoring",
+    "copyright": "Kubota",
+    "chassis_panel": "Chassis",
+    "mqline_panel": "MQ Line",
+    "paint_panel": "Paint",
+    "tractor_panel": "Tractor",
+    "rework_panel": "Rework",
+    "shipped_panel": "Shipped"
+},
+"panel_table": {
+    "panel_title": "",
+    "panel_description": "Description",
+    "panel_total": "Total Tractors",
+    "panel_IDNO": "IDNO",
+    "panel_location": "Stage ID",
+    "panel_date": "Entry Time",
+    "panel_age": "Timein stage"
+  },
+"chassis_panel": {
+    "panel_title": "Chassis",
+    "panel_description": "Chassis state",
+    "panel_totals": "Total tractors in chassis area"
+  },
+"paint_panel": {
+    "panel_title": "",
+    "panel_desc": "",
+    "panel_totals": ""
+  },
+"tractor_panel": {
+    "panel_title": "",
+    "panel_desc": "",
+    "panel_totals": ""
+  },
+"mqline_panel": {
+    "panel_title": "",
+    "panel_desc": "",
+    "panel_totals": ""
+  },
+"rework_panel": {
+    "panel_title": "",
+    "panel_desc": "",
+    "panel_totals": ""
+  },
+"shipped_panel": {
+    "panel_title": "",
+    "panel_desc": "",
+    "panel_totals": ""
+  },
+	"signupform": {
+		"Signup": "Sign Up",
+		"Firstname": "First Name",
+		"Lastname": "Last Name",
+		"Email": "Email Address",
+		"Password": "Password"
+	},
+	"loginform": {
+		"Login": "Log In",
+		"Email": "Email Address",
+		"Password": "Password",
+		"ForgotPassword": "Forgot Password?"
+	}
+}

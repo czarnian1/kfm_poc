@@ -1,0 +1,81 @@
+{
+"_locale": "ja-JP",
+"_namespace": "common",
+"navbar": {
+  "userName": "ユーザー名",
+  "Language": "言語",
+  "enUS": "英語 - 米",
+  "jaJP": "日本語",
+  "deDE": "ドイツ人",
+  "frFR": "フランス語",
+  "Index": "インデックス",
+  "Documents": "ドキュメント",
+  "Signup": "サインアップ",
+  "Login": "ログイン",
+  "Logout": "ログアウト",
+  "production_status": "Production Status",
+  "admin": "Admin"
+},
+"main": {
+		"title": "クボタ生産監視",
+    "chassis_panel": "シャーシ",
+    "mqline_panel": "品質",
+    "paint_panel": "ペイント",
+    "tractor_panel": "トラクター",
+    "rework_panel": "リワーク",
+    "shipped_panel": "出荷された"
+},
+"panel_table": {
+    "panel_title": "",
+    "panel_description": "生産のシャーシ領域内のトラクターID",
+    "panel_total": "シャシーライン合計",
+    "panel_IDNO": "IDNO",
+    "panel_location": "ロケーション",
+    "panel_date": "エントリー時間",
+    "panel_age": "エリア内の時間"
+  },
+"chassis_panel": {
+    "panel_title": "シャーシ",
+    "panel_description": "説明",
+    "panel_totals": "シャシー生産領域内のトラクターIDの合計"
+  },
+"paint_panel": {
+    "panel_title": "",
+    "panel_desc": "",
+    "panel_totals": ""
+  },
+"tractor_panel": {
+    "panel_title": "",
+    "panel_desc": "",
+    "panel_totals": ""
+  },
+"mqline_panel": {
+    "panel_title": "",
+    "panel_desc": "",
+    "panel_totals": ""
+  },
+"rework_panel": {
+    "panel_title": "",
+    "panel_desc": "",
+    "panel_totals": ""
+  },
+"shipped_panel": {
+    "panel_title": "",
+    "panel_desc": "",
+    "panel_totals": ""
+  },
+"signupform": {
+  "Signup": "サインアップ",
+  "Firstname": "ファーストネーム",
+  "Lastname": "苗字",
+  "Email": "電子メールアドレス",
+  "Password": "パスワード"
+},
+"loginform": {
+  "Login": "ログイン",
+  "Email": "電子メールアドレス",
+  "Password": "パスワード",
+  "ForgotPassword": "パスワードをお忘れですか"
+}
+}
+

@@ -1,0 +1,73 @@
+@font-face {
+  font-family: 'kubota';
+  src:  url('fonts/kubota.eot?2x41nl');
+  src:  url('fonts/kubota.eot?2x41nl#iefix') format('embedded-opentype'),
+    url('fonts/kubota.ttf?2x41nl') format('truetype'),
+    url('fonts/kubota.woff?2x41nl') format('woff'),
+    url('fonts/kubota.svg?2x41nl#kubota') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+i {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'kubota' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.kubota-KFM_Icons_chassis-icon:before {
+  content: "\e902";
+}
+.kubota-KFM_Icons_rework-icon:before {
+  content: "\e903";
+}
+.kubota-KFM_Icons_mqline-icon:before {
+  content: "\e904";
+}
+.kubota-KFM_Icons_shipped-icon:before {
+  content: "\e905";
+}
+.kubota-KFM_Icons_tractor-icon:before {
+  content: "\e901";
+}
+.kubota-KFM_Icons_paint-icon:before {
+  content: "\e900";
+}
+
+.kubota-mls {
+  margin-left: .25em;
+}
+
+.kubota-fs-48 {
+  font-size: 48px;
+  color: #01a3b2;
+  margin-right: .35em;
+}
+
+.kubota-fs-32 {
+  font-size: 32px;
+  color: #01a3b2;
+  vertical-align: top;
+}
+.kubota-panel-bg {
+  background-color: #01a3b2!important;
+  color: #ffffff!important;
+}
+
+.navbar-brand {
+    padding: 0px;
+}
+.navbar-brand>img {
+  width: 25%;
+  padding:15px;
+  height: auto;
+}
