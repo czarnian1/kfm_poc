@@ -4,7 +4,6 @@ import { Mongo } from 'meteor/mongo';
 Meteor.startup(() => {
  	// code to run on server at startup
 
- 
 	export const Productiontasks = new Mongo.Collection('productiontasks');
 
 	//console.log(Meteor);

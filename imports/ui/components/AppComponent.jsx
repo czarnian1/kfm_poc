@@ -8,7 +8,7 @@ import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import {Router, Link, browserHistory} from 'react-router';
-import { AppLayout } from '../../ui/layouts/App.jsx';
+//import { AppLayout } from '../../ui/layouts/App.jsx';
 
 import Productiontasks from '../../api/productiontasks.js';
 
@@ -46,8 +46,6 @@ export class AppComponent extends Component {
 
   componentDidMount() {
     console.log("AppComponent:componentDidMount enter");
-    Meteor.subscribe('productiontasks');
-
   };
 
   ComponentDidUpdate(prevProps, prevState) {
@@ -67,16 +65,17 @@ export class AppComponent extends Component {
     console.log(this.props);
   };
 
- render(){
+  render(){
     console.log("AppComponent:render entered");
-        //render the pages passed as children from react-router in the props object passed to this componebt
-        return (
-          <div className="col-md-10" id="app-render">
-            <NavbarComponent />
-              { this.props.children }
-          </div>
-        );
-      }
+    //render the pages passed as children from react-router in the props object passed to this component
+
+    //  className="col-md-10" id="app-render"
+    return (
+        <div className="col-md-12" id="app-render">
+            { this.props.children }
+        </div>
+    );
+  }
 };
 
 AppComponent.propTypes = {
@@ -88,22 +87,24 @@ AppComponent.propTypes = {
 export default AppComponent = createContainer(() => {
   console.log("AppComponent::createContainer ");
   
-  const handle = Meteor.subscribe('productiontasks', {onReady: function(){
-    console.log("AppComponent::createContainer: dataready")
-    console.log(handle);
+  const handle = Meteor.subscribe(
+      'productiontasks', 
+      {
+          onReady: function(){
+              console.log("AppComponent::createContainer: dataready")
+              console.log(handle);
     
-    console.log("AppComponent::createContainer:handle "+handle.ready());
-    
-  }
+              console.log("AppComponent::createContainer:handle "+handle.ready());
+          }
+      }
 
-}
-
-);
+  );
+  
   console.log(Productiontasks);
   return {
       //data: ProductionTasks.find(),
       //productiontasks: Productiontasks.find({"LOCATIONSTATUS": "1"}).fetch(),
       //chassiscount: Productiontasks.find({"LOCATIONSTATUS": "1"}).count(),
-      };
+  };
   
 }, AppComponent);

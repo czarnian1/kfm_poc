@@ -4,24 +4,27 @@ Active Code :
 
 */
 
-import React from 'react';
-import { Component } from 'react-dom';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
-import { browserHistory} from 'react-router';
+//import { browserHistory} from 'react-router';
 
 //This wrapper is used at present as react.js doesn't have nativerendering with accounts-ui-bootstrap
 
-import AccountsUIWrapper from '../components/AccountsUIWrapper.jsx'
+//import AccountsUIWrapper from '../components/AccountsUIWrapper.jsx'
 
-export class Logout extends Component {
 
-	constructor(props) {
-		super(props);
-	}
-
-	componentWillMount () {
+class LogoutComponent extends Component {
+    componentWillMount () {
         console.log("logout:componentwillmount");
-        this.props.dispatch(pushPath('/'));
+        var ttt=Meteor.userId();
+        Meteor.logout();
+        this.props.dispatch(pushPath('/login'));
+        replace({
+            pathname: '/login',
+            state: { nextPathname: nextState.location.pathname },
+          });
+
     }
 
     render () {
@@ -29,4 +32,9 @@ export class Logout extends Component {
     } 
 }
 
-export default Logout
+export const Logout = ( ) => (
+  <div>
+    <LogoutComponent />
+  </div>
+);
+  

@@ -303,6 +303,14 @@ export default ChassisPanelComponent = createContainer(() => {
 
 	console.log("ChassispanelComponent:createContainer ");
 
+	var t;
+	t=Productiontasks.find({"LOCATIONSTATUS": "1"}).fetch();
+	t=Productiontasks.find({"LOCATIONSTATUS": "2"}).fetch();
+	t=Productiontasks.find({"LOCATIONSTATUS": "3"}).fetch();
+	t=Productiontasks.find({"LOCATIONSTATUS": "4"}).fetch();
+	t=Productiontasks.find({"LOCATIONSTATUS": "5"}).fetch();
+    t=Productiontasks.find({"LOCATIONSTATUS": "6"}).fetch();
+
   return {
 
   	//to do componentise all these - refactor to make the app more modular

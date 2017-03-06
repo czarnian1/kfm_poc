@@ -6,10 +6,6 @@ Active Code :
 
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
-import AccountsUIWrapper from '../../ui/components/AccountsUIWrapper.jsx';
-
-//import { Navigation } from '../../ui/components/Navigation.jsx';
-//import { createContainer } from 'meteor/react-meteor-data';
 
 const T = i18n.createComponent(); // translater component for json lookup
 
@@ -34,44 +30,26 @@ export class NavbarComponent extends Component {
             <li className="dropdown">
                <a href="#" className="dropdown-toggle" data-toggle="dropdown"><T>common.navbar.productionstatus</T><strong className="caret"></strong></a>
               <ul className="dropdown-menu">
-                <li><IndexLink to="/" activeClassName="active"><T>common.navbar.home</T></IndexLink></li>
-                <li><Link to="/dashboard" activeClassName="active"><T>common.navbar.dashboard</T></Link></li>
                 <li>
-                  <a href="#"><T>common.navbar.onehourthreshold</T></a>
+                  <a href="#"><T>1 Hour</T></a>
                 </li>
                 <li>
-                  <a href="#"><T>common.navbar.thityminthreshold</T></a>
-                </li>
-                <li className="divider">
-                </li>
-                <li>
-                  <a href="#"><T>common.navbar.late</T></a>
-                </li>
-                <li className="divider">
-                </li>
-                <li>
-                  <a href="#"><T>common.navbar.ontime</T></a>
+                  <a href="#"><T>Overdue</T></a>
                 </li>
               </ul>
             </li>
           </ul>
           <ul className="nav navbar-nav navbar-right">
-            <li>
-              <a href="#"><AccountsUIWrapper /></a>
-            </li>
             <li className="dropdown">
-               <a href="#" className="dropdown-toggle" data-toggle="dropdown"><T>common.navbar.admin</T><strong className="caret"></strong></a>
+              <a href="#" className="dropdown-toggle" data-toggle="dropdown"><T>common.navbar.admin</T><strong className="caret"></strong></a>
               <ul className="dropdown-menu">
-                <li>
-                </li>
-                
                 <li>
                   <button className="btn-link dropdown-toggle" type="button" id="setLanguage" data-toggle="dropdown"></button>
                   <a href="#"><T>common.navbar.changelanguage</T></a>
                 </li>
                 <li className="divider">
                 </li>
-                <li>
+                <li><a href="/logout"><T>Logout</T></a>
                 </li>
               </ul>
             </li>

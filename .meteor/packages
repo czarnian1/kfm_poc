@@ -19,8 +19,8 @@ ecmascript@0.6.1              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.1            # Server-side component of the `meteor shell` command
 
 insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
-accounts-password
-stylus
+accounts-password@1.3.3
+stylus@2.513.8
 react-meteor-data
 twbs:bootstrap
 ian:accounts-ui-bootstrap-3

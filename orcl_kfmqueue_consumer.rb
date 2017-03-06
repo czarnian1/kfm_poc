@@ -5,8 +5,9 @@ require 'oci8'
 require 'mongo'
 require 'yajl'
 
-oc = OCI8.new('mjackson', 'Frag1000')
-mongo_client =  Mongo::Client.new(['127.0.0.1:27017'], :database => 'production_kfm_db')
+oc = OCI8.new('testuser1', 'testuser1')
+#mongo_client =  Mongo::Client.new(['127.0.0.1:27017'], :database => 'production_kfm_db')
+mongo_client =  Mongo::Client.new('mongodb://localhost:27017/production_kfm_db')
 
 mongo_db = mongo_client.database
 
