@@ -6,37 +6,27 @@ This class is huge - todo componentise it further and use imports
 
 
 import React, { Component, PropTypes } from 'react';
-
 import { createContainer } from 'meteor/react-meteor-data';
-
-import { ChassistaskComponent } from '../../ui/components/ChassistaskComponent.jsx';
-
 import { Meteor } from 'meteor/meteor';
 
 import { Productiontasks } from '../../api/productiontasks.js';
 
-import Productiontask from '../../ui/components/Productiontask.jsx';
-
-// Chassispanel component - represents the whole dashboard Panel Components in the DOM
 const T = i18n.createComponent(); // translater component for json lookup universe:i18n
 
-class ChassisPanelComponent extends Component {
+export class LinePanelsComponent extends Component {
 
 	constructor(props) {
 		super(props);
-		console.log("ChassisPanelComponent:constructor");
+		console.log("LinePanelsComponent:constructor");
 		console.log(props);
 	};
 
-
-  componentWillMount() {
-    console.log("ChassisPanelComponent:componentWillMount enter");
-    
-    
-  };
+     componentWillMount() {
+        console.log("LinePanelsComponent:componentWillMount enter");
+    };
 
   componentDidMount() {
-    console.log("ChassisPanelComponent:componentDidMount enter");
+    console.log("LinePanelsComponent:componentDidMount enter");
     console.log(Productiontasks);
 
   };
@@ -47,7 +37,7 @@ class ChassisPanelComponent extends Component {
   };
 
   componentWillReceiveProps() {
-    console.log("ChassisPanelComponent:componetWillReceiveProps ");
+    console.log("LinePanelsComponent:componetWillReceiveProps ");
   };
 
   	render() {
@@ -286,7 +276,7 @@ class ChassisPanelComponent extends Component {
     }
 };
 
-ChassisPanelComponent.propTypes = {
+LinePanelsComponent.propTypes = {
   chassistasks: PropTypes.array.isRequired,
   chassiscount: PropTypes.number,
   painttasks: PropTypes.array.isRequired,
@@ -299,35 +289,30 @@ ChassisPanelComponent.propTypes = {
   shippedcount: PropTypes.number,
 };
 
-export default ChassisPanelComponent = createContainer(() => {
 
-	console.log("ChassispanelComponent:createContainer ");
+import { Session } from 'meteor/session'
 
-	var t;
-	t=Productiontasks.find({"LOCATIONSTATUS": "1"}).fetch();
-	t=Productiontasks.find({"LOCATIONSTATUS": "2"}).fetch();
-	t=Productiontasks.find({"LOCATIONSTATUS": "3"}).fetch();
-	t=Productiontasks.find({"LOCATIONSTATUS": "4"}).fetch();
-	t=Productiontasks.find({"LOCATIONSTATUS": "5"}).fetch();
-    t=Productiontasks.find({"LOCATIONSTATUS": "6"}).fetch();
-
+export default LinePanelsComponent = createContainer(() => {
+  Session.setDefault("filterENDREGION", {$in:[]})
+  
   return {
 
   	//to do componentise all these - refactor to make the app more modular
   	//seprate out this huge component into smaller sub components and containser for react-meteor-data
   	//Also this is crude - based on JSON textstrings coming from sync and simply filtering by LOCATIONSTATUS
   	//refactor in future
-    chassistasks: Productiontasks.find({"LOCATIONSTATUS": "1"}).fetch(),
-    painttasks: Productiontasks.find({"LOCATIONSTATUS": "2"}).fetch(),
-    tractortasks: Productiontasks.find({"LOCATIONSTATUS": "3"}).fetch(),
-    mqlinetasks: Productiontasks.find({"LOCATIONSTATUS": "4"}).fetch(),
-    reworktasks: Productiontasks.find({"LOCATIONSTATUS": "5"}).fetch(),
-    shippedtasks: Productiontasks.find({"LOCATIONSTATUS": "6"}).fetch(),
-    chassiscount: Productiontasks.find({"LOCATIONSTATUS": "1"}).count(),
-    paintcount: Productiontasks.find({"LOCATIONSTATUS": "2"}).count(),
-    tractorcount: Productiontasks.find({"LOCATIONSTATUS": "3"}).count(),
-    mqlinecount: Productiontasks.find({"LOCATIONSTATUS": "4"}).count(),
-    reworkcount: Productiontasks.find({"LOCATIONSTATUS": "5"}).count(),
-    shippedcount: Productiontasks.find({"LOCATIONSTATUS": "6"}).count(),
+      
+    chassistasks: Productiontasks.find({"LOCATIONSTATUS": "1", "ENDREGION":Session.get("filterENDREGION") }).fetch(),
+    painttasks: Productiontasks.find({"LOCATIONSTATUS": "2", "ENDREGION":Session.get("filterENDREGION") }).fetch(),
+    tractortasks: Productiontasks.find({"LOCATIONSTATUS": "3", "ENDREGION":Session.get("filterENDREGION") }).fetch(),
+    mqlinetasks: Productiontasks.find({"LOCATIONSTATUS": "4", "ENDREGION":Session.get("filterENDREGION") }).fetch(),
+    reworktasks: Productiontasks.find({"LOCATIONSTATUS": "5", "ENDREGION":Session.get("filterENDREGION") }).fetch(),
+    shippedtasks: Productiontasks.find({"LOCATIONSTATUS": "6", "ENDREGION":Session.get("filterENDREGION") }).fetch(),
+    chassiscount: Productiontasks.find({"LOCATIONSTATUS": "1", "ENDREGION":Session.get("filterENDREGION") }).count(),
+    paintcount: Productiontasks.find({"LOCATIONSTATUS": "2", "ENDREGION":Session.get("filterENDREGION") }).count(),
+    tractorcount: Productiontasks.find({"LOCATIONSTATUS": "3", "ENDREGION":Session.get("filterENDREGION") }).count(),
+    mqlinecount: Productiontasks.find({"LOCATIONSTATUS": "4", "ENDREGION":Session.get("filterENDREGION") }).count(),
+    reworkcount: Productiontasks.find({"LOCATIONSTATUS": "5", "ENDREGION":Session.get("filterENDREGION") }).count(),
+    shippedcount: Productiontasks.find({"LOCATIONSTATUS": "6", "ENDREGION":Session.get("filterENDREGION") }).count(),
   };
-}, ChassisPanelComponent);
+}, LinePanelsComponent);

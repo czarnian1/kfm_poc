@@ -11,6 +11,20 @@ const T = i18n.createComponent(); // translater component for json lookup
 
 // Navbar of the application
 export class NavbarComponent extends Component {
+    onClickLogout(p){
+        console.log("NavbarComponent:onClickLogout");
+        Meteor.logout(
+            function(e){
+                if(e) {
+                    console.log(e);
+                }
+                else {
+                    console.log("Logged out!");
+                } 
+            }
+        );
+
+    };   
 
   render() {
     console.log("NavbarComponent:render");
@@ -49,7 +63,8 @@ export class NavbarComponent extends Component {
                 </li>
                 <li className="divider">
                 </li>
-                <li><a href="/logout"><T>Logout</T></a>
+                <li>
+                  <a href="/login" onClick={this.onClickLogout}><T>Logout</T></a>
                 </li>
               </ul>
             </li>

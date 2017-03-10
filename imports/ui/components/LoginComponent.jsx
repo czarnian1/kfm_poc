@@ -1,70 +1,72 @@
-/*
+import React, { Component, PropTypes } from 'react'
+import { browserHistory, Link } from 'react-router'
+import { createContainer } from 'meteor/react-meteor-data'
 
-Active Code : 
+export default class LoginComponent extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      error: ''
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-*/
+  handleSubmit(e){
+    e.preventDefault();
+    let username = document.getElementById('loginUsername').value;
+    let password = document.getElementById('loginPassword').value;
+    Meteor.loginWithPassword(username, password, (err) => {
+      if(err){
+        this.setState({
+          error: err.reason
+        });
+      } else {
+        browserHistory.push('/dashboard');
+      }
+    });
+  }
 
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Template } from 'meteor/templating';
-import { Blaze } from 'meteor/blaze';
+  render(){
+    const error = this.state.error;
 
-
-class LoginObject extends Component {
-
-    onClickLogin(p){
-        console.log("LoginObject:onClickLogin");
-        Meteor.loginWithPassword(
-            document.getElementById("loginUsername").value,
-            document.getElementById("loginPassword").value,
-            function(e){
-                if(e) {
-                    console.log(e);
-                } else {
-                    console.log("logged in");
-                } 
-            }
-        );
-    };   
-
-    render() {
-      console.log("LoginObject:render");
-      return (
-          <div>
-
-<div className="col-md-4" style={{height:"100%", "vertical-align": "middle"}}></div>
-<div className="col-md-4 center-block" >
-              <h3>Login</h3>
-              <form class="form-horizontal">
-                  <div class="form-group">
-                      <div class="col-sm-10">
-                          <input type="test" class="form-control" id="loginUsername" placeholder="Username"/>
-                      </div>
-                  </div>
-                  <br />
-                  <div class="form-group">
-                      <div class="col-sm-10">
-                          <input type="password" class="form-control" id="loginPassword" placeholder="Password" />
-                      </div>
-                  </div>
-                  <br />
-                  <div class="form-group">
-                      <div class="col-sm-offset-2 col-sm-10">
-                          <button type="submit" class="btn btn-default" onClick={this.onClickLogin} >Login</button>
-                      </div>
-                  </div>
+    return (
+      <div className="modal show"  style={{top:"100px"}}>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="text-center">Login</h1>
+            </div>
+            <div className="modal-body">
+              { error.length > 0 ?
+                <div className="alert alert-danger fade in">{error}</div>
+                :''}
+              <form  id="login-form"
+                    className="form col-md-12 center-block"
+                    onSubmit={this.handleSubmit}>
+                <div className="form-group">
+                  <input type="text"
+                        id="loginUsername"
+                        className="form-control input-lg"
+                        placeholder="Username"/>
+                </div>
+                <div className="form-group">
+                  <input type="password"
+                        id="loginPassword"
+                        className="form-control input-lg"
+                        placeholder="Password"/>
+                </div>
+                <div className="form-group text-center">
+                  <input type="submit"
+                        id="login-button"
+                        className="btn btn-primary btn-lg btn-block"
+                        value="Login" />
+                </div>
               </form>
-</div>
+            </div>
+            <div className="modal-footer" style={{borderTop: 0}}></div>
           </div>
-      )
-    }
+        </div>
+      </div>
+    );
+  }
 }
-
-export const LoginComponent = ( ) => (
-    <div>
-        <LoginObject />
-    </div>
-);
-
-  
-
