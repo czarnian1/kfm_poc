@@ -27,6 +27,12 @@ i {
 .kubota-KFM_Icons_chassis-icon:before {
   content: "\e902";
 }
+.kubota-KFM_Icons_paint-icon:before {
+  content: "\e900";
+}
+.kubota-KFM_Icons_tractor-icon:before {
+  content: "\e901";
+}
 .kubota-KFM_Icons_rework-icon:before {
   content: "\e903";
 }
@@ -35,12 +41,6 @@ i {
 }
 .kubota-KFM_Icons_shipped-icon:before {
   content: "\e905";
-}
-.kubota-KFM_Icons_tractor-icon:before {
-  content: "\e901";
-}
-.kubota-KFM_Icons_paint-icon:before {
-  content: "\e900";
 }
 
 .kubota-mls {

@@ -1,11 +1,3 @@
-/*
-
-Active Code : 
-
-This component doesn't display Productiontasks but will filters on the relevant collections
-
-*/
-
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
@@ -14,22 +6,22 @@ import { Session } from 'meteor/session'
 const T = i18n.createComponent(); // translater component for json lookup
 
 const filter_ul_style = {
-  'list-style': 'none'
+  'liststyle': 'none'
 }
 
 // Filter component - represents the Filter Panel Component in the DOM
 export class FilterComponent extends Component {
-  onClickUpdate(){
-      var f=[];
-
-      if(document.getElementById('filterEndRegion_UK').checked) f[f.length]="UK";
-      if(document.getElementById('filterEndRegion_EUR').checked) f[f.length]="EUR";
-      if(document.getElementById('filterEndRegion_USA').checked) f[f.length]="USA";
-      if(document.getElementById('filterEndRegion_JAPAN').checked) f[f.length]="JAPAN";
-      Session.set("filterENDREGION", {$in:f})
-  }
-   
   render(){
+      var onClickUpdate=function(e){
+          var f=[];
+
+          if(document.getElementById('filterEndRegion_UK').checked) f[f.length]="UK";
+          if(document.getElementById('filterEndRegion_EUR').checked) f[f.length]="EUR";
+          if(document.getElementById('filterEndRegion_USA').checked) f[f.length]="USA";
+          if(document.getElementById('filterEndRegion_JAPAN').checked) f[f.length]="JAPAN";
+          Session.set("filterENDREGION", {$in:f})
+      }
+       
     return (
         <span>
             <div>
@@ -51,24 +43,16 @@ export class FilterComponent extends Component {
                   <fieldset>
                     <ul style={filter_ul_style}>
                       <li>
-                      <label>
-                      <input type="checkbox" id="filterEndRegion_UK" onClick={this.onClickUpdate}  /><T>UK</T>
-                      </label>
+                      <input type="checkbox" id="filterEndRegion_UK" onClick={onClickUpdate}  /><T>UK</T>
                       </li>
                       <li>
-                      <label>
-                      <input type="checkbox" id="filterEndRegion_EUR" onClick={this.onClickUpdate} /><T>Europe</T>
-                      </label>
+                      <input type="checkbox" id="filterEndRegion_EUR" onClick={onClickUpdate} /><T>Europe</T>
                       </li>
                       <li>
-                      <label>
-                      <input type="checkbox" id="filterEndRegion_USA" onClick={this.onClickUpdate} /><T>USA</T>
-                      </label>
+                      <input type="checkbox" id="filterEndRegion_USA" onClick={onClickUpdate} /><T>USA</T>
                       </li>
                       <li>
-                      <label>
-                      <input type="checkbox" id="filterEndRegion_JAPAN" onClick={this.onClickUpdate} /><T>Japan</T>
-                      </label>
+                      <input type="checkbox" id="filterEndRegion_JAPAN" onClick={onClickUpdate} /><T>Japan</T>
                       </li>
                     </ul>
                   </fieldset>

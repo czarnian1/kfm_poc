@@ -21,19 +21,21 @@
 "main": {
 	"title": "Kubota Production Monitoring",
     "copyright": "Kubota",
-    "chassis_panel": "Chassis",
-    "mqline_panel": "MQ Line",
-    "paint_panel": "Paint",
-    "tractor_panel": "Tractor",
-    "rework_panel": "Rework",
-    "shipped_panel": "Shipped"
-},
+    "CHASSIS_LINE_title": "Chassis line",
+    "PAINT_LINE_title": "Paint line",
+    "TRACTOR_LINE_title": "Tractor line",
+    "REWORK_BEFORE_MQ_title": "Rework before MQ",
+    "MQ_LINE_title": "MQ Line",
+    "REWORK_AFTER_MQ_title": "Rework after MQ",
+    "PRODUCTION_END_title": "End of Production",
+    "INSPECTION_title": "Inspection",
+    "REWORK_DUR_INSP_title": "Rework during inspection",
+    "SHIPPING_title": "Shipping date"
+  },
 "panel_table": {
     "panel_title": "",
-    "panel_description": "Description",
     "panel_total": "Total Tractors",
-    "panel_IDNO": "IDNO",
-    "panel_location": "Stage ID",
+    "panel_ID_NO": "ID_NO",
     "panel_date": "Entry Time",
     "panel_age": "Timein stage"
   },

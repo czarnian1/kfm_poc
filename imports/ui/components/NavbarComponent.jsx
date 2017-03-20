@@ -1,9 +1,3 @@
-/*
-
-Active Code : 
-
-*/
-
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
 
@@ -28,14 +22,14 @@ export class NavbarComponent extends Component {
 
   render() {
     console.log("NavbarComponent:render");
-    //return the html for Navbar in Application
+
     return(
      <nav className="navbar navbar-default" role="navigation" id="render-application-navbar">
         <div className="navbar-header">
            
           <button className="navbar-toggle" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
              <span className="sr-only">Toggle navigation</span><span className="icon-bar"></span><span className="icon-bar"></span><span className="icon-bar"></span>
-          </button> <a href="#" className="navbar-brand"><img style={{width: "25%"}} src="assets/Kubota_logo_400px.png"/></a>
+          </button> <a href="#" className="navbar-brand"><img style={{width: "25%"}} src="/assets/Kubota_logo_400px.png"/></a>
         </div>
         
         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

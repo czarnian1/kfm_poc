@@ -5,13 +5,17 @@ Meteor.startup(() => {
  	// code to run on server at startup
 
 	export const Productiontasks = new Mongo.Collection('productiontasks');
+	export const Productiontask_notes = new Mongo.Collection('productiontask_notes');
 
 	//console.log(Meteor);
 
 	if (Meteor.isServer) {
 		console.log("serve/main.js publish the production tasks for clients");
-		Meteor.publish('productiontasks', function productiontasksPublication() {
+		Meteor.publish('productiontasks', function() {
 			return Productiontasks.find();
+		});
+		Meteor.publish('productiontask_notes', function() {
+			return Productiontask_notes.find();
 		});
 
 	} else
