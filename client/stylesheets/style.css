@@ -71,3 +71,13 @@ i {
   padding:15px;
   height: auto;
 }
+
+.PanelMainCell{
+	table-layout:fixed;
+	padding:0;
+	border-collapse:collapse;
+	border:solid 1px silver;
+	cellspacing:0;
+}
+
+

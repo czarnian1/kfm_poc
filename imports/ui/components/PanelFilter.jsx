@@ -10,7 +10,7 @@ const filter_ul_style = {
 }
 
 // Filter component - represents the Filter Panel Component in the DOM
-export class FilterComponent extends Component {
+export class PanelFilter extends Component {
   render(){
       var onClickUpdate=function(e){
           var f=[];

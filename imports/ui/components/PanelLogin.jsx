@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { browserHistory, Link } from 'react-router'
 import { createContainer } from 'meteor/react-meteor-data'
 
-export default class LoginComponent extends Component {
+export default class PanelLogin extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -21,7 +21,7 @@ export default class LoginComponent extends Component {
           error: err.reason
         });
       } else {
-        browserHistory.push('/dashboard');
+        browserHistory.push('/Main');
       }
     });
   }

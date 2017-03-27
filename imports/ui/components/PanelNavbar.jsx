@@ -1,12 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
 
+import { Session } from 'meteor/session'
+
 const T = i18n.createComponent(); // translater component for json lookup
 
 // Navbar of the application
-export class NavbarComponent extends Component {
+export class PanelNavbar extends Component {
+
+    onClickProductionStatusOneHour(e){
+        var now=new Date();
+        Session.set("productionStatus", {"$gte" : new Date(now.getTime()-3600*1000)} );
+    }
+    
+    onClickProductionStatusOverdue(e){
+        Session.set("productionStatus", {"$gte" : new Date(1)} );
+    }
+    
     onClickLogout(p){
-        console.log("NavbarComponent:onClickLogout");
+        console.log("PanelNavbar:onClickLogout");
         Meteor.logout(
             function(e){
                 if(e) {
@@ -21,7 +33,7 @@ export class NavbarComponent extends Component {
     };   
 
   render() {
-    console.log("NavbarComponent:render");
+    console.log("PanelNavbar:render");
 
     return(
      <nav className="navbar navbar-default" role="navigation" id="render-application-navbar">
@@ -39,10 +51,10 @@ export class NavbarComponent extends Component {
                <a href="#" className="dropdown-toggle" data-toggle="dropdown"><T>common.navbar.productionstatus</T><strong className="caret"></strong></a>
               <ul className="dropdown-menu">
                 <li>
-                  <a href="#"><T>1 Hour</T></a>
+                  <a href="#" onClick={this.onClickProductionStatusOneHour}><T>1 Hour</T></a>
                 </li>
                 <li>
-                  <a href="#"><T>Overdue</T></a>
+                  <a href="#" onClick={this.onClickProductionStatusOverdue}><T>Overdue</T></a>
                 </li>
               </ul>
             </li>
@@ -69,4 +81,4 @@ export class NavbarComponent extends Component {
   };
 }
 
-export default NavbarComponent;
+export default PanelNavbar;

@@ -12,7 +12,7 @@ mongo_client =  Mongo::Client.new('mongodb://localhost:27017/production_kfm_db')
 mongo_db = mongo_client.database
 cols = mongo_db.collection_names
 puts cols
-col = mongo_db.collection('productiontasks')
+col = mongo_db.collection('prod_monitor')
 puts col
 
 oc.exec("alter session set NLS_DATE_FORMAT='yyyy-mm-dd\"T\"hh24:mi:ss'")
@@ -42,6 +42,12 @@ while true
   hash['CREATE_DATE']=DateTime.strptime(hash['CREATE_DATE'], '%Y-%m-%dT%H:%M:%S');
   hash['UPDATE_DATE']=DateTime.strptime(hash['UPDATE_DATE'], '%Y-%m-%dT%H:%M:%S');
  
+  if hash['PARTS_PREPARATION_STATUS']==""
+    hash.delete('PARTS_PREPARATION_STATUS')
+  else
+    hash['PARTS_PREPARATION_STATUS']=hash['PARTS_PREPARATION_STATUS'].to_i(10);
+  end
+
   if hash['CHASSIS_LINE_START_DATE']==""
     hash.delete('CHASSIS_LINE_START_DATE')
   else
@@ -144,17 +150,17 @@ while true
     hash['REWORK_DUR_INSP_END_DATE']=DateTime.strptime(hash['REWORK_DUR_INSP_END_DATE'], '%Y-%m-%dT%H:%M:%S');
   end
   
+  if hash['SHIPPING_STATUS']==""
+    hash.delete('SHIPPING_STATUS')
+  else
+    hash['SHIPPING_STATUS']=hash['SHIPPING_STATUS'].to_i(10);
+  end
+  
   if hash['SHIPPING_DATE']==""
     hash.delete('SHIPPING_DATE')
   else
     hash['SHIPPING_DATE']=DateTime.strptime(hash['SHIPPING_DATE'], '%Y-%m-%dT%H:%M:%S');
   end
-  
-  # ENDREGION will be based on two digits of the tractor SERIAL_NO, waiting confirmation.
-  hash['ENDREGION']='UK'; # set as temporary for debugging purpose
-  
-  # IDNO_STATE is still under consideration.
-  hash['IDNO_STATE']=1;   # set as temporary for debugging purpose
   
   # print
   puts hash.inspect

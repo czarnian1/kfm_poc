@@ -1,53 +1,68 @@
 import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router'
 
 export class RootContainer extends Component {
-  constructor(props){
-    super(props);
-    this.state = this.getMeteorData();
-    this.logout = this.logout.bind(this);
-  }
-
-  getMeteorData(){
-    return { isAuthenticated: Meteor.userId() !== null };
-  }
-
-  componentWillMount(){
-    if (!this.state.isAuthenticated) {
-      browserHistory.push('/login');
+    constructor(props, context) {
+        console.log("RootContainer:constructor");
+        super(props, context);
+        this.state = this.getMeteorData();
+        this.logout = this.logout.bind(this);
+//        context.router;
     }
-  }
 
-  componentDidUpdate(prevProps, prevState){
-    if (!this.state.isAuthenticated) {
-      browserHistory.push('/login');
+    getMeteorData(){
+        console.log("RootContainer:getMeteorData");
+        return { isAuthenticated: Meteor.userId() !== null };
     }
-  }
 
-  logout(e){
-    e.preventDefault();
-    Meteor.logout();
-    browserHistory.push('/login');
-  }
+    componentWillMount(){
+        console.log("RootContainer:componentWillMount");
+        if (!this.state.isAuthenticated) {
+            browserHistory.push('/login');
+//            this.context.router.push('/login')
+        }
+    }
 
-  render(){
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    );
-  }
+    componentDidUpdate(prevProps, prevState){
+        console.log("RootContainer:componentDidUpdate");
+        if (!this.state.isAuthenticated) {
+            browserHistory.push('/login');
+        }
+    }
+
+    logout(e){
+        console.log("RootContainer:logout");
+        e.preventDefault();
+        Meteor.logout();
+        browserHistory.push('/login');
+    }
+
+    render(){
+        console.log("RootContainer:render");
+        return (
+            <div>
+                {this.props.children}
+            </div>
+        );
+    }
 }
 
+/*
+RootContainer.contextTypes = {
+    router: React.PropTypes.func.isRequired
+};
+*/
 
-import Productiontasks from '../../api/productiontasks.js';
-import Productiontask_notes from '../../api/productiontask_notes.js';
+
+import prod_monitor from '../../api/prod_monitor.js';
+import prod_monitor_comment from '../../api/prod_monitor_comment.js';
 import { createContainer } from 'meteor/react-meteor-data';
 
 export default RootContainer = createContainer(() => {
-    Meteor.subscribe('productiontasks');
-    Meteor.subscribe('productiontask_notes');
+    Meteor.subscribe('prod_monitor');
+    Meteor.subscribe('prod_monitor_comment');
     
     return {
     };
     
-  }, RootContainer);
+}, RootContainer);
