@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
 export default class CF {
-    
 
     constructor(props){
         var json=null;
@@ -21,23 +20,22 @@ export default class CF {
                     },
             }
         );
-
         this.state = json;
     }
 
     
     stageTitle(stage){
         switch(parseInt(stage)){
-        case 1: return  'common.main.CHASSIS_LINE_title';
-        case 2: return  'common.main.PAINT_LINE_title';
-        case 3: return  'common.main.TRACTOR_LINE_title';
-        case 4: return  'common.main.REWORK_BEFORE_MQ_title';
-        case 5: return  'common.main.MQ_LINE_title';
-        case 6: return  'common.main.REWORK_AFTER_MQ_title';
-        case 7: return  'common.main.PRODUCTION_END_title';
-        case 8: return  'common.main.INSPECTION_title';
-        case 9: return  'common.main.REWORK_DUR_INSP_title';
-        case 10: return 'common.main.SHIPPING_title';
+        case 1: return  'common.main.chassis_line_title';
+        case 2: return  'common.main.paint_line_title';
+        case 3: return  'common.main.tractor_line_title';
+        case 4: return  'common.main.rework_before_mq_title';
+        case 5: return  'common.main.mq_line_title';
+        case 6: return  'common.main.rework_after_mq_title';
+        case 7: return  'common.main.production_end_title';
+        case 8: return  'common.main.inspection_title';
+        case 9: return  'common.main.rework_dur_insp_title';
+        case 10: return 'common.main.shipping_title';
         default: return 'data error, unknown stage #'+stage+"#";
         }
     }
@@ -50,8 +48,8 @@ export default class CF {
         case 4: return  'kubota-KFM_Icons_rework-icon';
         case 5: return  'kubota-KFM_Icons_mqline-icon';
         case 6: return  'kubota-KFM_Icons_rework-icon';
-        case 7: return  '';
-        case 8: return  '';
+        case 7: return  'kubota-KFM_Icons_moved-icon';
+        case 8: return  'kubota-KFM_Icons_inspection-icon';
         case 9: return  'kubota-KFM_Icons_rework-icon';
         case 10: return 'kubota-KFM_Icons_shipped-icon';
         default: return 'data error, unknown stage #'+stage+"#";
@@ -68,17 +66,19 @@ export default class CF {
         spent= Math.floor(spent/1000/60);
 
         var i;
-        var duration=null,warn=null,message='',color='';
+        //MSJ : Bootstrap css tr classes for table highlighting added className to json object and return object
+        var duration=null,warn=null,message='',color='', className='';
         for(i=0,c=''; i < ary.length; ++i){
             if(duration==null && ary[i].warn)   duration=ary[i].duration;
             if(ary[i].duration <= spent){
-                warn   =ary[i].warn;
-                message=ary[i].message;
-                color  =ary[i].color;
+                warn      =ary[i].warn;
+                message   =ary[i].message;
+                color     =ary[i].color;
+                className =ary[i].className;
             }
         }
         
-        return {"error":false,"thresholdSpent":spent,"thresholdDuration":duration,"thresholdMessage":message,"thresholdColor":color}
+        return {"error":false,"thresholdSpent":spent,"thresholdDuration":duration,"thresholdMessage":message,"thresholdColor":color, "className":className}
     }
     
     

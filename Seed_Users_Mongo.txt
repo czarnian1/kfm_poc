@@ -1,0 +1,14 @@
+db.users.insert(
+{ "_id" : "KMbXT8dbe2Aqbx9qt", "createdAt" : ISODate("2017-01-27T16:15:50.791Z"), "services" : { "password" : { "bcrypt" : "$2a$10$eADIbuqjkdlA0cgHsSdgz.Gpmtgt2qleiCdgdlgO8cgLL6pT/W/1S" }, "resume" : { "loginTokens" : [ { "when" : ISODate("2017-02-03T12:03:15.714Z"), "hashedToken" : "3V/tvTmMSnyGEFQV59dRbT3Phxr+vDqRMfQlRckJKrw=" }, { "when" : ISODate("2017-02-03T13:48:10.345Z"), "hashedToken" : "K+bx0wE6MjKdu48pD3y/5I2iGSGTWP8zRi3Oa/VzPT8=" }, { "when" : ISODate("2017-02-23T17:01:15.879Z"), "hashedToken" : "Z2RSF2oraCwO+bGRouvy2Zmh8opqTj1yO4sxwQ/peAA=" }, { "when" : ISODate("2017-02-23T17:20:35.229Z"), "hashedToken" : "AK+vDLUrHYKP7z5NoP6JfWK+L6kc7ajb6DIKmXrdY2I=" }, { "when" : ISODate("2017-02-24T10:46:53.592Z"), "hashedToken" : "Zu1+yUnlNe5EX5O3Mn21jN+2TGE2OLLgdT3JloVDAB4=" }, { "when" : ISODate("2017-03-09T11:09:38.946Z"), "hashedToken" : "TlcG7uAs7f6AWw3uGubaENU7Q/ucn3udLfpMrXpEhlU=" } ] } }, "username" : "mjackson", "profile" : {  } })
+
+db.users.insert(
+{ "_id" : "y9tPxF7nZAdD6GHmY", "createdAt" : ISODate("2017-03-29T16:04:28.318Z"), "services" : { "password" : { "bcrypt" : "$2a$10$TRmJcx5RDVcbVMIBgDARO.wTB0meRA0XrtwC3f2MVH0aQQ7FeoGQK" }, "resume" : { "loginTokens" : [ ] } }, "username" : "testuser1", "profile" : {  } })
+
+db.users.insert(
+{ "_id" : "857g6nzffRpPCx7wi", "createdAt" : ISODate("2017-03-29T16:04:49.567Z"), "services" : { "password" : { "bcrypt" : "$2a$10$ZhwwTKicUEXpH.f07oD2YuiRaG92EcC23/bdel0yf8mRVvFVYVYnC" }, "resume" : { "loginTokens" : [ ] } }, "username" : "testuser2", "profile" : {  } })
+
+db.users.insert(
+{ "_id" : "9mGJ6tpa39pYCS6Sd", "createdAt" : ISODate("2017-03-29T16:05:11.771Z"), "services" : { "password" : { "bcrypt" : "$2a$10$lUvAusAm7BABK8piiipjQuSq5Qdroy75vIwbJ15NYKKE8lNdjhSOe" }, "resume" : { "loginTokens" : [ ] } }, "username" : "testuser3", "profile" : {  } }
+)
+
+

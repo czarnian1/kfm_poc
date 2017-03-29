@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
+import AccountsUIWrapper from '../../ui/components/AccountsUIWrapper.jsx';
 
 import { Session } from 'meteor/session'
 
@@ -60,6 +61,9 @@ export class PanelNavbar extends Component {
             </li>
           </ul>
           <ul className="nav navbar-nav navbar-right">
+           <li>
+              <a href="#"><AccountsUIWrapper /></a>
+            </li>
             <li className="dropdown">
               <a href="#" className="dropdown-toggle" data-toggle="dropdown"><T>common.navbar.admin</T><strong className="caret"></strong></a>
               <ul className="dropdown-menu">

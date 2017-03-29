@@ -18,19 +18,25 @@ export class PanelMain extends Component {
         
         this.props.products.map((p)=>{
            var r=cf.productStatus(p);
-           
-           // Tractor Status
-           if(!r.error) $("#"+p.ID_NO.trim()+" .classTractorStatus").html(r.isOnGoing ? '<i class="'+cf.stageIcon(r.stage)+'"></i>'+i18n.__(cf.stageTitle(r.stage)):"");
+           // Tractor Status MSJ added ready for FSM even if !r.isOngoing
+           if(!r.error) $("#"+p.ID_NO.trim()+" .classTractorStatus").html(r.isOnGoing ? '<i class="kubota-fs-32 '+cf.stageIcon(r.stage)+'"></i>'+i18n.__(cf.stageTitle(r.stage)):'<i class="kubota-fs-32 '+cf.stageIcon(r.stage)+'"></i>'+i18n.__(cf.stageTitle(r.stage)));
            
            // Comment
            var c=prod_monitor_comment.find({"ID_NO":p.ID_NO.trim()}).count();
-           $("#"+p.ID_NO.trim()+" .classComment").html(0 < c ? '<span class="glyphicon glyphicon-exclamation-sign" />':'<span class="glyphicon glyphicon-ok" />');
+           //$("#"+p.ID_NO.trim()+" .classComment").html(0 < c ? '<span class="glyphicon glyphicon-exclamation-sign" />':'<span class="glyphicon glyphicon-ok" />');
+           $("#"+p.ID_NO.trim()+" .classComment").html(0 < c ? '<span class="glyphicon glyphicon-exclamation-sign" />':'');
            
            // SHIPPING_STATUS
            $("#"+p.ID_NO.trim()+" .classShippingStatus").html(r.shippingStatus);
            
            // Row's color
-           if(!r.error) $("#"+p.ID_NO.trim()).css('background-color',r[r.stage].thresholdColor);
+           //
+           //if(!r.error) $("#"+p.ID_NO.trim()).css('background-color',r[r.stage].thresholdColor);
+           if(r[r.stage].className) {
+		$("#"+p.ID_NO.trim())[0].className = r[r.stage].className;
+		} else {
+		console.log("no need to toggle class");
+	   }
         });
     }
         
@@ -57,42 +63,42 @@ export class PanelMain extends Component {
         }
 
         return (
-                <div>
-                    <table className="PanelMainCell" width="1px">
+                <div className="container-fluid">
+                    <table className="table table-bordered table-responsive">
                         <thead>
                             <tr>
-                                <th className="PanelMainCell" width="90px" rowSpan={2}>Monthly Sequence No</th>
-                                <th className="PanelMainCell" width="90px" rowSpan={2}>IDNO (Kubota Production ID)</th>
-                                <th className="PanelMainCell" width="90px" rowSpan={2}>Model Code</th>
-                                <th className="PanelMainCell" width="90px" rowSpan={2}>Model Description</th>
-                                <th className="PanelMainCell" width="90px" rowSpan={2}>Planned Finished Date</th>
-                                <th className="PanelMainCell" width="80px" rowSpan={2}>Comment</th>
-                                <th className="PanelMainCell" width="100px" rowSpan={2}>Tractor Status</th>
-                                <th className="PanelMainCell" width="80px" rowSpan={2}>Missing Parts</th>
-                                <th className="PanelMainCell" width="160px" colSpan={2}><center>Chasis Line</center></th>
-                                <th className="PanelMainCell" width="160px" colSpan={2}><center>Paint Line</center></th>
-                                <th className="PanelMainCell" width="160px" colSpan={2}><center>Tractor Line</center></th>
-                                <th className="PanelMainCell" width="160px" colSpan={2}><center>MQ Line</center></th>
-                                <th className="PanelMainCell" width="160px" colSpan={2}><center>Rework</center></th>
-                                <th className="PanelMainCell" width="80px" rowSpan={2}>Production Completion</th>
-                                <th className="PanelMainCell" width="160px" colSpan={2}><center>Inspection</center></th>
-                                <th className="PanelMainCell" width="100px">Shipping Status</th>
-                                <th className="PanelMainCell" width="80px" rowSpan={2}>Shipping</th>
+                                <th rowSpan={2}><T>common.main.monthlysequenceno</T></th>
+                                <th rowSpan={2}><T>common.main.idno</T></th>
+                                <th rowSpan={2}><T>common.main.modelcode</T></th>
+                                <th rowSpan={2}><T>common.main.modeldescription</T></th>
+                                <th rowSpan={2}><T>common.main.plannedfinish</T></th>
+                                <th rowSpan={2}><T>common.main.comment</T></th>
+                                <th rowSpan={2}><T>common.main.tractorstatus</T></th>
+                                <th rowSpan={2}><T>common.main.missingpparts</T></th>
+                                <th colSpan={2}><center><T>common.main.chassisline</T></center></th>
+                                <th colSpan={2}><center><T>common.main.paintline</T></center></th>
+                                <th colSpan={2}><center><T>common.main.tractorline</T></center></th>
+                                <th colSpan={2}><center><T>common.main.mqline</T></center></th>
+                                <th colSpan={2}><center><T>common.main.rework</T></center></th>
+                                <th rowSpan={2}><T>common.main.productioncompletion</T></th>
+                                <th colSpan={2}><center><T>common.main.inspection</T></center></th>
+                                <th><T>common.main.shippingstatus</T></th>
+                                <th rowSpan={2}><T>common.main.shipping</T></th>
                             </tr>
                             <tr>
-                                <th className="PanelMainCell"><center>Start</center></th>
-                                <th className="PanelMainCell"><center>End</center></th>
-                                <th className="PanelMainCell"><center>Start</center></th>
-                                <th className="PanelMainCell"><center>End</center></th>
-                                <th className="PanelMainCell"><center>Start</center></th>
-                                <th className="PanelMainCell"><center>End</center></th>
-                                <th className="PanelMainCell"><center>Start</center></th>
-                                <th className="PanelMainCell"><center>End</center></th>
-                                <th className="PanelMainCell"><center>Start</center></th>
-                                <th className="PanelMainCell"><center>End</center></th>
-                                <th className="PanelMainCell"><center>Start</center></th>
-                                <th className="PanelMainCell"><center>End</center></th>
-                                <th className="PanelMainCell"><center>Blank</center></th>
+                                <th><center><T>common.main.start</T></center></th>
+                                <th><center><T>common.main.end</T></center></th>
+                                <th><center><T>common.main.start</T></center></th>
+                                <th><center><T>common.main.end</T></center></th>
+                                <th><center><T>common.main.start</T></center></th>
+                                <th><center><T>common.main.end</T></center></th>
+                                <th><center><T>common.main.start</T></center></th>
+                                <th><center><T>common.main.end</T></center></th>
+                                <th><center><T>common.main.start</T></center></th>
+                                <th><center><T>common.main.end</T></center></th>
+                                <th><center><T>common.main.start</T></center></th>
+                                <th><center><T>common.main.end</T></center></th>
+                                <th><center></center></th>
                             </tr>
                         </thead>
 
@@ -100,29 +106,29 @@ export class PanelMain extends Component {
                             {this.props.products.map(function(p) {
                                 return (
                                     <tr id={p.ID_NO.trim()}>
-                                        <td className="PanelMainCell">{formatString(p.TTTT)}(? No corresponding field)</td>
-                                        <td className="PanelMainCell"><Link to={"/Comment/"+p.ID_NO.trim()}>{formatString(p.ID_NO.trim())}</Link></td>
-                                        <td className="PanelMainCell">{formatString(p.TTTT)}(? No corresponding field)</td>
-                                        <td className="PanelMainCell">{formatString(p.TTTT)}(? No corresponding field)</td>
-                                        <td className="PanelMainCell">{formatDateTime(p.TTTT)}(? No corresponding field)</td>
-                                        <td className="PanelMainCell"><center className="classComment"></center></td>
-                                        <td className="PanelMainCell classTractorStatus"></td>
-                                        <td className="PanelMainCell">{formatString(p.PARTS_PREPARATION_STATUS)}</td>
-                                        <td className="PanelMainCell">{formatDateTime(p.CHASSIS_LINE_START_DATE)}</td>
-                                        <td className="PanelMainCell">{formatDateTime(p.CHASSIS_LINE_END_DATE)}</td>
-                                        <td className="PanelMainCell">{formatDateTime(p.PAINT_LINE_START_DATE)}</td>
-                                        <td className="PanelMainCell">{formatDateTime(p.PAINT_LINE_END_DATE)}</td>
-                                        <td className="PanelMainCell">{formatDateTime(p.TRACTOR_LINE_START_DATE)}</td>
-                                        <td className="PanelMainCell">{formatDateTime(p.TRACTOR_LINE_END_DATE)}</td>
-                                        <td className="PanelMainCell">{formatDateTime(p.MQ_LINE_START_DATE)}</td>
-                                        <td className="PanelMainCell">{formatDateTime(p.MQ_LINE_END_DATE)}</td>
-                                        <td className="PanelMainCell classReworkStart"></td>
-                                        <td className="PanelMainCell classReworkEnd"></td>
-                                        <td className="PanelMainCell">{formatDateTime(p.PRODUCTION_END_DATE)}</td>
-                                        <td className="PanelMainCell">{formatDateTime(p.INSPECTION_START_DATE)}</td>
-                                        <td className="PanelMainCell">{formatDateTime(p.INSPECTION_END_DATE)}</td>
-                                        <td className="PanelMainCell classShippingStatus"></td>
-                                        <td className="PanelMainCell">{formatDateTime(p.SHIPPING_DATE)}</td>
+                                        <td>{formatString(p.TTTT)}PROD_INFO</td>
+                                        <td><Link to={"/Comment/"+p.ID_NO.trim()}>{formatString(p.ID_NO.trim())}</Link></td>
+                                        <td>{formatString(p.TTTT)}PROD_INFO</td>
+                                        <td>{formatString(p.TTTT)}PROD_INFO</td>
+                                        <td>{formatDateTime(p.TTTT)}PROD_INFO</td>
+                                        <td><center className="classComment"></center></td>
+                                        <td className="classTractorStatus"></td>
+                                        <td>{formatString(p.PARTS_PREPARATION_STATUS)}</td>
+                                        <td>{formatDateTime(p.CHASSIS_LINE_START_DATE)}</td>
+                                        <td>{formatDateTime(p.CHASSIS_LINE_END_DATE)}</td>
+                                        <td>{formatDateTime(p.PAINT_LINE_START_DATE)}</td>
+                                        <td>{formatDateTime(p.PAINT_LINE_END_DATE)}</td>
+                                        <td>{formatDateTime(p.TRACTOR_LINE_START_DATE)}</td>
+                                        <td>{formatDateTime(p.TRACTOR_LINE_END_DATE)}</td>
+                                        <td>{formatDateTime(p.MQ_LINE_START_DATE)}</td>
+                                        <td>{formatDateTime(p.MQ_LINE_END_DATE)}</td>
+                                        <td className="classReworkStart"></td>
+                                        <td className="classReworkEnd"></td>
+                                        <td>{formatDateTime(p.PRODUCTION_END_DATE)}</td>
+                                        <td>{formatDateTime(p.INSPECTION_START_DATE)}</td>
+                                        <td>{formatDateTime(p.INSPECTION_END_DATE)}</td>
+                                        <td className="classShippingStatus"></td>
+                                        <td>{formatDateTime(p.SHIPPING_DATE)}</td>
                                     </tr>
                                 )
                             })}

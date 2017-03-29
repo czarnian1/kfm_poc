@@ -8,7 +8,7 @@ import {renderRoutes} from '../imports/ui/startup/routes.jsx'
 import PanelNavbar from '../imports/ui/components/PanelNavbar.jsx';
 
 Meteor.startup(() => {
-    initAccount();
+   //initAccount();
 
     render(<PanelNavbar />, document.getElementById('render-Nav-Bar'));
     render(renderRoutes(), document.getElementById('react-root-render-container'));

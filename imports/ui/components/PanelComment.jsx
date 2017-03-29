@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-
 import { prod_monitor } from '../../api/prod_monitor.js';
 import { prod_monitor_comment } from '../../api/prod_monitor_comment.js';
+import { Link } from 'react-router';
 
 import CF from '../classes/CommonFunctions.jsx';
 const cf=new CF();
@@ -28,7 +28,7 @@ export class PanelComment extends Component {
             // Tractor Status
             if(!r.error) $("#state_TractorStatus").html(
                 '<span style="color:'+r[r.stage].thresholdColor+'">'
-                +'<i class="'+cf.stageIcon(r.stage)+'"></i>'
+                +'<i class="kubota-fs-32 '+cf.stageIcon(r.stage)+'"></i>'
                 +i18n.__(cf.stageTitle(r.stage))
                 +'</span>'
             );
@@ -36,6 +36,7 @@ export class PanelComment extends Component {
             // Time until area Threshhold
             t=r[r.stage].thresholdDuration;
             if(!r.error && t!=undefined){
+                //use cf__i18n language !!
                 s = 'Time until area threshhold: '
                 s+= (60*24<=t)? Math.floor(t/60/24)+' days ' : "";
                 s+= (Math.floor(t/60))%24+' hours ';
@@ -52,14 +53,14 @@ export class PanelComment extends Component {
             $('#state_Age').html(s);
             
             // Health
-            if(!r.error) $("#state_Health").html('Health: <span style="color:'+r[r.stage].thresholdColor+'">'+r[r.stage].thresholdMessage+'</span>');
+            if(!r.error) $("#state_Health").html('Health: <span style="color:'+r[r.stage].thresholdColor+'">'+i18n.__(r[r.stage].thresholdMessage)+'</span>');
         }
 
         /*
          * For each stage
          */
         for(i=1;i<=10;++i){
-            if(r[i]!=undefined && r[i]!=null)    $('#stage'+i+' .health').html('<span style="color:'+r[i].thresholdColor+'">'+r[i].thresholdMessage+'</span>');
+            if(r[i]!=undefined && r[i]!=null)    $('#stage'+i+' .health').html('<span style="color:'+r[i].thresholdColor+'">'+i18n.__(r[i].thresholdMessage)+'</span>');
         }
 
 
@@ -134,23 +135,23 @@ export class PanelComment extends Component {
         }
         
         return(
-            <div className="panel panel-default container">
+            <div className="panel panel-default container-fluid">
                 <br />
-                <table className="table"> 
+                <table className="table table-bordered table-responsive"> 
                     <thead>
                         <tr style={{"background-color":"silver"}}>
-                            <td className="col-md-3 table-bordered">ID_NO</td>
-                            <td className="col-md-3 table-bordered">Started</td>
-                            <td className="col-md-3 table-bordered">Tractor Status</td>
-                            <td className="col-md-3 table-bordered">Shipping Status</td>
+                            <td><T>common.main.idno</T></td>
+                            <td><T>common.main.started</T></td>
+                            <td><T>common.main.tractorstatus</T></td>
+                            <td><T>common.main.shippingstatus</T></td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr style={{"background-color":"whitesmoke"}}>
-                            <td className="col-md-3 table-bordered">{r==undefined?"":r.ID_NO.trim()}</td>
-                            <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.CREATE_DATE)}</td>
-                            <td className="col-md-3 table-bordered" id="state_TractorStatus"></td>
-                            <td className="col-md-3 table-bordered" id="state_ShippingStatus"></td>
+			     <td><Link to={"/Main"}>{r==undefined?"":r.ID_NO.trim()}</Link></td>
+                            <td>{r==undefined?"":formatDateTime(r.CREATE_DATE)}</td>
+                            <td id="state_TractorStatus"></td>
+                            <td id="state_ShippingStatus"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -158,9 +159,9 @@ export class PanelComment extends Component {
                 <br />
                 <div>
                     <div className="row">
-                        <div className="col-md-5"><span id="state_TimeThreshold" className="glyphicon glyphicon-time" /></div>
-                        <div className="col-md-5"><span id="state_Age" className="glyphicon glyphicon-hourglass" /></div>
-                        <div className="col-md-2"><span id="state_Health" className="glyphicon glyphicon-flag" /></div>
+                        <div className="col-md-5"><span className="glyphicon glyphicon-time" /> <span id="state_TimeThreshold"/></div>
+                        <div className="col-md-5"><span className="glyphicon glyphicon-hourglass" /> <span id="state_Age"/></div>
+                        <div className="col-md-2"><span className="glyphicon glyphicon-flag" /> <span id="state_Health"/></div>
                     </div>
                 </div>
                 <br />
@@ -247,7 +248,7 @@ export class PanelComment extends Component {
                         </h3>
                         <br />
                         
-                        <table className="PanelMainCell" width="1px">
+                        <table className="table table-responsive table-condensed table-bordered" width="1px">
                             <thead>
                                 <tr>
                                     <th className="PanelMainCell" width="20px"> </th>

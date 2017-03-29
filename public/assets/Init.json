@@ -1,64 +1,64 @@
 {
 	"ProductionThresholds":{
 		"CHASSIS_LINE":[
-			{"duration":  0,"warn":false,"message":"Good"   ,"color":"green"},
-			{"duration": 40,"warn":false,"message":"Warning","color":"darkorange"},
-			{"duration": 50,"warn":true ,"message":"Delayed","color":"magenta"},
-			{"duration":100,"warn":true ,"message":"Trouble","color":"red"}
+			{"duration":  0,"warn":false,"message":"common.message.good" ,"color":"green", "className":""},
+			{"duration": 40,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
+			{"duration": 50,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
+			{"duration":100,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		],
 		"PAINT_LINE":[
-			{"duration":  0,"warn":false,"message":"Good"   ,"color":"green"},
-			{"duration": 40,"warn":false,"message":"Warning","color":"darkorange"},
-			{"duration": 70,"warn":true ,"message":"Delayed","color":"magenta"},
-			{"duration":130,"warn":true ,"message":"Trouble","color":"red"}
+			{"duration":  0,"warn":false,"message":"common.message.good" ,"color":"green", "className":""},
+			{"duration": 40,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
+			{"duration": 70,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
+			{"duration":130,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		],
 		"TRACTOR_LINE":[
-			{"duration":  0,"warn":false,"message":"Good"   ,"color":"green"},
-			{"duration": 40,"warn":false,"message":"Warning","color":"darkorange"},
-			{"duration": 60,"warn":true ,"message":"Delayed","color":"magenta"},
-			{"duration":120,"warn":true ,"message":"Trouble","color":"red"}
+			{"duration":  0,"warn":false,"message":"common.message.good" ,"color":"green", "className":""},
+			{"duration": 40,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
+			{"duration": 60,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
+			{"duration":120,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		],
 		"REWORK_BEFORE_MQ":[
-			{"duration":  0,"warn":false,"message":"Good"   ,"color":"green"},
-			{"duration": 40,"warn":false,"message":"Warning","color":"darkorange"},
-			{"duration": 50,"warn":true ,"message":"Delayed","color":"magenta"},
-			{"duration":100,"warn":true ,"message":"Trouble","color":"red"}
+			{"duration":  0,"warn":false,"message":"common.message.good","color":"green", "className":""},
+			{"duration": 40,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
+			{"duration": 50,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
+			{"duration":100,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		],
 		"MQ_LINE":[
-			{"duration":  0,"warn":false,"message":"Good"   ,"color":"green"},
-			{"duration": 40,"warn":false,"message":"Warning","color":"darkorange"},
-			{"duration": 60,"warn":true ,"message":"Delayed","color":"magenta"},
-			{"duration":120,"warn":true ,"message":"Trouble","color":"red"}
+			{"duration":  0,"warn":false,"message":"common.message.good"   ,"color":"green", "className":""},
+			{"duration": 40,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
+			{"duration": 60,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
+			{"duration":120,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		],
 		"REWORK_AFTER_MQ":[
-			{"duration":  0,"warn":false,"message":"Good"   ,"color":"green"},
-			{"duration": 40,"warn":false,"message":"Warning","color":"darkorange"},
-			{"duration": 50,"warn":true ,"message":"Delayed","color":"magenta"},
-			{"duration":100,"warn":true ,"message":"Trouble","color":"red"}
+			{"duration":  0,"warn":false,"message":"common.message.good"   ,"color":"green", "className":""},
+			{"duration": 40,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
+			{"duration": 50,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
+			{"duration":100,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		],
 		"PRODUCTION_END":[
-			{"duration":   0,"warn":false,"message":"Good"   ,"color":"green"},
-			{"duration": 300,"warn":false,"message":"Warning","color":"darkorange"},
-			{"duration":1200,"warn":true ,"message":"Delayed","color":"magenta"},
-			{"duration":1440,"warn":true ,"message":"Trouble","color":"red"}
+			{"duration":   0,"warn":false,"message":"common.message.good"   ,"color":"green", "className":""},
+			{"duration": 300,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
+			{"duration":1200,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
+			{"duration":1440,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		],
 		"INSPECTION":[
-			{"duration":  0,"warn":false,"message":"Good"   ,"color":"green"},
-			{"duration": 40,"warn":false,"message":"Warning","color":"darkorange"},
-			{"duration": 60,"warn":true ,"message":"Delayed","color":"magenta"},
-			{"duration":120,"warn":true ,"message":"Trouble","color":"red"}
+			{"duration":  0,"warn":false,"message":"common.message.good"   ,"color":"green", "className":""},
+			{"duration": 40,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
+			{"duration": 60,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
+			{"duration":120,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		],
 		"REWORK_DUR_INSP":[
-			{"duration":  0,"warn":false,"message":"Good"   ,"color":"green"},
-			{"duration": 40,"warn":false,"message":"Warning","color":"darkorange"},
-			{"duration": 50,"warn":true ,"message":"Delayed","color":"magenta"},
-			{"duration":100,"warn":true ,"message":"Trouble","color":"red"}
+			{"duration":  0,"warn":false,"message":"common.message.good"   ,"color":"green", "className":""},
+			{"duration": 40,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
+			{"duration": 50,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
+			{"duration":100,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		],
 		"SHIPPING":[
-			{"duration":    0,"warn":false,"message":"Good"   ,"color":"green"},
-			{"duration": 5760,"warn":false,"message":"Warning","color":"darkorange"},
-			{"duration":10080,"warn":true ,"message":"Delayed","color":"magenta"},
-			{"duration":17280,"warn":true ,"message":"Trouble","color":"red"}
+			{"duration":    0,"warn":false,"message":"common.message.good"   ,"color":"green", "className":""},
+			{"duration": 5760,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
+			{"duration":10080,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
+			{"duration":17280,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		]
 	}
 }
