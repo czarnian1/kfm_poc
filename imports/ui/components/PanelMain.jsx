@@ -3,16 +3,18 @@ import { render } from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Link } from 'react-router';
 
-import { prod_monitor } from '../../api/prod_monitor.js';
-import { prod_monitor_comment } from '../../api/prod_monitor_comment.js';
+import { PROD_MONITOR } from '../../api/prod_monitor.js';
+import { PROD_MONITOR_COMMENT } from '../../api/prod_monitor_comment.js';
 
 import CF from '../classes/CommonFunctions.jsx';
 const cf=new CF();
 
 const T = i18n.createComponent(); // translater component for json lookup universe:i18n
 
+
 export class PanelMain extends Component {
     updateDisplay(){
+        
         if(this.props.products == undefined)    return;
         if(this.props.products <= 0)    return;
         
@@ -22,7 +24,7 @@ export class PanelMain extends Component {
            if(!r.error) $("#"+p.ID_NO.trim()+" .classTractorStatus").html(r.isOnGoing ? '<i class="kubota-fs-32 '+cf.stageIcon(r.stage)+'"></i>'+i18n.__(cf.stageTitle(r.stage)):'<i class="kubota-fs-32 '+cf.stageIcon(r.stage)+'"></i>'+i18n.__(cf.stageTitle(r.stage)));
            
            // Comment
-           var c=prod_monitor_comment.find({"ID_NO":p.ID_NO.trim()}).count();
+           var c=PROD_MONITOR_COMMENT.find({"ID_NO":p.ID_NO.trim()}).count();
            //$("#"+p.ID_NO.trim()+" .classComment").html(0 < c ? '<span class="glyphicon glyphicon-exclamation-sign" />':'<span class="glyphicon glyphicon-ok" />');
            $("#"+p.ID_NO.trim()+" .classComment").html(0 < c ? '<span class="glyphicon glyphicon-exclamation-sign" />':'');
            
@@ -33,10 +35,10 @@ export class PanelMain extends Component {
            //
            //if(!r.error) $("#"+p.ID_NO.trim()).css('background-color',r[r.stage].thresholdColor);
            if(r[r.stage].className) {
-		$("#"+p.ID_NO.trim())[0].className = r[r.stage].className;
-		} else {
-		console.log("no need to toggle class");
-	   }
+               $("#"+p.ID_NO.trim())[0].className = r[r.stage].className;
+           } else {
+               console.log("no need to toggle class");
+           }
         });
     }
         
@@ -63,7 +65,7 @@ export class PanelMain extends Component {
         }
 
         return (
-                <div className="container-fluid">
+                <div className="container-fluid table-responsive">
                     <table className="table table-bordered table-responsive">
                         <thead>
                             <tr>
@@ -106,11 +108,11 @@ export class PanelMain extends Component {
                             {this.props.products.map(function(p) {
                                 return (
                                     <tr id={p.ID_NO.trim()}>
-                                        <td>{formatString(p.TTTT)}PROD_INFO</td>
+                                        <td>{formatString(p.MONTHLY_SEQ)}</td>
                                         <td><Link to={"/Comment/"+p.ID_NO.trim()}>{formatString(p.ID_NO.trim())}</Link></td>
-                                        <td>{formatString(p.TTTT)}PROD_INFO</td>
-                                        <td>{formatString(p.TTTT)}PROD_INFO</td>
-                                        <td>{formatDateTime(p.TTTT)}PROD_INFO</td>
+                                        <td>{formatString(p.MODEL_CODE)}</td>
+                                        <td>{formatString(p.REMARKS)}</td>
+                                        <td>{formatDateTime(p.PLAN_PROD_FINISH_DATE)}</td>
                                         <td><center className="classComment"></center></td>
                                         <td className="classTractorStatus"></td>
                                         <td>{formatString(p.PARTS_PREPARATION_STATUS)}</td>
@@ -169,9 +171,10 @@ import { Session } from 'meteor/session'
 export default PanelMain = createContainer(() => {
     console.log("PanelMain:createContainer");
     Session.setDefault("productionStatus", {"$gte" : new Date(1)} );
-    
+
     return {
-        products: prod_monitor.find({$or: [ {"CREATE_DATE":Session.get("productionStatus")} , {"UPDATE_DATE":Session.get("productionStatus")} ]}).fetch(),
+        products: PROD_MONITOR.find().fetch(),
+//        products: PROD_MONITOR.find({$or: [ {"CREATE_DATE":Session.get("productionStatus")} , {"UPDATE_DATE":Session.get("productionStatus")} ]}).fetch(),
     };
 }, PanelMain);
 

@@ -1,9 +1,7 @@
 /*
 
-local (client) side collection prod_monitor_comment, which we subscribe to
+local (client) side collection PROD_MONITOR_COMMENT, which we subscribe to
 
 */
 
-import { Mongo } from 'meteor/mongo';
- 
-export const prod_monitor_comment = new Mongo.Collection('prod_monitor_comment',{"idGeneration":"MONGO"});
+export const PROD_MONITOR_COMMENT = new Oracle.Collection('PROD_MONITOR_COMMENT');

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { prod_monitor } from '../../api/prod_monitor.js';
-import { prod_monitor_comment } from '../../api/prod_monitor_comment.js';
+import { PROD_MONITOR } from '../../api/prod_monitor.js';
+import { PROD_MONITOR_COMMENT } from '../../api/prod_monitor_comment.js';
 import { Link } from 'react-router';
 
 import CF from '../classes/CommonFunctions.jsx';
@@ -13,8 +13,10 @@ export class PanelComment extends Component {
     
     updateDisplay(){
         if(this.props.product == undefined)    return;
-        var p=this.props.product;
-        var r=cf.productStatus(this.props.product);
+        if(this.props.product.length < 1)    return;
+        if(this.props.product[0] == undefined)    return;
+        var p=this.props.product[0];
+        var r=cf.productStatus(p);
         
         var i,t,s;
         
@@ -67,7 +69,7 @@ export class PanelComment extends Component {
     }
 
     render(){
-        var r=this.props.product;
+        var r=this.props.product[0];
 
         var formatDateTime=function(d){
             var r="";
@@ -93,13 +95,15 @@ export class PanelComment extends Component {
         var onClickUpdate=(e)=>{
             $("#commentsTable > tr").each(function(){
                 if($("#"+this.id+" .rowCheck")[0].checked){
-                    prod_monitor_comment.update(
-                        {"_id":new Meteor.Collection.ObjectID(this.id)},
+                    PROD_MONITOR_COMMENT.update(
+                        {"_id":this.id},
                         {$set:{
                             "UPDATE_DATE":new Date(),
                             "UPDATE_BY":Meteor.user().username,
                             "USER_COMMENT":$("#"+this.id+" .rowText")[0].value,
-                        }}
+                        }},
+                        {multi:false, upsert:false},
+                        function(){console.log("onClickDelete():Update.")}
                     );
                     
                 }
@@ -110,27 +114,29 @@ export class PanelComment extends Component {
         var onClickDelete=function(e){
             $("#commentsTable > tr").each(function(){
                 if($("#"+this.id+" .rowCheck")[0].checked){
-                    prod_monitor_comment.remove(
-                        {"_id":new Meteor.Collection.ObjectID(this.id)}
+                    PROD_MONITOR_COMMENT.remove(
+                        {"_id":this.id}, function(){console.log("onClickDelete():Remove.")}
                     );
                     
                 }
             });
             $(".rowCheck").prop('checked', false);
+            
         }
         
         var onClickInsert=function(e){
             console.log("PanelComment:onClickInsert");
 
             var argv=[];
-            var maxS=prod_monitor_comment.findOne({ID_NO:r.ID_NO.trim()}, {sort:  {SEQ_NO: -1}});
+            var maxS=PROD_MONITOR_COMMENT.find({ID_NO:r.ID_NO.trim()}, {sort:  {SEQ_NO: -1}}).fetch();
             
+//            argv["_id"]='seqMeteor_id.nextval';
             argv["ID_NO"]=r.ID_NO.trim();
-            argv["SEQ_NO"]= maxS==undefined? 1 : maxS.SEQ_NO+1;
+            argv["SEQ_NO"]= (maxS==undefined || maxS.length < 1) ? 1 : maxS[0].SEQ_NO+1;
             argv["CREATE_DATE"]=new Date();
             argv["CREATE_BY"]=Meteor.user().username;
             argv["USER_COMMENT"]=document.getElementById('addingComment').value;
-            prod_monitor_comment.insert(argv);
+            PROD_MONITOR_COMMENT.insert(argv);
             document.getElementById('addingComment').value="";
         }
         
@@ -139,7 +145,7 @@ export class PanelComment extends Component {
                 <br />
                 <table className="table table-bordered table-responsive"> 
                     <thead>
-                        <tr style={{"background-color":"silver"}}>
+                        <tr style={{"backgroundColor":"silver"}}>
                             <td><T>common.main.idno</T></td>
                             <td><T>common.main.started</T></td>
                             <td><T>common.main.tractorstatus</T></td>
@@ -147,7 +153,7 @@ export class PanelComment extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style={{"background-color":"whitesmoke"}}>
+                        <tr style={{"backgroundColor":"whitesmoke"}}>
 			     <td><Link to={"/Main"}>{r==undefined?"":r.ID_NO.trim()}</Link></td>
                             <td>{r==undefined?"":formatDateTime(r.CREATE_DATE)}</td>
                             <td id="state_TractorStatus"></td>
@@ -168,7 +174,7 @@ export class PanelComment extends Component {
                             
                 <table className="table table-bordered"> 
                     <thead className="table-bordered">
-                        <tr style={{"background-color":"silver"}}>
+                        <tr style={{"backgroundColor":"silver"}}>
                             <td className="col-md-3 table-bordered">Stage</td>
                             <td className="col-md-3 table-bordered">Entry</td>
                             <td className="col-md-3 table-bordered">Exit</td>
@@ -182,7 +188,7 @@ export class PanelComment extends Component {
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.CHASSIS_LINE_END_DATE)}</td>
                             <td className="col-md-3 table-bordered health"></td>
                         </tr>
-                        <tr id="stage2" style={{"background-color":"whitesmoke"}}>
+                        <tr id="stage2" style={{"backgroundColor":"whitesmoke"}}>
                             <td className="col-md-3 table-bordered">{i18n.__(cf.stageTitle(2))}</td>
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.PAINT_LINE_START_DATE)}</td>
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.PAINT_LINE_END_DATE)}</td>
@@ -194,7 +200,7 @@ export class PanelComment extends Component {
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.TRACTOR_LINE_END_DATE)}</td>
                             <td className="col-md-3 table-bordered health"></td>
                         </tr>
-                        <tr id="stage4" style={{"background-color":"whitesmoke"}}>
+                        <tr id="stage4" style={{"backgroundColor":"whitesmoke"}}>
                             <td className="col-md-3 table-bordered">{i18n.__(cf.stageTitle(4))}</td>
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.REWORK_BEFORE_MQ_START_DATE)}</td>
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.REWORK_BEFORE_MQ_END_DATE)}</td>
@@ -206,7 +212,7 @@ export class PanelComment extends Component {
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.MQ_LINE_END_DATE)}</td>
                             <td className="col-md-3 table-bordered health"></td>
                         </tr>
-                        <tr id="stage6" style={{"background-color":"whitesmoke"}}>
+                        <tr id="stage6" style={{"backgroundColor":"whitesmoke"}}>
                             <td className="col-md-3 table-bordered">{i18n.__(cf.stageTitle(6))}</td>
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.REWORK_AFTER_MQ_START_DATE)}</td>
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.REWORK_AFTER_MQ_END_DATE)}</td>
@@ -214,11 +220,11 @@ export class PanelComment extends Component {
                         </tr>
                         <tr id="stage7">
                             <td className="col-md-3 table-bordered">{i18n.__(cf.stageTitle(7))}</td>
-                            <td className="col-md-3 table-bordered" style={{"background-color":"grey"}}></td>
+                            <td className="col-md-3 table-bordered" style={{"backgroundColor":"grey"}}></td>
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.PRODUCTION_END_DATE)}</td>
                             <td className="col-md-3 table-bordered health"></td>
                         </tr>
-                        <tr id="stage8" style={{"background-color":"whitesmoke"}}>
+                        <tr id="stage8" style={{"backgroundColor":"whitesmoke"}}>
                             <td className="col-md-3 table-bordered">{i18n.__(cf.stageTitle(8))}</td>
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.INSPECTION_START_DATE)}</td>
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.INSPECTION_END_DATE)}</td>
@@ -230,18 +236,18 @@ export class PanelComment extends Component {
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.REWORK_DUR_INSP_END_DATE)}</td>
                             <td className="col-md-3 table-bordered health"></td>
                         </tr>
-                        <tr id="stage10" style={{"background-color":"whitesmoke"}}>
+                        <tr id="stage10" style={{"backgroundColor":"whitesmoke"}}>
                             <td className="col-md-3 table-bordered">{i18n.__(cf.stageTitle(10))}</td>
                             <td className="col-md-3 table-bordered">{r==undefined?"":formatDateTime(r.SHIPPING_DATE)}</td>
-                            <td className="col-md-3 table-bordered" style={{"background-color":"grey"}}></td>
+                            <td className="col-md-3 table-bordered" style={{"backgroundColor":"grey"}}></td>
                             <td className="col-md-3 table-bordered health"></td>
                         </tr>
                     </tbody>
                 </table>
 
                 <br /><br />
-                            
-                <div className="panel panel-default">
+
+                <div className="panel panel-default table-responsive">
                     <div className="panel-heading" id="render-production-task-notes">
                         <h3 className="panel-title">
                             <T>Comments</T>
@@ -251,28 +257,28 @@ export class PanelComment extends Component {
                         <table className="table table-responsive table-condensed table-bordered" width="1px">
                             <thead>
                                 <tr>
-                                    <th className="PanelMainCell" width="20px"> </th>
-                                    <th className="PanelMainCell" width="30px">Line</th>
-                                    <th className="PanelMainCell" width="90px">Create Date</th>
-                                    <th className="PanelMainCell" width="90px">Create by</th>
-                                    <th className="PanelMainCell" width="90px">Update Date</th>
-                                    <th className="PanelMainCell" width="90px">Update by</th>
-                                    <th className="PanelMainCell" width="600px">Comment</th>
+                                    <th className="TableCell" width="20px"> </th>
+                                    <th className="TableCell" width="30px">Line</th>
+                                    <th className="TableCell" width="90px">Create Date</th>
+                                    <th className="TableCell" width="90px">Create by</th>
+                                    <th className="TableCell" width="90px">Update Date</th>
+                                    <th className="TableCell" width="90px">Update by</th>
+                                    <th className="TableCell" >Comment</th>
                                 </tr>
                             </thead>
-                            <tbody id="commentsTable" style={{"background-color":"whitesmoke"}}>
+                            <tbody id="commentsTable" style={{"backgroundColor":"whitesmoke"}}>
                                 {this.props.comments.map(function(n){
                                     return(
                                         <tr id={n._id.valueOf()}>
-                                            <td className="PanelMainCell text-center">
+                                            <td className="TableCell text-center">
                                                 <input className="rowCheck" type="checkbox" />
                                             </td>
-                                            <td className="PanelMainCell text-center">{n.SEQ_NO}</td>
-                                            <td className="PanelMainCell">{formatDateTime(n.CREATE_DATE)}</td>
-                                            <td className="PanelMainCell">{formatString(n.CREATE_BY)}</td>
-                                            <td className="PanelMainCell">{formatDateTime(n.UPDATE_DATE)}</td>
-                                            <td className="PanelMainCell">{formatString(n.UPDATE_BY)}</td>
-                                            <td className="PanelMainCell">
+                                            <td className="TableCell text-center">{n.SEQ_NO}</td>
+                                            <td className="TableCell">{formatDateTime(n.CREATE_DATE)}</td>
+                                            <td className="TableCell">{formatString(n.CREATE_BY)}</td>
+                                            <td className="TableCell">{formatDateTime(n.UPDATE_DATE)}</td>
+                                            <td className="TableCell">{formatString(n.UPDATE_BY)}</td>
+                                            <td className="TableCell">
                                                 {formatString(n.USER_COMMENT)}<br />
                                                 <input type="text" className="rowText" style={{width:"100%"}} />
                                             </td>
@@ -302,13 +308,13 @@ export class PanelComment extends Component {
                             
                     </div>
                 </div>
-                                    
+                                                        
             </div>
         );
     }
 
     componentDidMount() {
-        console.log("PanelMain:componentDidMount");
+        console.log("PanelComment:componentDidMount");
         // Set timer to update the displayed values.
         this.setState({
             'timerId': Meteor.setInterval(
@@ -321,7 +327,7 @@ export class PanelComment extends Component {
     }
     
     componentDidUpdate() {
-        console.log("PanelMain:componentDidUpdate");
+        console.log("PanelComment:componentDidUpdate");
         this.props.comments.map(
             (n)=>{
                 $('#'+n._id.valueOf()+' .rowText').val(n.USER_COMMENT);
@@ -332,7 +338,7 @@ export class PanelComment extends Component {
     }
 
     componentWillUnmount() {
-        console.log("PanelMain:componentWillUnmount");
+        console.log("PanelComment:componentWillUnmount");
         if(this.state!=undefined && this.state.timerId!=undefined && this.state.timerId!=null)   Meteor.clearInterval(this.state.timerId);
     }
 }
@@ -343,8 +349,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 export default PanelComment = createContainer(({params}) => {
     return {
-        product: prod_monitor.findOne({"ID_NO": params.id }),
-        comments: prod_monitor_comment.find({"ID_NO": params.id }).fetch(),
+        product: PROD_MONITOR.find({"ID_NO": params.id }).fetch(),
+        comments: PROD_MONITOR_COMMENT.find({"ID_NO": params.id }, {sort:['SEQ_NO']}).fetch(),
   };
 }, PanelComment);
 

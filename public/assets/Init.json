@@ -9,7 +9,6 @@
 		"PAINT_LINE":[
 			{"duration":  0,"warn":false,"message":"common.message.good" ,"color":"green", "className":""},
 			{"duration": 40,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
-			{"duration": 70,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
 			{"duration":130,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		],
 		"TRACTOR_LINE":[
@@ -38,7 +37,6 @@
 		],
 		"PRODUCTION_END":[
 			{"duration":   0,"warn":false,"message":"common.message.good"   ,"color":"green", "className":""},
-			{"duration": 300,"warn":false,"message":"common.message.warning","color":"darkorange", "className":"warning"},
 			{"duration":1200,"warn":true ,"message":"common.message.delayed","color":"magenta", "className":"info"},
 			{"duration":1440,"warn":true ,"message":"common.message.trouble","color":"red", "className":"danger"}
 		],

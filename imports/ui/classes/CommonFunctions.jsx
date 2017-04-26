@@ -8,7 +8,7 @@ export default class CF {
             {
                 async: false,
                 type: 'GET',
-                url: "/assets/Init.json",     // get xml file name
+                url: "/assets/Init.json",
                 dataType:'json',
                 success:
                     function(x){
