@@ -15,18 +15,38 @@ export class RootContainer extends Component {
         return { isAuthenticated: Meteor.userId() !== null };
     }
 
+    rootContainerAutoRun(){
+        console.log("RootContainer:rootContainerAutoRun");
+
+        // Set language
+        if(Meteor.user()!=undefined){
+            switch(Meteor.user().profile.defaultLocale){
+            case 'ja':
+                i18n.setLocale("ja");
+                accountsUIBootstrap3.setLanguage('ja');
+                break;
+            default:
+                i18n.setLocale("en");
+                accountsUIBootstrap3.setLanguage('en');
+            }
+        }
+    }
+    
     componentWillMount(){
         console.log("RootContainer:componentWillMount");
         if (!this.state.isAuthenticated) {
-            browserHistory.push('/login');
-//            this.context.router.push('/login')
+            browserHistory.push('/Login');
+//            this.context.router.push('/Login')
+        }
+        else{
+            Tracker.autorun(()=>{this.rootContainerAutoRun();});
         }
     }
 
     componentDidUpdate(prevProps, prevState){
         console.log("RootContainer:componentDidUpdate");
         if (!this.state.isAuthenticated) {
-            browserHistory.push('/login');
+            browserHistory.push('/Login');
         }
     }
 
@@ -34,7 +54,7 @@ export class RootContainer extends Component {
         console.log("RootContainer:logout");
         e.preventDefault();
         Meteor.logout();
-        browserHistory.push('/login');
+        browserHistory.push('/Login');
     }
 
     render(){
@@ -56,12 +76,14 @@ RootContainer.contextTypes = {
 
 import prod_monitor from '../../api/prod_monitor.js';
 import prod_monitor_comment from '../../api/prod_monitor_comment.js';
+import prod_monitor_parts from '../../api/prod_monitor_parts.js';
 import { createContainer } from 'meteor/react-meteor-data';
 
 export default RootContainer = createContainer(() => {
     Meteor.subscribe('prod_monitor');
     Meteor.subscribe('prod_monitor_comment');
-    
+    Meteor.subscribe('prod_monitor_parts');
+
     return {
     };
     

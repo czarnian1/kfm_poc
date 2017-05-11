@@ -78,7 +78,7 @@ i {
   height: auto;
 }
 
-.PanelMainCell{
+.TableCell{
 	table-layout:fixed;
 	padding:0;
 	border-collapse:collapse;

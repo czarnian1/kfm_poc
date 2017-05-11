@@ -1,81 +1,99 @@
 {
-"_locale": "ja-JP",
-"_namespace": "common",
-"navbar": {
-  "userName": "ユーザー名",
-  "Language": "言語",
-  "enUS": "英語 - 米",
-  "jaJP": "日本語",
-  "deDE": "ドイツ人",
-  "frFR": "フランス語",
-  "Index": "インデックス",
-  "Documents": "ドキュメント",
-  "Signup": "サインアップ",
-  "Login": "ログイン",
-  "Logout": "ログアウト",
-  "production_status": "Production Status",
-  "admin": "Admin"
-},
-"main": {
-		"title": "クボタ生産監視",
-    "chassis_panel": "シャーシ",
-    "mqline_panel": "品質",
-    "paint_panel": "ペイント",
-    "tractor_panel": "トラクター",
-    "rework_panel": "リワーク",
-    "shipped_panel": "出荷された"
-},
-"panel_table": {
-    "panel_title": "",
-    "panel_description": "生産のシャーシ領域内のトラクターID",
-    "panel_total": "シャシーライン合計",
-    "panel_IDNO": "IDNO",
-    "panel_location": "ロケーション",
-    "panel_date": "エントリー時間",
-    "panel_age": "エリア内の時間"
-  },
-"chassis_panel": {
-    "panel_title": "シャーシ",
-    "panel_description": "説明",
-    "panel_totals": "シャシー生産領域内のトラクターIDの合計"
-  },
-"paint_panel": {
-    "panel_title": "",
-    "panel_desc": "",
-    "panel_totals": ""
-  },
-"tractor_panel": {
-    "panel_title": "",
-    "panel_desc": "",
-    "panel_totals": ""
-  },
-"mqline_panel": {
-    "panel_title": "",
-    "panel_desc": "",
-    "panel_totals": ""
-  },
-"rework_panel": {
-    "panel_title": "",
-    "panel_desc": "",
-    "panel_totals": ""
-  },
-"shipped_panel": {
-    "panel_title": "",
-    "panel_desc": "",
-    "panel_totals": ""
-  },
-"signupform": {
-  "Signup": "サインアップ",
-  "Firstname": "ファーストネーム",
-  "Lastname": "苗字",
-  "Email": "電子メールアドレス",
-  "Password": "パスワード"
-},
-"loginform": {
-  "Login": "ログイン",
-  "Email": "電子メールアドレス",
-  "Password": "パスワード",
-  "ForgotPassword": "パスワードをお忘れですか"
-}
+	"_locale": "ja",
+	"_namespace": "ui",
+	
+	"common": {
+		"Start": "開始",
+		"End": "終了",
+		"MonthlySequenceno": "月次順序番号",
+		"IdNo": "ＩＤＮＯ",
+		"ModelCode": "型式番号",
+		"ModelDescription": "型式説明",
+		"PlannedFinish": "完了予定",
+		"Comment": "コメント",
+		"TractorStatus": "工程",
+		"MissingParts": "不足部品",
+		"PreProduction": "生産開始前",
+		"ChassisLine": "シャシーライン",
+		"PaintLine": "ペイントライン",
+		"TractorLine": "トラクターライン",
+		"ReworkBeforeMQ": "MQ前リワーク",
+		"MQLine": "MQライン",
+		"ReworkAfterMQ": "MQ後リワーク",
+		"ProductionCompletion": "製造完了",
+		"Inspection": "検査",
+		"ReworkDuringInspection": "検査中リワーク",
+        "SapComplete": "SAP完了",
+        "ShippingStatus": "出荷準備状況",
+        "Shipped": "出荷済",
+        "Shipping": "出荷",
+		"Line": "行",
+		"CreateDate": "作成日時",
+		"CreateBy": "作成者",
+		"UpdateDate": "更新日時",
+		"UpdateBy": " 更新者",
+		"Insert": "挿入",
+		"Update": "更新",
+		"Delete": "削除",
+		"BackToMainScreen": "Main画面へ戻る"
+	},
+	"shippingStatus": {
+		"StateErr": "未定義状態",
+		"State000": " ",
+		"State001": "出荷準備エリアへ留置",
+		"State002": "外部へ留置",
+		"State003": "フューチャーエリアへ留置",
+		"State004": "出荷済み",
+		"State005": "紛失"
+	},
+	"login": {
+		"Login": "ログイン",
+		"Username": "ユーザー名",
+		"Password": "パスワード",
+		"ConfirmPassword": "パスワード再入力",
+		"EmailNotification": "警告メール",
+		"EmailAddress": "電子メールアドレス",
+		"FilterStartId": "フィルタ: 開始ID",
+		"FilterEndId": "フィルタ: 修了ID",
+		"CreateAccount": "アカウントを作成",
+		"ManageAccount": "アカウント管理",
+		"Submit": "送信"
+	},
+	"navbar": {
+		"ToggleNavigation": "ナビゲーション切替",
+        "ProductionStatus": "生産状況",
+        "OneoHour": "1時間以内",
+        "Overdue": "全て",
+        "DataExport": "Excel用データ出力",
+        "Csv": "CSV型式",
+        "Json": "JSON型式",
+		"Admin": "管理",
+        "ChangeLanguage": "言語",
+		"Logout": "ログアウト"
+	},
+	"comment": {
+		"Guide001": "行を選んで、",
+		"Guide002": "&nbspまたは&nbsp",
+		"Guide003": "&nbspを押してください。",
+		"Guide004": "挿入するコメントをここへ記入してください。"
+	},
+	"missingParts": {
+		"ItemNumber": "品番",
+		"ItemDescription": "品名",
+		"RequiredQuantity": "必要数",
+		"MissingQuantity": "不足数",
+		"CalculatedDate": "計算日"
+	},
+	"locationHealth": {
+		"information": "通知",
+    	"good": "良好",
+    	"warning": "注意",
+	    "delayed": "遅延",
+	    "trouble": "トラブル",
+		"TimeUntilAreaThreshhold": "制限時間まで: ",
+		"TimeOverAreaThreshhold": "超過時間: ",
+		"AgeSinceAssemblyStarted": "作業開始から: ",
+		"Health": "状態 "
+	}
 }
 

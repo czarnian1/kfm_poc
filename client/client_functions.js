@@ -14,7 +14,7 @@ Tracker.autorun(function(c) {
 	{
 		//redirect to login
 		console.log(" redirecting to login");
-		browserHistory.push('/login');
+		browserHistory.push('/Login');
 	}
 	console.log(userId ? "login" : "logout");
 });
