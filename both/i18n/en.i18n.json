@@ -1,0 +1,98 @@
+{
+	"_locale": "en",
+	"_namespace": "ui",
+	
+	"common": {
+		"Start": "Start",
+		"End": "End",
+		"MonthlySequenceno": "Monthly Sequence No",
+		"IdNo": "IDNO",
+		"ModelCode": "Model Code",
+		"ModelDescription": "Model Description",
+		"PlannedFinish": "Planned Finished Date",
+		"Comment": "Comment",
+		"TractorStatus": "Tractor Status",
+		"MissingParts": "Missing Parts",
+		"PreProduction": "Pre production",
+		"ChassisLine": "Chasis Line",
+		"PaintLine": "Paint Line",
+		"TractorLine": "Tractor Line",
+		"ReworkBeforeMQ": "Rework before MQ",
+		"MQLine": "MQ Line",
+		"ReworkAfterMQ": "Rework after MQ",
+		"ProductionCompletion": "Production Completion",
+		"Inspection": "Inspection",
+		"ReworkDuringInspection": "Rework during inspection",
+        "SapComplete": "SAP Complete",
+        "ShippingStatus": "Shipping Status",
+        "Shipped": "Shipped",
+        "Shipping": "Shipping",
+		"Line": "Line",
+		"CreateDate": "Create date",
+		"CreateBy": "Create by",
+		"UpdateDate": "Update date",
+		"UpdateBy": "Update by",
+		"Insert": "Insert",
+		"Update": "Update",
+		"Delete": "Delete",
+		"BackToMainScreen": "Back to Main screen"
+	},
+	"shippingStatus": {
+		"StateErr": "Unknown Status",
+		"State000": " ",
+		"State001": "Placed at shipping area",
+		"State002": "Placed outside",
+		"State003": "Placed at future area",
+		"State004": "Shipped",
+		"State005": "Lost"
+	},
+	"login": {
+		"Login": "Login",
+		"Username": "Username",
+		"Password": "Password",
+		"ConfirmPassword": "Confirm password",
+		"EmailNotification": "Email notification",
+		"EmailAddress": "Email address",
+		"FilterStartId": "Filter: Start ID number",
+		"FilterEndId": "Filter: End ID number",
+		"CreateAccount": "Create account",
+		"ManageAccount": "Manage account",
+		"Submit": "Submit"
+	},
+	"navbar": {
+		"ToggleNavigation": "Toggle navigation",
+        "ProductionStatus": "Production status",
+        "OneoHour": "One hour",
+        "Overdue": "Overdue",
+        "DataExport": "Export for Excel",
+        "Csv": "CSV format",
+        "Json": "JSON format",
+		"Admin": "Admin",
+        "ChangeLanguage": "Change language",
+		"Logout": "Logout"
+	},
+	"comment": {
+		"Guide001": "Select the lines, then click ",
+		"Guide002": "&nbspor&nbsp",
+		"Guide003": "",
+		"Guide004": "Add a production memo note here."
+	},
+	"missingParts": {
+		"ItemNumber": "Item Number",
+		"ItemDescription": "Item Description",
+		"RequiredQuantity": "Requirement Quantity",
+		"MissingQuantity": "Missing Quantity",
+		"CalculatedDate": "Calculated Date"
+	},
+	"locationHealth": {
+		"information": "Information",
+    	"good": "On time",
+    	"warning": "Minor delays",
+	    "delayed": "Delayed",
+	    "trouble": "Trouble",
+		"TimeUntilAreaThreshhold": "Time until area threshhold: ",
+		"TimeOverAreaThreshhold": "Time over area threshhold: ",
+		"AgeSinceAssemblyStarted": "Age since assembly started: ",
+		"Health": "Health "
+	}
+}
