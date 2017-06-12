@@ -1,60 +1,67 @@
 {
 	"ProductionThresholds":{
 		"CHASSIS_LINE":[
-			{"duration":  0,"warn":false,"message":"ui.locationHealth.good" ,"color":"green", "className":""},
-			{"duration": 61,"warn":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 70,"warn":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":100,"warn":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"green", "className":""},
+			{"duration": 61,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
+			{"duration": 70,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
+			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
 		],
 		"PAINT_LINE":[
-			{"duration":  0,"warn":false,"message":"ui.locationHealth.good" ,"color":"green", "className":""},
-			{"duration": 40,"warn":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration":130,"warn":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"green", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
+			{"duration":130,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
 		],
 		"TRACTOR_LINE":[
-			{"duration":  0,"warn":false,"message":"ui.locationHealth.good" ,"color":"green", "className":""},
-			{"duration": 40,"warn":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 60,"warn":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":120,"warn":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"green", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
+			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
+			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
 		],
 		"REWORK_BEFORE_MQ":[
-			{"duration":  0,"warn":false,"message":"ui.locationHealth.good","color":"green", "className":""},
-			{"duration": 40,"warn":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 50,"warn":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":100,"warn":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good","color":"green", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
+			{"duration": 50,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
+			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
 		],
 		"MQ_LINE":[
-			{"duration":  0,"warn":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration": 40,"warn":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 60,"warn":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":120,"warn":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
+			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
+			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
 		],
 		"REWORK_AFTER_MQ":[
-			{"duration":  0,"warn":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration": 40,"warn":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 50,"warn":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":100,"warn":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
+			{"duration": 50,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
+			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
 		],
 		"PRODUCTION_END":[
-			{"duration":   0,"warn":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration":1200,"warn":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":1440,"warn":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
+			{"duration":1200,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
+			{"duration":1440,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
 		],
 		"INSPECTION":[
-			{"duration":  0,"warn":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration": 40,"warn":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 60,"warn":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":120,"warn":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
+			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
+			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
 		],
 		"REWORK_DUR_INSP":[
-			{"duration":  0,"warn":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration":100,"warn":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
+			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
 		],
 		"SHIPPING":[
-			{"duration":    0,"warn":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration": 5760,"warn":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration":10080,"warn":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":17280,"warn":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":    0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
+			{"duration": 5760,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
+			{"duration":10080,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
+			{"duration":17280,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
 		]
-	}
+	},
+	"Roles":[
+		{"role":"Standard",  "message":"ui.common.RoleStandard",  "Comments":false,"GoodsReceipt":false,"AdminScreen":false},
+		{"role":"Production","message":"ui.common.RoleProduction","Comments":true, "GoodsReceipt":false,"AdminScreen":false},
+		{"role":"Material",  "message":"ui.common.RoleMaterial",  "Comments":false,"GoodsReceipt":true, "AdminScreen":false},
+		{"role":"Admin",     "message":"ui.common.RoleAdmin",     "Comments":true, "GoodsReceipt":true, "AdminScreen":true }
+	],
+	"AllowSelfRegistration":false
 }

@@ -40,22 +40,22 @@ export default class PanelLogin extends Component {
                         { error.length > 0 ? <div className="alert alert-danger fade in">{error}</div> :''}
                             <form  id="login-form" className="form" onSubmit={this.handleSubmit}>
                             <div className="form-group">
-                                <input type="text" id="loginUsername" className="form-control input-lg" placeholder={i18n.__("ui.login.Username")}/>
+                                <T _translateProps={['placeholder']}>
+                                    <input type="text" id="loginUsername" className="form-control input-lg" placeholder="ui.login.Username"/>
+                                </T>
                             </div>
                             <div className="form-group">
-                                <input type="password" id="loginPassword" className="form-control input-lg" placeholder={i18n.__("ui.login.Password")}/>
+                                <T _translateProps={['placeholder']}>
+                                    <input type="password" id="loginPassword" className="form-control input-lg" placeholder="ui.login.Password"/>
+                                </T>
                             </div>
                             <div className="form-group">
-                                <input type="submit" id="login-button" className="btn btn-primary btn-lg btn-block" value={i18n.__("ui.login.Login")} />
+                                <T _translateProps={['value']}>
+                                    <input type="submit" id="login-button" className="btn btn-primary btn-lg btn-block" value="ui.login.Login"/>
+                                </T>
                             </div>
                         </form>
                     </div>
-                </div>
-                <br />
-                <div  className="row">
-                    <center>
-                        <a href="/LoginAccount" ><T>ui.login.CreateAccount</T></a>
-                    </center>
                 </div>
             </div>
         );

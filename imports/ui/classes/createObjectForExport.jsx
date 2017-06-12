@@ -15,36 +15,36 @@ export default class createObjectForExport{
     productToStr(p){
         var contents = "";
 
-        contents +=  '"ID_NO","'                      + cf.formatString(p.ID_NO)                        + '"';
-        contents += ',"CREATE_DATE","'                + cf.formatDateTime(p.CREATE_DATE)                + '"';
-        contents += ',"CREATE_BY","'                  + cf.formatString(p.CREATE_BY)                    + '"';
-        contents += ',"UPDATE_DATE","'                + cf.formatDateTime(p.UPDATE_DATE)                + '"';
-        contents += ',"UPDATE_BY","'                  + cf.formatString(p.UPDATE_BY)                    + '"';
-        contents += ',"MONTHLY_SEQ",'                 + cf.formatString(p.MONTHLY_SEQ);
-        contents += ',"MODEL_CODE","'                 + cf.formatString(p.MODEL_CODE)                   + '"';
-        contents += ',"REMARKS","'                    + cf.formatString(p.REMARKS)                      + '"';
-        contents += ',"PLAN_PROD_FINISH_DATE","'      + cf.formatDateTime(p.PLAN_PROD_FINISH_DATE)      + '"';
-        contents += ',"LOCATIONSTATUS",'              + cf.formatString(p.LOCATIONSTATUS);
-        contents += ',"PARTS_PREPARATION_STATUS","'   + cf.formatString(p.PARTS_PREPARATION_STATUS)     + '"';
-        contents += ',"CHASSIS_LINE_START_DATE","'    + cf.formatDateTime(p.CHASSIS_LINE_START_DATE)    + '"';
-        contents += ',"CHASSIS_LINE_END_DATE","'      + cf.formatDateTime(p.CHASSIS_LINE_END_DATE)      + '"';
-        contents += ',"PAINT_LINE_START_DATE","'      + cf.formatDateTime(p.PAINT_LINE_START_DATE)      + '"';
-        contents += ',"PAINT_LINE_END_DATE","'        + cf.formatDateTime(p.PAINT_LINE_END_DATE)        + '"';
-        contents += ',"TRACTOR_LINE_START_DATE","'    + cf.formatDateTime(p.TRACTOR_LINE_START_DATE)    + '"';
-        contents += ',"TRACTOR_LINE_END_DATE","'      + cf.formatDateTime(p.TRACTOR_LINE_END_DATE)      + '"';
-        contents += ',"REWORK_BEFORE_MQ_START_DATE","'+ cf.formatDateTime(p.REWORK_BEFORE_MQ_START_DATE)+ '"';
-        contents += ',"REWORK_BEFORE_MQ_END_DATE","'  + cf.formatDateTime(p.REWORK_BEFORE_MQ_END_DATE)  + '"';
-        contents += ',"MQ_LINE_START_DATE","'         + cf.formatDateTime(p.MQ_LINE_START_DATE)         + '"';
-        contents += ',"MQ_LINE_END_DATE","'           + cf.formatDateTime(p.MQ_LINE_END_DATE)           + '"';
-        contents += ',"REWORK_AFTER_MQ_START_DATE","' + cf.formatDateTime(p.REWORK_AFTER_MQ_START_DATE) + '"';
-        contents += ',"REWORK_AFTER_MQ_END_DATE","'   + cf.formatDateTime(p.REWORK_AFTER_MQ_END_DATE)   + '"';
-        contents += ',"PRODUCTION_END_DATE","'        + cf.formatDateTime(p.PRODUCTION_END_DATE)        + '"';
-        contents += ',"INSPECTION_START_DATE","'      + cf.formatDateTime(p.INSPECTION_START_DATE)      + '"';
-        contents += ',"INSPECTION_END_DATE","'        + cf.formatDateTime(p.INSPECTION_END_DATE)        + '"';
-        contents += ',"REWORK_DUR_INSP_START_DATE","' + cf.formatDateTime(p.REWORK_DUR_INSP_START_DATE) + '"';
-        contents += ',"REWORK_DUR_INSP_END_DATE","'   + cf.formatDateTime(p.REWORK_DUR_INSP_END_DATE)   + '"';
-        contents += ',"SHIPPING_STATUS","'            + cf.formatString(p.SHIPPING_STATUS)              + '"';
-        contents += ',"SHIPPING_DATE","'              + cf.formatDateTime(p.SHIPPING_DATE)              + '"';
+        contents += ',"' + cf.formatString(p.ID_NO)                        + '"';
+        contents += ',"' + cf.formatDateTime(p.CREATE_DATE)                + '"';
+        contents += ',"' + cf.formatString(p.CREATE_BY)                    + '"';
+        contents += ',"' + cf.formatDateTime(p.UPDATE_DATE)                + '"';
+        contents += ',"' + cf.formatString(p.UPDATE_BY)                    + '"';
+        contents += ','  + cf.formatString(p.MONTHLY_SEQ);
+        contents += ',"' + cf.formatString(p.MODEL_CODE)                   + '"';
+        contents += ',"' + cf.formatString(p.REMARKS)                      + '"';
+        contents += ',"' + cf.formatDateTime(p.PLAN_PROD_FINISH_DATE)      + '"';
+        contents += ','  + cf.formatString(p.LOCATION_STATUS);
+        contents += ',"' + cf.formatString(p.PARTS_PREPARATION_STATUS)     + '"';
+        contents += ',"' + cf.formatDateTime(p.CHASSIS_LINE_START_DATE)    + '"';
+        contents += ',"' + cf.formatDateTime(p.CHASSIS_LINE_END_DATE)      + '"';
+        contents += ',"' + cf.formatDateTime(p.PAINT_LINE_START_DATE)      + '"';
+        contents += ',"' + cf.formatDateTime(p.PAINT_LINE_END_DATE)        + '"';
+        contents += ',"' + cf.formatDateTime(p.TRACTOR_LINE_START_DATE)    + '"';
+        contents += ',"' + cf.formatDateTime(p.TRACTOR_LINE_END_DATE)      + '"';
+        contents += ',"' + cf.formatDateTime(p.REWORK_BEFORE_MQ_START_DATE)+ '"';
+        contents += ',"' + cf.formatDateTime(p.REWORK_BEFORE_MQ_END_DATE)  + '"';
+        contents += ',"' + cf.formatDateTime(p.MQ_LINE_START_DATE)         + '"';
+        contents += ',"' + cf.formatDateTime(p.MQ_LINE_END_DATE)           + '"';
+        contents += ',"' + cf.formatDateTime(p.REWORK_AFTER_MQ_START_DATE) + '"';
+        contents += ',"' + cf.formatDateTime(p.REWORK_AFTER_MQ_END_DATE)   + '"';
+        contents += ',"' + cf.formatDateTime(p.PRODUCTION_END_DATE)        + '"';
+        contents += ',"' + cf.formatDateTime(p.INSPECTION_START_DATE)      + '"';
+        contents += ',"' + cf.formatDateTime(p.INSPECTION_END_DATE)        + '"';
+        contents += ',"' + cf.formatDateTime(p.REWORK_DUR_INSP_START_DATE) + '"';
+        contents += ',"' + cf.formatDateTime(p.REWORK_DUR_INSP_END_DATE)   + '"';
+        contents += ',"' + cf.formatString(p.SHIPPING_STATUS)              + '"';
+        contents += ',"' + cf.formatDateTime(p.SHIPPING_DATE)              + '"';
         
         return contents;
     }
@@ -53,23 +53,74 @@ export default class createObjectForExport{
         var products=prod_monitor.find({$or: [ {"CREATE_DATE":filter} , {"UPDATE_DATE":filter} ]}).fetch();
 
         var contents = "";
-
+        
+        // Header line
+        contents +=  '"Collection"';
+        contents += ',"ID_NO"';
+        contents += ',"CREATE_DATE"';
+        contents += ',"CREATE_BY"';
+        contents += ',"UPDATE_DATE"';
+        contents += ',"UPDATE_BY"';
+        contents += ',"MONTHLY_SEQ"';
+        contents += ',"MODEL_CODE"';
+        contents += ',"REMARKS"';
+        contents += ',"PLAN_PROD_FINISH_DATE"';
+        contents += ',"LOCATION_STATUS"';
+        contents += ',"PARTS_PREPARATION_STATUS"';
+        contents += ',"CHASSIS_LINE_START_DATE"';
+        contents += ',"CHASSIS_LINE_END_DATE"';
+        contents += ',"PAINT_LINE_START_DATE"';
+        contents += ',"PAINT_LINE_END_DATE"';
+        contents += ',"TRACTOR_LINE_START_DATE"';
+        contents += ',"TRACTOR_LINE_END_DATE"';
+        contents += ',"REWORK_BEFORE_MQ_START_DATE"';
+        contents += ',"REWORK_BEFORE_MQ_END_DATE"';
+        contents += ',"MQ_LINE_START_DATE"';
+        contents += ',"MQ_LINE_END_DATE"';
+        contents += ',"REWORK_AFTER_MQ_START_DATE"';
+        contents += ',"REWORK_AFTER_MQ_END_DATE"';
+        contents += ',"PRODUCTION_END_DATE"';
+        contents += ',"INSPECTION_START_DATE"';
+        contents += ',"INSPECTION_END_DATE"';
+        contents += ',"REWORK_DUR_INSP_START_DATE"';
+        contents += ',"REWORK_DUR_INSP_END_DATE"';
+        contents += ',"SHIPPING_STATUS"';
+        contents += ',"SHIPPING_DATE"';
+        contents += ',"SEQ_NO"';
+        contents += ',"CREATE_DATE"';
+        contents += ',"CREATE_BY"';
+        contents += ',"UPDATE_DATE"';
+        contents += ',"UPDATE_BY"';
+        contents += ',"USER_COMMENT"';
+        contents += ',"SEQ_NO"';
+        contents += ',"LOCATION"';
+        contents += ',"CALCULATED_DATE"';
+        contents += ',"ITEM_NUMBER"';
+        contents += ',"ITEM_DESCRIPTION"';
+        contents += ',"REQUIREMENT_QTY"';
+        contents += ',"MISSING_QTY"';
+        contents += ',"Ack"';
+        contents += ',"AckBy"';
+        contents += ',"AckOn"';
+        contents += "\r\n";
+        
+        //  Per product
         products.map(
             (p)=>{
-                contents += '"PROD_MONITOR",' + this.productToStr(p);
+                contents += '"PROD_MONITOR"' + this.productToStr(p);
                 contents += "\r\n";
 
                 // Comments
                 var comments=prod_monitor_comment.find({"ID_NO":p.ID_NO.trim()}).fetch();
                 comments.map(
                     (c)=>{
-                        contents +=  '"PROD_MONITOR_COMMENT",'+ this.productToStr(p);
-                        contents += ',"SEQ_NO",'              + cf.formatString(c.SEQ_NO);
-                        contents += ',"CREATE_DATE","'       + cf.formatDateTime(c.CREATE_DATE)+ '"';
-                        contents += ',"CREATE_BY","'         + cf.formatString(c.CREATE_BY)    + '"';
-                        contents += ',"UPDATE_DATE","'       + cf.formatDateTime(c.UPDATE_DATE)+ '"';
-                        contents += ',"UPDATE_BY","'         + cf.formatString(c.UPDATE_BY)    + '"';
-                        contents += ',"USER_COMMENT","'      + cf.formatString(c.USER_COMMENT) + '"';
+                        contents += '"PROD_MONITOR_COMMENT"'+ this.productToStr(p);
+                        contents += ','  + cf.formatString(c.SEQ_NO);
+                        contents += ',"' + cf.formatDateTime(c.CREATE_DATE)+ '"';
+                        contents += ',"' + cf.formatString(c.CREATE_BY)    + '"';
+                        contents += ',"' + cf.formatDateTime(c.UPDATE_DATE)+ '"';
+                        contents += ',"' + cf.formatString(c.UPDATE_BY)    + '"';
+                        contents += ',"' + cf.formatString(c.USER_COMMENT) + '"';
                         contents += "\r\n";
                     }
                 );
@@ -78,14 +129,25 @@ export default class createObjectForExport{
                 var parts=prod_monitor_parts.find({"ID_NO":p.ID_NO.trim()}).fetch();
                 parts.map(
                     (mp)=>{
-                        contents +=  '"PROD_MONITOR_PARTS",'+ this.productToStr(p);
-                        contents += ',"SEQ_NO",'           + cf.formatString(mp.SEQ_NO);
-                        contents += ',"LOCATION","'        + cf.formatString(mp.LOCATION)         + '"';
-                        contents += ',"CALCULATED_DATE","' + cf.formatDateTime(mp.CALCULATED_DATE)+ '"';
-                        contents += ',"ITEM_NUMBER","'     + cf.formatString(mp.ITEM_NUMBER)      + '"';
-                        contents += ',"ITEM_DESCRIPTION","'+ cf.formatString(mp.ITEM_DESCRIPTION) + '"';
-                        contents += ',"REQUIREMENT_QTY",'  + cf.formatString(mp.REQUIREMENT_QTY);
-                        contents += ',"MISSING_QTY",'      + cf.formatString(mp.MISSING_QTY);
+                        contents +=  '"PROD_MONITOR_PARTS"'+ this.productToStr(p);
+                        // Comment
+                        contents += ','  + cf.formatString(c.SEQ_NO);
+                        contents += ',"' + cf.formatDateTime(c.CREATE_DATE)+ '"';
+                        contents += ',"' + cf.formatString(c.CREATE_BY)    + '"';
+                        contents += ',"' + cf.formatDateTime(c.UPDATE_DATE)+ '"';
+                        contents += ',"' + cf.formatString(c.UPDATE_BY)    + '"';
+                        contents += ',"' + cf.formatString(c.USER_COMMENT) + '"';
+                        // Parts
+                        contents += ','  + cf.formatString(mp.SEQ_NO);
+                        contents += ',"' + cf.formatString(mp.LOCATION)         + '"';
+                        contents += ',"' + cf.formatDateTime(mp.CALCULATED_DATE)+ '"';
+                        contents += ',"' + cf.formatString(mp.ITEM_NUMBER)      + '"';
+                        contents += ',"' + cf.formatString(mp.ITEM_DESCRIPTION) + '"';
+                        contents += ','  + cf.formatString(mp.REQUIREMENT_QTY);
+                        contents += ','  + cf.formatString(mp.MISSING_QTY);
+                        contents += ',"' + (mp.Ack?'Received':'Missing')        + '"';
+                        contents += ',"' + cf.formatString(mp.AckBy)            + '"';
+                        contents += ',"' + cf.formatDateTime(mp.AckOn)          + '"';
                         contents += "\r\n";
                     }
                 );
@@ -115,7 +177,7 @@ export default class createObjectForExport{
                 contents += ',{"MODEL_CODE": "'                 + cf.formatString(p.MODEL_CODE)                   + '"}';
                 contents += ',{"REMARKS": "'                    + cf.formatString(p.REMARKS)                      + '"}';
                 contents += ',{"PLAN_PROD_FINISH_DATE": "'      + cf.formatDateTime(p.PLAN_PROD_FINISH_DATE)      + '"}';
-                contents += ',{"LOCATIONSTATUS": "'             + cf.formatString(p.LOCATIONSTATUS)               + '"}';
+                contents += ',{"LOCATION_STATUS": '             + cf.formatString(p.LOCATION_STATUS)              + '}';
                 contents += ',{"PARTS_PREPARATION_STATUS": "'   + cf.formatString(p.PARTS_PREPARATION_STATUS)     + '"}';
                 contents += ',{"CHASSIS_LINE_START_DATE": "'    + cf.formatDateTime(p.CHASSIS_LINE_START_DATE)    + '"}';
                 contents += ',{"CHASSIS_LINE_END_DATE": "'      + cf.formatDateTime(p.CHASSIS_LINE_END_DATE)      + '"}';
@@ -134,7 +196,7 @@ export default class createObjectForExport{
                 contents += ',{"INSPECTION_END_DATE": "'        + cf.formatDateTime(p.INSPECTION_END_DATE)        + '"}';
                 contents += ',{"REWORK_DUR_INSP_START_DATE": "' + cf.formatDateTime(p.REWORK_DUR_INSP_START_DATE) + '"}';
                 contents += ',{"REWORK_DUR_INSP_END_DATE": "'   + cf.formatDateTime(p.REWORK_DUR_INSP_END_DATE)   + '"}';
-                contents += ',{"SHIPPING_STATUS": "'            + cf.formatString(p.SHIPPING_STATUS)              + '"}';
+                contents += ',{"SHIPPING_STATUS": '             + cf.formatString(p.SHIPPING_STATUS)              + '}';
                 contents += ',{"SHIPPING_DATE": "'              + cf.formatDateTime(p.SHIPPING_DATE)              + '"}';
 
                 // Comments
@@ -146,7 +208,7 @@ export default class createObjectForExport{
                     (c)=>{
                         if(0 < cLen) contents += ",";
                         contents += "[";
-                        contents +=  '{"SEQ_NO": "'       + cf.formatString(c.SEQ_NO)       + '"}';
+                        contents +=  '{"SEQ_NO": '       + cf.formatString(c.SEQ_NO)       + '}';
                         contents += ',{"CREATE_DATE": "' + cf.formatDateTime(c.CREATE_DATE)+ '"}';
                         contents += ',{"CREATE_BY": "'   + cf.formatString(c.CREATE_BY)    + '"}';
                         contents += ',{"UPDATE_DATE": "' + cf.formatDateTime(c.UPDATE_DATE)+ '"}';
@@ -167,13 +229,17 @@ export default class createObjectForExport{
                     (mp)=>{
                         if(0 < mpLen) contents += ",";
                         contents += "[";
-                        contents +=  '{"SEQ_NO": "'          + cf.formatString(mp.SEQ_NO)           + '"}';
+                        contents +=  '{"SEQ_NO": '           + cf.formatString(mp.SEQ_NO)           + '}';
                         contents += ',{"LOCATION": "'        + cf.formatString(mp.LOCATION)         + '"}';
                         contents += ',{"CALCULATED_DATE": "' + cf.formatDateTime(mp.CALCULATED_DATE)+ '"}';
                         contents += ',{"ITEM_NUMBER": "'     + cf.formatString(mp.ITEM_NUMBER)      + '"}';
                         contents += ',{"ITEM_DESCRIPTION": "'+ cf.formatString(mp.ITEM_DESCRIPTION) + '"}';
-                        contents += ',{"REQUIREMENT_QTY": "' + cf.formatString(mp.REQUIREMENT_QTY)  + '"}';
-                        contents += ',{"MISSING_QTY": "'     + cf.formatString(mp.MISSING_QTY)      + '"}';
+                        contents += ',{"REQUIREMENT_QTY": '  + cf.formatString(mp.REQUIREMENT_QTY)  + '}';
+                        contents += ',{"MISSING_QTY": '      + cf.formatString(mp.MISSING_QTY)      + '}';
+                        contents += ',{"Ack": "'             + (mp.Ack?'Received':'Missing')        + '"}';
+                        contents += ',{"AckBy": "'           + cf.formatString(mp.AckBy)            + '"}';
+                        contents += ',{"AckOn": "'           + cf.formatDateTime(mp.AckOn)          + '"}';
+
                         contents += "]";
                         ++mpLen;
                     }

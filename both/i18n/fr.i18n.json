@@ -39,7 +39,7 @@
 	},
 	"shippingStatus": {
 		"StateErr": "Unknown Status",
-		"State000": " ",
+		"State000": "-",
 		"State001": "Placed at shipping area",
 		"State002": "Placed outside",
 		"State003": "Placed at future area",

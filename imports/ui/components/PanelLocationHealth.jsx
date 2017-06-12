@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { prod_monitor } from '../../api/prod_monitor.js';
 import { Link } from 'react-router';
 
-import CF from '../classes/CommonFunctions.jsx';
+import CF, {LocationTitles, LocationIcons, ShippingStatuses} from '../classes/CommonFunctions.jsx';
 const cf=new CF();
 
 const T = i18n.createComponent(); // translater component for json lookup universe:i18n
@@ -11,7 +11,7 @@ const T = i18n.createComponent(); // translater component for json lookup univer
 export class PanelLocationHealth extends Component {
     
     updateDisplay(){
-        console.log("PanelLocationHealth:updateDisplay");
+//        console.log("PanelLocationHealth:updateDisplay");
         if(this.props.product == undefined)    return;
         var p=this.props.product;
         var r=cf.productStatus(this.props.product);
@@ -19,30 +19,45 @@ export class PanelLocationHealth extends Component {
         var i,t,s;
         
         // Location
+//        console.log("PanelLocationHealth:updateDisplay: Location");
         if(r.error) $("#state_Location").html("System error.");
         else{
             $("#state_Location").html(
-                '<span style="color:'+r[p.LOCATIONSTATUS].thresholdColor+'">'
-                +'<i class="kubota-fs-32 '+cf.locationIcon(p.LOCATIONSTATUS)+'"></i>'
-                +i18n.__(cf.locationTitle(p.LOCATIONSTATUS))
+                '<span style="color:'+r[p.LOCATION_STATUS].thresholdColor+'">'
+                +'<i class="kubota-fs-32 '+LocationIcons[p.LOCATION_STATUS]+'"></i>'
+                +i18n.__(LocationTitles[p.LOCATION_STATUS])
                 +'</span>'
             );
         }
         
         // SHIPPING_STATUS
         if(r.error) $("#state_ShippingStatus").html("System error.");
-        else        $("#state_ShippingStatus").html(i18n.__(r.shippingStatus));
+        else        $("#state_ShippingStatus").html(i18n.__(ShippingStatuses[p.SHIPPING_STATUS]));
+        
+        // Age since assembly
+        if(r.error) $("#state_Age").html("System error.");
+        else{
+            if(r.isOnGoing){
+                t=r[p.LOCATION_STATUS].thresholdSpent;
+                s = i18n.__("ui.locationHealth.AgeSinceAssemblyStarted");
+                s+= (60*24<=t)? Math.floor(t/60/24)+' days ' : "";
+                s+= (Math.floor(t/60))%24+' hours ';
+                s+= Math.floor(t%60)+' minutes.';
+                $('#state_Age').html(s);
+            }
+            else    $("#state_Age").html( i18n.__("ui.locationHealth.NotApplicable") );
+        }
         
         // Time until area Threshhold
         if(r.error) $("#state_TimeThreshold").html("System error.");
         else{
             if(r.isOnGoing){
-                t=r[p.LOCATIONSTATUS].thresholdDuration - r[p.LOCATIONSTATUS].thresholdSpent;
+                t=r[p.LOCATION_STATUS].thresholdDuration - r[p.LOCATION_STATUS].thresholdSpent;
                 if(0 < t){
                     s = i18n.__("ui.locationHealth.TimeUntilAreaThreshhold");
                     s+= (60*24<=t)? Math.floor(t/60/24)+' days ' : "";
                     s+= (Math.floor(t/60))%24+' hours ';
-                    s+= t%60+' minutes';
+                    s+= t%60+' minutes.';
                     $("#state_TimeThreshold").html(s);
                 }
                 else{
@@ -50,45 +65,28 @@ export class PanelLocationHealth extends Component {
                     s = i18n.__("ui.locationHealth.TimeOverAreaThreshhold");
                     s+= (60*24<=t)? Math.floor(t/60/24)+' days ' : "";
                     s+= (Math.floor(t/60))%24+' hours ';
-                    s+= t%60+' minutes';
+                    s+= t%60+' minutes.';
                     $("#state_TimeThreshold").html(s);
                 }
             }
-            else    $("#state_TimeThreshold").html(" ");
+            else    $("#state_TimeThreshold").html( i18n.__("ui.locationHealth.NotApplicable") );
         }
       
-        // Age since assembly
-        if(r.error) $("#state_Age").html("System error.");
-        else{
-            if(r.isOnGoing){
-                t=r[p.LOCATIONSTATUS].thresholdSpent;
-                s = i18n.__("ui.locationHealth.AgeSinceAssemblyStarted");
-                s+= (60*24<=t)? Math.floor(t/60/24)+' days ' : "";
-                s+= (Math.floor(t/60))%24+' hours ';
-                s+= Math.floor(t%60)+' minutes';
-                $('#state_Age').html(s);
-            }
-            else    $("#state_Age").html(" ");
-        }
-        
         // Health
         if(r.error) $("#state_Health").html("System error.");
         else{
             if(r.isOnGoing){
-                $("#state_Health").html(i18n.__("ui.locationHealth.Health") + '<span style="color:'+r[p.LOCATIONSTATUS].thresholdColor+'">'+i18n.__(r[p.LOCATIONSTATUS].thresholdMessage)+'</span>');
+                $("#state_Health").html(i18n.__("ui.locationHealth.Health") + '<span style="color:'+r[p.LOCATION_STATUS].thresholdColor+'">'+i18n.__(r[p.LOCATION_STATUS].thresholdMessage)+'.</span>');
             }
-            else    $("#state_Health").html(" ");
+            else    $("#state_Health").html( i18n.__("ui.locationHealth.NotApplicable") );
         }
-        
-        
-
         
 
         /*
-         * For each LOCATIONSTATUS
+         * For each LOCATION_STATUS
          */
         for(i=1;i<=14;++i){
-            if(r[i]!=undefined && r[i]!=null)    $('#LOCATIONSTATUS'+i+' .health').html('<span style="color:'+r[i].thresholdColor+'">'+i18n.__(r[i].thresholdMessage)+'</span>');
+            if(r[i]!=undefined && r[i]!=null)    $('#LOCATION_STATUS'+i+' .health').html('<span style="color:'+r[i].thresholdColor+'">'+i18n.__(r[i].thresholdMessage)+'</span>');
         }
 
 
@@ -105,7 +103,7 @@ export class PanelLocationHealth extends Component {
                         <tr style={{"backgroundColor":"silver"}}>
                             <td><center><T>ui.common.IdNo</T></center></td>
                             <td><center><T>ui.common.Start</T></center></td>
-                            <td><center><T>ui.common.TractorStatus</T></center></td>
+                            <td><center><T>ui.common.LocationStatus</T></center></td>
                             <td><center><T>ui.common.ShippingStatus</T></center></td>
                         </tr>
                     </thead>
@@ -122,8 +120,8 @@ export class PanelLocationHealth extends Component {
                 <br />
                 <div>
                     <div className="row">
-                        <div className="col-md-5"><span className="glyphicon glyphicon-time" /> <span id="state_TimeThreshold"/></div>
                         <div className="col-md-5"><span className="glyphicon glyphicon-hourglass" /> <span id="state_Age"/></div>
+                        <div className="col-md-5"><span className="glyphicon glyphicon-time" /> <span id="state_TimeThreshold"/></div>
                         <div className="col-md-2"><span className="glyphicon glyphicon-flag" /> <span id="state_Health"/></div>
                     </div>
                 </div>
@@ -132,69 +130,69 @@ export class PanelLocationHealth extends Component {
                 <table className="table table-bordered"> 
                     <thead className="table-bordered">
                         <tr style={{"backgroundColor":"silver"}}>
-                            <td className="col-md-3 table-bordered"><center><T>ui.common.TractorStatus</T></center></td>
+                            <td className="col-md-3 table-bordered"><center><T>ui.common.LocationStatus</T></center></td>
                             <td className="col-md-3 table-bordered"><center><T>ui.common.Start</T></center></td>
                             <td className="col-md-3 table-bordered"><center><T>ui.common.End</T></center></td>
                             <td className="col-md-3 table-bordered"><center><T>ui.locationHealth.Health</T></center></td>
                         </tr>
                     </thead>
                     <tbody className="table-bordered">
-                        <tr id="LOCATIONSTATUS1">
-                            <td><T>{cf.locationTitle(1)}</T></td>
+                        <tr id="LOCATION_STATUS1">
+                            <td><T>{LocationTitles[1]}</T></td>
                             <td>{r==undefined?"":cf.formatDateTime(r.CHASSIS_LINE_START_DATE)}</td>
                             <td>{r==undefined?"":cf.formatDateTime(r.CHASSIS_LINE_END_DATE)}</td>
                             <td className="health"></td>
                         </tr>
-                        <tr id="LOCATIONSTATUS2" style={{"backgroundColor":"whitesmoke"}}>
-                            <td><T>{cf.locationTitle(2)}</T></td>
+                        <tr id="LOCATION_STATUS2" style={{"backgroundColor":"whitesmoke"}}>
+                            <td><T>{LocationTitles[2]}</T></td>
                             <td>{r==undefined?"":cf.formatDateTime(r.PAINT_LINE_START_DATE)}</td>
                             <td>{r==undefined?"":cf.formatDateTime(r.PAINT_LINE_END_DATE)}</td>
                             <td className="health"></td>
                         </tr>
-                        <tr id="LOCATIONSTATUS3">
-                            <td><T>{cf.locationTitle(3)}</T></td>
+                        <tr id="LOCATION_STATUS3">
+                            <td><T>{LocationTitles[3]}</T></td>
                             <td>{r==undefined?"":cf.formatDateTime(r.TRACTOR_LINE_START_DATE)}</td>
                             <td>{r==undefined?"":cf.formatDateTime(r.TRACTOR_LINE_END_DATE)}</td>
                             <td className="health"></td>
                         </tr>
-                        <tr id="LOCATIONSTATUS5" style={{"backgroundColor":"whitesmoke"}}>
-                            <td><T>{cf.locationTitle(5)}</T></td>
+                        <tr id="LOCATION_STATUS5" style={{"backgroundColor":"whitesmoke"}}>
+                            <td><T>{LocationTitles[5]}</T></td>
                             <td>{r==undefined?"":cf.formatDateTime(r.REWORK_BEFORE_MQ_START_DATE)}</td>
                             <td>{r==undefined?"":cf.formatDateTime(r.REWORK_BEFORE_MQ_END_DATE)}</td>
                             <td className="health"></td>
                         </tr>
-                        <tr id="LOCATIONSTATUS4">
-                            <td><T>{cf.locationTitle(4)}</T></td>
+                        <tr id="LOCATION_STATUS4">
+                            <td><T>{LocationTitles[4]}</T></td>
                             <td>{r==undefined?"":cf.formatDateTime(r.MQ_LINE_START_DATE)}</td>
                             <td>{r==undefined?"":cf.formatDateTime(r.MQ_LINE_END_DATE)}</td>
                             <td className="health"></td>
                         </tr>
-                        <tr id="LOCATIONSTATUS6" style={{"backgroundColor":"whitesmoke"}}>
-                            <td><T>{cf.locationTitle(6)}</T></td>
+                        <tr id="LOCATION_STATUS6" style={{"backgroundColor":"whitesmoke"}}>
+                            <td><T>{LocationTitles[6]}</T></td>
                             <td>{r==undefined?"":cf.formatDateTime(r.REWORK_AFTER_MQ_START_DATE)}</td>
                             <td>{r==undefined?"":cf.formatDateTime(r.REWORK_AFTER_MQ_END_DATE)}</td>
                             <td className="health"></td>
                         </tr>
-                        <tr id="LOCATIONSTATUS7">
-                            <td><T>{cf.locationTitle(7)}</T></td>
+                        <tr id="LOCATION_STATUS7">
+                            <td><T>{LocationTitles[7]}</T></td>
                             <td style={{"backgroundColor":"grey"}}></td>
                             <td>{r==undefined?"":cf.formatDateTime(r.PRODUCTION_END_DATE)}</td>
                             <td className="health"></td>
                         </tr>
-                        <tr id="LOCATIONSTATUS8" style={{"backgroundColor":"whitesmoke"}}>
-                            <td><T>{cf.locationTitle(8)}</T></td>
+                        <tr id="LOCATION_STATUS8" style={{"backgroundColor":"whitesmoke"}}>
+                            <td><T>{LocationTitles[8]}</T></td>
                             <td>{r==undefined?"":cf.formatDateTime(r.INSPECTION_START_DATE)}</td>
                             <td>{r==undefined?"":cf.formatDateTime(r.INSPECTION_END_DATE)}</td>
                             <td className="health"></td>
                         </tr>
-                        <tr id="LOCATIONSTATUS9">
-                            <td><T>{cf.locationTitle(9)}</T></td>
+                        <tr id="LOCATION_STATUS9">
+                            <td><T>{LocationTitles[9]}</T></td>
                             <td>{r==undefined?"":cf.formatDateTime(r.REWORK_DUR_INSP_START_DATE)}</td>
                             <td>{r==undefined?"":cf.formatDateTime(r.REWORK_DUR_INSP_END_DATE)}</td>
                             <td className="health"></td>
                         </tr>
-                        <tr id="LOCATIONSTATUS14" style={{"backgroundColor":"whitesmoke"}}>
-                            <td><T>{cf.locationTitle(14)}</T></td>
+                        <tr id="LOCATION_STATUS14" style={{"backgroundColor":"whitesmoke"}}>
+                            <td><T>{LocationTitles[14]}</T></td>
                             <td>{r==undefined?"":cf.formatDateTime(r.SHIPPING_DATE)}</td>
                             <td style={{"backgroundColor":"grey"}}></td>
                             <td className="health"></td>
@@ -209,7 +207,7 @@ export class PanelLocationHealth extends Component {
     }
 
     componentDidMount() {
-        console.log("PanelLocationHealth:componentDidMount");
+//        console.log("PanelLocationHealth:componentDidMount");
         // Set timer to update the displayed values.
         this.setState({
             'timerId': Meteor.setInterval(
@@ -222,8 +220,12 @@ export class PanelLocationHealth extends Component {
     }
 
     componentDidUpdate() {
-        console.log("PanelLocationHealth:componentDidUpdate");
+//        console.log("PanelLocationHealth:componentDidUpdate");
         this.updateDisplay();
+        
+        i18n.onChangeLocale ((newLocale)=>{
+            this.updateDisplay();
+        })
     }
     
     componentWillUnmount() {

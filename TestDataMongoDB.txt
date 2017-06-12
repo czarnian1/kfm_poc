@@ -1,3 +1,25 @@
+db.users.insert(
+{
+    "_id" : "2SLemX9BG28pnfkq2",
+    "createdAt" : ISODate("2017-06-08T00:26:03.123Z"),
+    "services" : {
+        "password" : {
+            "bcrypt" : "$2a$10$dCtBCzerFrMC.mbVteQw3ejP04B0X63/rs7inhkThGR92Jn0eTA1m" 
+        }, 
+        "resume" : { 
+            "loginTokens" : [ 
+                { 
+                    "when" : ISODate("2017-06-08T00:26:03.146Z"), 
+                    "hashedToken" : "o1ufmD59kU4/6AGaQcV/H05BcM5Hm2H98JKiAA4JSj8=" 
+                } 
+            ] 
+        } 
+    }, 
+    "username" : "administrator", 
+    "roles" : { "__global_roles__" : [ "Admin" ] } 
+}
+)
+
 db.prod_monitor.insert(
 {
 "ID_NO" : "30GO01100"
@@ -245,7 +267,18 @@ db.prod_monitor.insert(
 }
 )
 
-
+db.prod_monitor.update(
+                        {"_id":ObjectId("593378b480a3f11b5dc037e3")},
+                        {$set:{
+                            "UPDATE_DATE":new Date(),
+                            "UPDATE_BY":'UKUS20',
+                            "MONTHLY_SEQ":'20170100050',
+                            "REMARKS":'UKUS20',
+                            "LOCATION_STATUS":5,
+                        }}
+                    );
+                    
+                    
 
 db.prod_monitor_comment.insert({
  ID_NO: "30GO01100"

@@ -5,13 +5,13 @@
 	"common": {
 		"Start": "Start",
 		"End": "End",
-		"MonthlySequenceno": "Monthly Sequence No",
+		"MonthlySequenceNo": "Monthly Sequence No",
 		"IdNo": "IDNO",
 		"ModelCode": "Model Code",
 		"ModelDescription": "Model Description",
 		"PlannedFinish": "Planned Finished Date",
-		"Comment": "Comment",
-		"TractorStatus": "Tractor Status",
+		"Comments": "Comments",
+		"LocationStatus": "Location Status",
 		"MissingParts": "Missing Parts",
 		"PreProduction": "Pre production",
 		"ChassisLine": "Chasis Line",
@@ -35,11 +35,15 @@
 		"Insert": "Insert",
 		"Update": "Update",
 		"Delete": "Delete",
+		"RoleStandard": "Standard",
+		"RoleProduction": "Production",
+		"RoleMaterial": "Material",
+		"RoleAdmin": "Admin",
 		"BackToMainScreen": "Back to Main screen"
 	},
 	"shippingStatus": {
 		"StateErr": "Unknown Status",
-		"State000": " ",
+		"State000": "-",
 		"State001": "Placed at shipping area",
 		"State002": "Placed outside",
 		"State003": "Placed at future area",
@@ -50,14 +54,22 @@
 		"Login": "Login",
 		"Username": "Username",
 		"Password": "Password",
+		"Submit": "Submit"
+	},
+	"manageAccount": {
+		"NoAdminRole":"You do not have the Admin role.",
+		"CreateAccount":"Create account",
+		"ManageUsers": "Manage users",
+		"ManageAccount": "Manage account",
+		"ManageOtherUser":"Manage other user account (by Admin role)",
+		"Role":"Role",
 		"ConfirmPassword": "Confirm password",
-		"EmailNotification": "Email notification",
 		"EmailAddress": "Email address",
+		"EmailThresholdNotification": "Email Threshold Notification",
+		"EmailLineEventNotification": "Email Line Event Notification",
 		"FilterStartId": "Filter: Start ID number",
 		"FilterEndId": "Filter: End ID number",
-		"CreateAccount": "Create account",
-		"ManageAccount": "Manage account",
-		"Submit": "Submit"
+		"ShownColumns": "Main Dashboard Columns"
 	},
 	"navbar": {
 		"ToggleNavigation": "Toggle navigation",
@@ -71,7 +83,7 @@
         "ChangeLanguage": "Change language",
 		"Logout": "Logout"
 	},
-	"comment": {
+	"comments": {
 		"Guide001": "Select the lines, then click ",
 		"Guide002": "&nbspor&nbsp",
 		"Guide003": "",
@@ -82,17 +94,25 @@
 		"ItemDescription": "Item Description",
 		"RequiredQuantity": "Requirement Quantity",
 		"MissingQuantity": "Missing Quantity",
-		"CalculatedDate": "Calculated Date"
+		"CalculatedDate": "Calculated Date",
+		"Ack":"Ack",
+		"AckBy":"Ack By",
+		"AckOn":"Ack On",
+		"Missing":"Missing",
+		"Received":"Received",
+		"ToggleGR":"Toggle GR"
 	},
 	"locationHealth": {
 		"information": "Information",
+    	"none": "None",
     	"good": "On time",
     	"warning": "Minor delays",
 	    "delayed": "Delayed",
 	    "trouble": "Trouble",
+		"AgeSinceAssemblyStarted": "Age since assembly started: ",
 		"TimeUntilAreaThreshhold": "Time until area threshhold: ",
 		"TimeOverAreaThreshhold": "Time over area threshhold: ",
-		"AgeSinceAssemblyStarted": "Age since assembly started: ",
+		"NotApplicable": "Not in production",
 		"Health": "Health "
 	}
 }

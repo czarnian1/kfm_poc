@@ -6,6 +6,9 @@ import { Session } from 'meteor/session'
 
 import createObjectForExport from '../classes/createObjectForExport.jsx';
 
+import CF, {LocationTitles, LocationIcons, ShippingStatuses} from '../classes/CommonFunctions.jsx';
+const cf=new CF();
+
 const T = i18n.createComponent(); // translater component for json lookup
 
 // Navbar of the application
@@ -58,8 +61,8 @@ export default class PanelNavbar extends Component {
     };   
 
   render() {
-    console.log("PanelNavbar:render");
-
+//    console.log("PanelNavbar:render");
+    
     return(
       <nav className="navbar navbar-default" role="navigation" id="render-application-navbar">
             
@@ -100,9 +103,10 @@ export default class PanelNavbar extends Component {
           </ul>
 
           <ul className="nav navbar-nav navbar-right">
-            <li>
-              <a href="#"><AccountsUIWrapper /></a>
-            </li>
+           {
+                 cf.AllowSelfRegistration() ?  <li><a href="#"><AccountsUIWrapper /></a></li>
+                 : <li><h4 style={{margin:'15px'}}><label id="displayUsername" className="label label-success"></label></h4></li>
+           }
                   
             <li className="dropdown">
               <a href="#" className="dropdown-toggle" data-toggle="dropdown"><T>ui.navbar.Admin</T><strong className="caret"></strong></a>
@@ -112,20 +116,23 @@ export default class PanelNavbar extends Component {
                   <a href="#" onClick={ ()=>{this.setLocale('en');} }>English</a>
                 </li>
                   <li>
-                  <a href="#" onClick={ ()=>{this.setLocale('fr');} }>français</a>
+                  <a href="#" onClick={ ()=>{this.setLocale('fr');} }>Français</a>
                 </li>
                 <li>
                   <a href="#" onClick={ ()=>{this.setLocale('ja');} }>日本語</a>
                 </li>
-                      
-                <li className="divider"></li>
 
-                <li>
-                  <a href="/LoginAccount"><T>ui.login.ManageAccount</T></a>
+                <li className="divider"></li>
+                <li id="LiManageUsers">
+                  <a href="/ManageUsers"><T>ui.manageAccount.ManageUsers</T></a>
                 </li>
                   
                 <li className="divider"></li>
+                <li id="LiManageAccount">
+                  <a href={"/ManageAccount/"+Meteor.userId()}><T>ui.manageAccount.ManageAccount</T></a>
+                </li>
                   
+                <li className="divider"></li>
                 <li>
                   <a href="/Login" onClick={this.onClickLogout}><T>ui.navbar.Logout</T></a>
                 </li>
@@ -137,4 +144,25 @@ export default class PanelNavbar extends Component {
       </nav>
       );
   };
+
+  componentDidMount(){
+//      console.log("panelNavbar:componentDidMount");
+      Tracker.autorun(()=>{
+          if(Meteor.user()==undefined)  return;
+          
+          $('#displayUsername').html(Meteor.user().username);
+          
+          if( cf.Role(Meteor.user()).AdminScreen ){
+              $('#LiManageUsers').css('pointer-events', 'auto');
+              $('#LiManageUsers').css('opacity', 1.0);
+          }
+          else{
+              $('#LiManageUsers').css('pointer-events', 'none');
+              $('#LiManageUsers').css('opacity', 0.4);
+          }
+          
+          $("#LiManageAccount a").attr("href", '/ManageAccount/'+Meteor.userId());
+      });
+  }
+  
 }

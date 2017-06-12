@@ -3,140 +3,153 @@ import { render } from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Link } from 'react-router';
 
+import '../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+
 import { prod_monitor } from '../../api/prod_monitor.js';
 import { prod_monitor_comment } from '../../api/prod_monitor_comment.js';
 import { prod_monitor_parts } from '../../api/prod_monitor_parts.js';
 
-import CF from '../classes/CommonFunctions.jsx';
+import CF, {LocationTitles, LocationIcons, ShippingStatuses} from '../classes/CommonFunctions.jsx';
 const cf=new CF();
+
+import CheckboxFilter, {TrueFalseFilter} from './CheckboxFilter.jsx';
+
 
 const T = i18n.createComponent(); // translater component for json lookup universe:i18n
 
 export class PanelMain extends Component {
     
     updateDisplay(){
+//        console.log("PanelMain:updateDisplay()");
         if(this.props.products == undefined)    return;
         if(this.props.products <= 0)    return;
         
         this.props.products.map((p)=>{
-           var r=cf.productStatus(p);
+//            console.log("PanelMain:updateDisplay():products.map()");
+            var r=cf.productStatus(p);
 
-           // Comment
-           var c=prod_monitor_comment.find({"ID_NO":p.ID_NO.trim()}).count();
-           console.log('prod_monitor_comment rows count='+c);
-           $("#"+p.ID_NO.trim()+" .classComment").html(0 < c ? '<span class="glyphicon glyphicon-exclamation-sign text-warning" />':'<span class="glyphicon glyphicon-ok text-success" />');
+            // Comments
+            var c=prod_monitor_comment.find({"ID_NO":p.ID_NO.trim()}).count();
+            prod_monitor.update(
+                {"_id":p._id},
+                {$set:{"Comments":c}}
+            );
+
+            // Missing parts
+            var mp=prod_monitor_parts.find({"ID_NO":p.ID_NO.trim(),'Ack':false}).count();
+            prod_monitor.update(
+                {"_id":p._id},
+                {$set:{"MissingParts":mp}}
+            );
            
-           // Tractor Status MSJ added ready for FSM even if !r.isOngoing
-           if(!r.error) $("#"+p.ID_NO.trim()+" .classTractorStatus").html(r.isOnGoing ? '<i class="kubota-fs-32 '+cf.locationIcon(p.LOCATIONSTATUS)+'"></i>'+i18n.__(cf.locationTitle(p.LOCATIONSTATUS)):'<i class="kubota-fs-32 '+cf.locationIcon(p.LOCATIONSTATUS)+'"></i>'+i18n.__(cf.locationTitle(p.LOCATIONSTATUS)));
-           
-           // Missing parts
-           var mp=prod_monitor_parts.find({"ID_NO":p.ID_NO.trim()}).count();
-           console.log('prod_monitor_parts rows count='+c);
-           $("#"+p.ID_NO.trim()+" .classMissingParts").html(0 < mp ? '<span class="glyphicon glyphicon-exclamation-sign text-warning" />':'<span class="glyphicon glyphicon-ok text-success" />');
-           
-           // SHIPPING_STATUS
-           $("#"+p.ID_NO.trim()+" .classShippingStatus").html(i18n.__(r.shippingStatus));
-           
-           // Row's color
-           //
-           //if(!r.error) $("#"+p.ID_NO.trim()).css('background-color',r[p.LOCATIONSTATUS].thresholdColor);
-           if(r[p.LOCATIONSTATUS].thresholdClassName) {
-               $("#"+p.ID_NO.trim())[0].className = r[p.LOCATIONSTATUS].thresholdClassName;
-           } else {
-               console.log("no need to toggle class");
-           }
+            // Row's color
+            if(r.error || r[p.LOCATION_STATUS]==undefined || r[p.LOCATION_STATUS].thresholdClassName==undefined)  return;
+
+            $("."+p.ID_NO.trim()).removeClass(  $("."+p.ID_NO.trim()).attr('class')  ).addClass( p.ID_NO.trim()+' '+r[p.LOCATION_STATUS].thresholdClassName );
         });
     }
-        
-    render() {
-        return (
-                <div className="container-fluid table-responsive">
-                    <table className="table table-bordered table-responsive">
-                        <thead>
-                            <tr>
-                                <th rowSpan={2}><center><T>ui.common.MonthlySequenceno</T></center></th>
-                                <th rowSpan={2}><center><T>ui.common.IdNo</T></center></th>
-                                <th rowSpan={2}><center><T>ui.common.ModelCode</T></center></th>
-                                <th rowSpan={2}><center><T>ui.common.ModelDescription</T></center></th>
-                                <th rowSpan={2}><center><T>ui.common.PlannedFinish</T></center></th>
-                                <th rowSpan={2}><center><T>ui.common.Comment</T></center></th>
-                                <th rowSpan={2}><center><T>ui.common.TractorStatus</T></center></th>
-                                <th rowSpan={2}><center><T>ui.common.MissingParts</T></center></th>
-                                <th colSpan={2}><center><T>ui.common.ChassisLine</T></center></th>
-                                <th colSpan={2}><center><T>ui.common.PaintLine</T></center></th>
-                                <th colSpan={2}><center><T>ui.common.TractorLine</T></center></th>
-                                <th colSpan={2}><center><T>ui.common.ReworkBeforeMQ</T></center></th>
-                                <th colSpan={2}><center><T>ui.common.MQLine</T></center></th>
-                                <th colSpan={2}><center><T>ui.common.ReworkAfterMQ</T></center></th>
-                                <th rowSpan={2}><center><T>ui.common.ProductionCompletion</T></center></th>
-                                <th colSpan={2}><center><T>ui.common.Inspection</T></center></th>
-                                <th colSpan={2}><center><T>ui.common.ReworkDuringInspection</T></center></th>
-                                <th><center><T>ui.common.ShippingStatus</T></center></th>
-                                <th rowSpan={2}><center><T>ui.common.Shipping</T></center></th>
-                            </tr>
-                            <tr>
-                                <th><center><T>ui.common.Start</T></center></th>
-                                <th><center><T>ui.common.End</T></center></th>
-                                <th><center><T>ui.common.Start</T></center></th>
-                                <th><center><T>ui.common.End</T></center></th>
-                                <th><center><T>ui.common.Start</T></center></th>
-                                <th><center><T>ui.common.End</T></center></th>
-                                <th><center><T>ui.common.Start</T></center></th>
-                                <th><center><T>ui.common.End</T></center></th>
-                                <th><center><T>ui.common.Start</T></center></th>
-                                <th><center><T>ui.common.End</T></center></th>
-                                <th><center><T>ui.common.Start</T></center></th>
-                                <th><center><T>ui.common.End</T></center></th>
-                                <th><center><T>ui.common.Start</T></center></th>
-                                <th><center><T>ui.common.End</T></center></th>
-                                <th><center><T>ui.common.Start</T></center></th>
-                                <th><center><T>ui.common.End</T></center></th>
-                                <th><center></center></th>
-                            </tr>
-                        </thead>
+    
 
-                        <tbody>
-                            {this.props.products.map(function(p) {
-                                return (
-                                    <tr id={p.ID_NO.trim()}>
-                                        <td>{cf.formatString(p.MONTHLY_SEQ)}</td>
-                                        <td><Link to={"/Comment/"+p.ID_NO.trim()}>{cf.formatString(p.ID_NO.trim())}</Link></td>
-                                        <td>{cf.formatString(p.MODEL_CODE)}</td>
-                                        <td>{cf.formatString(p.REMARKS)}</td>
-                                        <td>{cf.formatDateTime(p.PLAN_PROD_FINISH_DATE)}</td>
-                                        <td><Link to={"/Comment/"+p.ID_NO.trim()}><center className="classComment"></center></Link></td>
-                                        <td className="classTractorStatus"></td>
-                                        <td><Link to={"/MissingParts/"+p.ID_NO.trim()}><center className="classMissingParts"></center></Link></td>
-                                        <td>{cf.formatDateTime(p.CHASSIS_LINE_START_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.CHASSIS_LINE_END_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.PAINT_LINE_START_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.PAINT_LINE_END_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.TRACTOR_LINE_START_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.TRACTOR_LINE_END_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.REWORK_BEFORE_MQ_START_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.REWORK_BEFORE_MQ_END_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.MQ_LINE_START_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.MQ_LINE_END_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.REWORK_AFTER_MQ_START_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.REWORK_AFTER_MQ_END_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.PRODUCTION_END_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.INSPECTION_START_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.INSPECTION_END_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.REWORK_DUR_INSP_START_DATE)}</td>
-                                        <td>{cf.formatDateTime(p.REWORK_DUR_INSP_END_DATE)}</td>
-                                        <td className="classShippingStatus"></td>
-                                        <td>{cf.formatDateTime(p.SHIPPING_DATE)}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+    componentWillMount(){
+        console.log('PaneMain:componentWillMount');
+    }
+
+    
+    render() {
+//        console.log('PaneMain:render()');
+        
+        var trClassName=(row, rowIndex)=>{
+            var r=cf.productStatus(row);
+
+            // Row's color
+            if(r.error || r[row.LOCATION_STATUS]==undefined || r[row.LOCATION_STATUS].thresholdClassName==undefined)  return row.ID_NO.trim();
+            return row.ID_NO.trim() +' '+ r[row.LOCATION_STATUS].thresholdClassName;
+        }
+        
+        var formatIdNo=(cell,row,formatExtraData,rowIdx)=>{
+            return  '<a href="/Comments/' + row.ID_NO.trim() + '">' + row.ID_NO.trim() + '</a>';
+            
+        }
+        
+        var formatComment=(cell,row,formatExtraData,rowIdx)=>{
+            return  '<a href="/Comments/' + row.ID_NO.trim() + '">' + (0 < cell ? '<span class="glyphicon glyphicon-exclamation-sign text-warning" />':'<span class="glyphicon glyphicon-ok text-success" />') + '</a>';
+        }
+        
+        var formatLocationStatus=(cell,row,formatExtraData,rowIdx)=>{
+            return  '<i class="kubota-fs-32 '+LocationIcons[cell]+'"></i>'+i18n.__(LocationTitles[cell]);
+//            return  '<span><i class="kubota-fs-32 '+LocationIcons[cell]+'"></i><T>'+LocationTitles[cell]+'</T></span>';
+//            return  (<i class="kubota-fs-32 {LocationIcons[cell]}"></i><T>{LocationTitles[cell]}</T>);
+//            return  (<i class="kubota-fs-32 {LocationIcons[cell]}"></i>);
+//            return  <span><i class="kubota-fs-32 {LocationIcons[cell]}" ></i><T>{LocationTitles[cell]}</T></span>;
+//            return  <T><i class="kubota-fs-32 {LocationIcons[cell]}" ></i></T>;
+
+        }
+        
+        var formatMissingParts=(cell,row,formatExtraData,rowIdx)=>{
+            return  '<a href="/MissingParts/' + row.ID_NO.trim() + '">' + (0 < cell ? '<span class="glyphicon glyphicon-exclamation-sign text-warning" />':'<span class="glyphicon glyphicon-ok text-success" />') + '</a>';
+        }
+        
+        var formatShippingStatus=(cell,row,formatExtraData,rowIdx)=>{
+            return  <T>{ShippingStatuses[cell]}</T>;
+        }
+        
+        var hide=(column)=>{
+            var u=Meteor.user();
+            if(u==undefined || u.profile==undefined || u.profile.ShownColumns==undefined)    return  false;
+
+            if(u['profile']['ShownColumns'][column]==undefined)    return  false;
+            else    return  ! u['profile']['ShownColumns'][column];
+        }
+        
+        const cellStyle={'wordBreak':'keep-all','whiteSpace':'normal'};
+        const filterLocationStatus={type:'SelectFilter',placeholder:' ',options:cf.i18nLocationTitles()};
+        const filterMissingParts={type:'CustomFilter',getElement:TrueFalseFilter,customFilterParameters:{textTrue:'ui.missingParts.Missing',textFalse:'ui.missingParts.Received'}};
+        const filterShippingStatus={type:'SelectFilter',placeholder:' ',options:cf.i18nShippingStatuses()};
+        
+//        console.log('PaneMain:render:return()');
+        return (
+            <div className="container">
+
+                <BootstrapTable data={this.props.products} trClassName={trClassName} search scrollTop={'Top'} options={{'defaultSortName':'MONTHLY_SEQ','defaultSortOrder':'asc'}}>
+                
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='MONTHLY_SEQ'                 dataFormat={cf.formatString} dataSort filter={{type:'TextFilter',placeholder:' '}} hidden={hide('MonthlySequenceNo')}><T>ui.common.MonthlySequenceNo</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='ID_NO'                       dataFormat={formatIdNo} dataSort filter={{type:'TextFilter',placeholder:' '}} isKey><T>ui.common.IdNo</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='90px'  dataField='MODEL_CODE'                  dataFormat={cf.formatString} searchable={false} hidden><T>ui.common.ModelCode</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='120px' dataField='REMARKS'                     dataFormat={cf.formatString} searchable={false} hidden><T>ui.common.ModelDescription</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='250px' dataField='PLAN_PROD_FINISH_DATE'       dataFormat={cf.formatDateTime} dataSort filter={{type:'DateFilter'}}><T>ui.common.PlannedFinish</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='Comments'                    dataFormat={formatComment} searchable={false}><T>ui.common.Comments</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='120px' dataField='LOCATION_STATUS'             dataFormat={formatLocationStatus} dataSort searchable={false} filter={filterLocationStatus}><T>ui.common.LocationStatus</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='MissingParts'                dataFormat={formatMissingParts} searchable={false} filter={filterMissingParts}><T>ui.common.MissingParts</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='CHASSIS_LINE_START_DATE'     dataFormat={cf.formatDateTime} dataSort hidden={hide('ChassisLine')}><T>ui.common.ChassisLine</T><br /><T>ui.common.Start</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='CHASSIS_LINE_END_DATE'       dataFormat={cf.formatDateTime} dataSort hidden={hide('ChassisLine')}><T>ui.common.ChassisLine</T><br /><T>ui.common.End</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='PAINT_LINE_START_DATE'       dataFormat={cf.formatDateTime} dataSort hidden={hide('PaintLine')}><T>ui.common.PaintLine</T><br /><T>ui.common.Start</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='PAINT_LINE_END_DATE'         dataFormat={cf.formatDateTime} dataSort hidden={hide('PaintLine')}><T>ui.common.PaintLine</T><br /><T>ui.common.End</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='TRACTOR_LINE_START_DATE'     dataFormat={cf.formatDateTime} dataSort hidden={hide('TractorLine')}><T>ui.common.TractorLine</T><br /><T>ui.common.Start</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='TRACTOR_LINE_END_DATE'       dataFormat={cf.formatDateTime} dataSort hidden={hide('TractorLine')}><T>ui.common.TractorLine</T><br /><T>ui.common.End</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='REWORK_BEFORE_MQ_START_DATE' dataFormat={cf.formatDateTime} dataSort hidden={hide('ReworkBeforeMQ')}><T>ui.common.ReworkBeforeMQ</T><br /><T>ui.common.Start</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='REWORK_BEFORE_MQ_END_DATE'   dataFormat={cf.formatDateTime} dataSort hidden={hide('ReworkBeforeMQ')}><T>ui.common.ReworkBeforeMQ</T><br /><T>ui.common.End</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='MQ_LINE_START_DATE'          dataFormat={cf.formatDateTime} dataSort hidden={hide('MQLine')}><T>ui.common.MQLine</T><br /><T>ui.common.Start</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='MQ_LINE_END_DATE'            dataFormat={cf.formatDateTime} dataSort hidden={hide('MQLine')}><T>ui.common.MQLine</T><br /><T>ui.common.End</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='REWORK_AFTER_MQ_START_DATE'  dataFormat={cf.formatDateTime} dataSort hidden={hide('ReworkAfterMQ')}><T>ui.common.ReworkAfterMQ</T><br /><T>ui.common.Start</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='REWORK_AFTER_MQ_END_DATE'    dataFormat={cf.formatDateTime} dataSort hidden={hide('ReworkAfterMQ')}><T>ui.common.ReworkAfterMQ</T><br /><T>ui.common.End</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='PRODUCTION_END_DATE'         dataFormat={cf.formatDateTime} dataSort hidden={hide('ProductionCompletion')}><T>ui.common.ProductionCompletion</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='INSPECTION_START_DATE'       dataFormat={cf.formatDateTime} dataSort hidden={hide('Inspection')}><T>ui.common.Inspection</T><br /><T>ui.common.Start</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='INSPECTION_END_DATE'         dataFormat={cf.formatDateTime} dataSort hidden={hide('Inspection')}><T>ui.common.Inspection</T><br /><T>ui.common.End</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='REWORK_DUR_INSP_START_DATE'  dataFormat={cf.formatDateTime} dataSort hidden={hide('ReworkDuringInspection')}><T>ui.common.ReworkDuringInspection</T><br /><T>ui.common.Start</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='REWORK_DUR_INSP_END_DATE'    dataFormat={cf.formatDateTime} dataSort hidden={hide('ReworkDuringInspection')}><T>ui.common.ReworkDuringInspection</T><br /><T>ui.common.End</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='120px' dataField='SHIPPING_STATUS'             dataFormat={formatShippingStatus} dataSort searchable={false} filter={filterShippingStatus}><T>ui.common.ShippingStatus</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='SHIPPING_DATE'               dataFormat={cf.formatDateTime} searchable={false}  ><T>ui.common.Shipping</T></TableHeaderColumn>
+                
+                </BootstrapTable>
+
+            </div>
         );
     }
 
     componentDidMount() {
-        console.log("PanelMain:componentDidMount");
+//        console.log("PanelMain:componentDidMount");
+
         // Set timer to update the displayed values.
         this.setState({
             'timerId': Meteor.setInterval(
@@ -149,12 +162,16 @@ export class PanelMain extends Component {
     }
     
     componentDidUpdate() {
-        console.log("PanelMain:componentDidUpdate");
+//        console.log("PanelMain:componentDidUpdate");
         this.updateDisplay();
+
+        i18n.onChangeLocale ((newLocale)=>{
+            this.updateDisplay();
+        })
     }
 
     componentWillUnmount() {
-        console.log("PanelMain:componentWillUnmount");
+//        console.log("PanelMain:componentWillUnmount");
         if(this.state!=undefined && this.state.timerId!=undefined && this.state.timerId!=null)   Meteor.clearInterval(this.state.timerId);
     }
 };
@@ -164,11 +181,32 @@ export class PanelMain extends Component {
 import { Session } from 'meteor/session'
 
 export default PanelMain = createContainer(() => {
-    console.log("PanelMain:createContainer");
+//    console.log("PanelMain:createContainer");
+    
+    var f={};
+    // Production status (means 1 hour limit)
     Session.setDefault("productionStatus", {"$gte" : new Date(1)} );
+    f['$or']=[
+        {"CREATE_DATE":Session.get("productionStatus")},
+        {"UPDATE_DATE":Session.get("productionStatus")}
+    ];
+    
+    // Filter ID_NO
+    var u=Meteor.user();
+    if(u!=undefined && u.profile!=undefined && u.profile.IdNoFilter!=undefined){
+        if(u.profile.IdNoFilter.Start!=undefined && u.profile.IdNoFilter.End!=undefined){
+            f['ID_NO']={"$gte":u.profile.IdNoFilter.Start,"$lte":u.profile.IdNoFilter.End};
+        }
+        if(u.profile.IdNoFilter.Start!=undefined && u.profile.IdNoFilter.End==undefined){
+            f['ID_NO']={"$gte":u.profile.IdNoFilter.Start};
+        }
+        if(u.profile.IdNoFilter.Start==undefined && u.profile.IdNoFilter.End!=undefined){
+            f['ID_NO']={"$lte":u.profile.IdNoFilter.End};
+        }
+    }
     
     return {
-        products: prod_monitor.find({$or: [ {"CREATE_DATE":Session.get("productionStatus")} , {"UPDATE_DATE":Session.get("productionStatus")} ]}).fetch(),
+        products: prod_monitor.find(f).fetch(),
     };
 }, PanelMain);
 
