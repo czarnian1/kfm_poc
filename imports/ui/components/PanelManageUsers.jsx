@@ -16,7 +16,7 @@ const cf=new CF();
 export class PanelManageUsers extends Component {
 
     render() {
-        console.log('PanelManageUsers:render()');
+//        console.log('PanelManageUsers:render()');
 
         // In the Admin role?
         if ( ! cf.Role(Meteor.user()).AdminScreen ) {
@@ -29,7 +29,7 @@ export class PanelManageUsers extends Component {
         }
 
         var onClickDelete=(_id)=>{
-            console.log('PanelManageUsers:onClickDelete()');
+//            console.log('PanelManageUsers:onClickDelete()');
 
             // Update MongoDB
             Meteor.call(
@@ -42,7 +42,7 @@ export class PanelManageUsers extends Component {
         }
         
         var onChangeRole=(_id,val)=>{
-            console.log('PanelManageUsers:onChangeRole()');
+//            console.log('PanelManageUsers:onChangeRole()');
 
             var argv={};
             
@@ -138,7 +138,7 @@ export class PanelManageUsers extends Component {
 }
 
 export default PanelManageUsers = createContainer(() => {
-    console.log("PanelManageUsers:createContainer");
+//    console.log("PanelManageUsers:createContainer");
     
     Meteor.subscribe( 'users' );
     

@@ -22,13 +22,13 @@ db.users.insert(
 
 db.prod_monitor.insert(
 {
-"ID_NO" : "30GO01100"
-, "CREATE_DATE" :                   ISODate("2017-03-25T09:30:25Z")
+"ID_NO" : "30GO01122"
+, "CREATE_DATE" :                   ISODate("2017-06-12T09:30:25Z")
 , "CREATE_BY" : "KK11      "
-, "UPDATE_DATE" :                   ISODate("2017-03-25T09:30:26Z")
+, "UPDATE_DATE" :                   ISODate("2017-06-12T09:30:26Z")
 , "UPDATE_BY" : "KK22      "
 , "PARTS_PREPARATION_STATUS" : ""
-, "CHASSIS_LINE_START_DATE" :       ISODate("2017-03-25T09:30:25Z")
+, "CHASSIS_LINE_START_DATE" :       ISODate("2017-06-12T09:30:25Z")
 }
 )
 
@@ -281,11 +281,24 @@ db.prod_monitor.update(
                     
 
 db.prod_monitor_comment.insert({
- ID_NO: "30GO01100"
+ ID_NO: "30GO01122"
 , SEQ_NO: 1
-, CREATE_DATE: ISODate("2017-03-25T10:32:22Z")
+, CREATE_DATE: ISODate("2017-06-12T10:32:22Z")
 , CREATE_BY: "testuser1"
-, UPDATE_DATE: ISODate("2017-03-25T10:32:22Z")
+, UPDATE_DATE: ISODate("2017-06-12T10:32:22Z")
 , UPDATE_BY: "testuser1"
 , USER_COMMENT: "AA 30GO01100 AA"
 })
+
+
+
+db.prod_monitor_parts.insert({
+ "ID_NO" : "30GO01122", 
+ "SEQ_NO" : "1", 
+ "CALCULATED_DATE" : ISODate("2017-06-12T22:15:33Z"), 
+ "ITEM_NUMBER" : "Item 111    ", 
+ "ITEM_DESCRIPTION" : "Item 111 description", 
+ "REQUIREMENT_QTY" : 1, 
+ "MISSING_QTY" : 1
+})
+

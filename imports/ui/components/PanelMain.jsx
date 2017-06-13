@@ -37,7 +37,7 @@ export class PanelMain extends Component {
             );
 
             // Missing parts
-            var mp=prod_monitor_parts.find({"ID_NO":p.ID_NO.trim(),'Ack':false}).count();
+            var mp=prod_monitor_parts.find({"ID_NO":p.ID_NO.trim(),'Ack':{'$ne':true}}).count();
             prod_monitor.update(
                 {"_id":p._id},
                 {$set:{"MissingParts":mp}}
@@ -50,11 +50,11 @@ export class PanelMain extends Component {
         });
     }
     
-
+/*
     componentWillMount(){
         console.log('PaneMain:componentWillMount');
     }
-
+*/
     
     render() {
 //        console.log('PaneMain:render()');
@@ -73,11 +73,13 @@ export class PanelMain extends Component {
         }
         
         var formatComment=(cell,row,formatExtraData,rowIdx)=>{
-            return  '<a href="/Comments/' + row.ID_NO.trim() + '">' + (0 < cell ? '<span class="glyphicon glyphicon-exclamation-sign text-warning" />':'<span class="glyphicon glyphicon-ok text-success" />') + '</a>';
+            if(row.Comments==undefined || row.Comments==0)  return  '<a href="/Comments/' + row.ID_NO.trim() + '"><span class="glyphicon glyphicon-ok text-success" /></a>';
+            return  '<a href="/Comments/' + row.ID_NO.trim() + '"><span class="glyphicon glyphicon-exclamation-sign text-warning" /></a>';
         }
         
         var formatLocationStatus=(cell,row,formatExtraData,rowIdx)=>{
-            return  '<i class="kubota-fs-32 '+LocationIcons[cell]+'"></i>'+i18n.__(LocationTitles[cell]);
+            if(row.LOCATION_STATUS==undefined)  return <span>Incorrect LOCATION_STATUS</span>;
+            return  '<i class="kubota-fs-32 '+LocationIcons[row.LOCATION_STATUS]+'"></i>'+i18n.__(LocationTitles[row.LOCATION_STATUS]);
 //            return  '<span><i class="kubota-fs-32 '+LocationIcons[cell]+'"></i><T>'+LocationTitles[cell]+'</T></span>';
 //            return  (<i class="kubota-fs-32 {LocationIcons[cell]}"></i><T>{LocationTitles[cell]}</T>);
 //            return  (<i class="kubota-fs-32 {LocationIcons[cell]}"></i>);
@@ -87,11 +89,13 @@ export class PanelMain extends Component {
         }
         
         var formatMissingParts=(cell,row,formatExtraData,rowIdx)=>{
-            return  '<a href="/MissingParts/' + row.ID_NO.trim() + '">' + (0 < cell ? '<span class="glyphicon glyphicon-exclamation-sign text-warning" />':'<span class="glyphicon glyphicon-ok text-success" />') + '</a>';
+            if(row.MissingParts==undefined || row.MissingParts==0)  return  '<a href="/MissingParts/' + row.ID_NO.trim() + '"><span class="glyphicon glyphicon-ok text-success" /></a>';
+            return  '<a href="/MissingParts/' + row.ID_NO.trim() + '"><span class="glyphicon glyphicon-exclamation-sign text-warning" /></a>';
         }
         
         var formatShippingStatus=(cell,row,formatExtraData,rowIdx)=>{
-            return  <T>{ShippingStatuses[cell]}</T>;
+            if(row.SHIPPING_STATUS==undefined)  return  <T>{ShippingStatuses[0]}</T>;
+            return  <T>{ShippingStatuses[row.SHIPPING_STATUS]}</T>;
         }
         
         var hide=(column)=>{
@@ -140,13 +144,17 @@ export class PanelMain extends Component {
                     <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='REWORK_DUR_INSP_END_DATE'    dataFormat={cf.formatDateTime} dataSort hidden={hide('ReworkDuringInspection')}><T>ui.common.ReworkDuringInspection</T><br /><T>ui.common.End</T></TableHeaderColumn>
                     <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='120px' dataField='SHIPPING_STATUS'             dataFormat={formatShippingStatus} dataSort searchable={false} filter={filterShippingStatus}><T>ui.common.ShippingStatus</T></TableHeaderColumn>
                     <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='SHIPPING_DATE'               dataFormat={cf.formatDateTime} searchable={false}  ><T>ui.common.Shipping</T></TableHeaderColumn>
-                
+                    
                 </BootstrapTable>
 
             </div>
         );
     }
 
+   /*
+    * 
+    */
+    
     componentDidMount() {
 //        console.log("PanelMain:componentDidMount");
 

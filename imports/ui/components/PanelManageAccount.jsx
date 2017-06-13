@@ -184,7 +184,7 @@ export class PanelManageAccount extends Component {
         var u=this.props.user
         
         var showRole=(user)=>{
-            console.log('showRole');
+//            console.log('showRole');
             if(user==undefined) return;
             
             var r=cf.Roles()[0].role;
@@ -485,7 +485,7 @@ export class PanelManageAccount extends Component {
 */
     
     componentDidUpdate() {
-        console.log("panelManageAccount:componentDidUpdate");
+//        console.log("panelManageAccount:componentDidUpdate");
         if (this.props.user==undefined )     return;
 
         var u=this.props.user;
@@ -566,7 +566,7 @@ export class PanelManageAccount extends Component {
 import { createContainer } from 'meteor/react-meteor-data';
 
 export default PanelManageAccount = createContainer(({params}) => {
-    console.log("PanelManageAccount:createContainer");
+//    console.log("PanelManageAccount:createContainer");
     
     Meteor.subscribe( 'users' );
     

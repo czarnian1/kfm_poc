@@ -14,6 +14,7 @@ export class PanelLocationHealth extends Component {
 //        console.log("PanelLocationHealth:updateDisplay");
         if(this.props.product == undefined)    return;
         var p=this.props.product;
+        if(p.LOCATION_STATUS == undefined)    return;
         var r=cf.productStatus(this.props.product);
         
         var i,t,s;

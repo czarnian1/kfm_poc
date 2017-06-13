@@ -19,7 +19,7 @@ export class PanelMissingParts extends Component {
     
     render(){
         var onClickUpdate=()=>{
-            console.log(this.refs.MissingPartsTable.state.selectedRowKeys)
+//            console.log(this.refs.MissingPartsTable.state.selectedRowKeys)
             
             for(var currentValue in this.refs.MissingPartsTable.state.selectedRowKeys){
                 var p=prod_monitor_parts.findOne({'ID_NO':this.props.ID_NO,'ITEM_NUMBER':this.refs.MissingPartsTable.state.selectedRowKeys[currentValue]});
@@ -48,13 +48,14 @@ export class PanelMissingParts extends Component {
         }
         
         var formatAck=(cell,row,formatExtraData,rowIdx)=>{
-            return  (row.Ack===false ? '<span class="glyphicon glyphicon-exclamation-sign text-warning" />' : '<span class="glyphicon glyphicon-ok text-success" />');
+            return  (row.Ack===true ? '<span class="glyphicon glyphicon-ok text-success" />' : '<span class="glyphicon glyphicon-exclamation-sign text-warning" />');
+//            return  (row.Ack===false ? '<span class="glyphicon glyphicon-exclamation-sign text-warning" />' : '<span class="glyphicon glyphicon-ok text-success" />');
         }
 
         var selectRowProp=()=>{
             if(cf.Role(Meteor.user()).GoodsReceipt) return {mode:'checkbox'}
 
-            return  false;
+            return  {};
         };
 
         
