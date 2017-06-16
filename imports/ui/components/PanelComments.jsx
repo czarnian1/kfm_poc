@@ -12,7 +12,8 @@ const T = i18n.createComponent(); // translater component for json lookup univer
 export class PanelComments extends Component {
 
     render(){
-        
+        // console.log("PanelComments:render()");
+
         var onClickUpdate=(e)=>{
             $("#commentsTable > tr").each(function(){
                 if($('.'+$(this).attr('class')+' .rowCheck').length <= 0)   return;
@@ -45,8 +46,8 @@ export class PanelComments extends Component {
         }
 
         var onClickInsert=(e)=>{
-            console.log("PanelComments:onClickInsert");
-            console.log(this.props.ID_NO);
+            // console.log("PanelComments:onClickInsert");
+            // console.log(this.props.ID_NO);
 
             var argv=[];
             var maxS=prod_monitor_comment.findOne({"ID_NO":this.props.ID_NO}, {sort:  {SEQ_NO: -1}});
@@ -174,7 +175,8 @@ export class PanelComments extends Component {
     }
 
     componentDidUpdate() {
-//        console.log("PanelComments:componentDidUpdate");
+        // console.log("PanelComments:componentDidUpdate()");
+        // console.log(Meteor.user());
         this.props.comments.map(
             (n)=>{
                 $('.'+n._id.valueOf()+' .rowText').val(n.USER_COMMENT);
@@ -189,6 +191,10 @@ export class PanelComments extends Component {
 import { createContainer } from 'meteor/react-meteor-data';
 
 export default PanelComments = createContainer(({params}) => {
+    // console.log("PanelComments:createContainer()");
+    // console.log(Meteor.user());
+    Meteor.user();  // This require in the createContainer(). Unless this, this program does not react, componentDidUpdate() is not triggered.
+
     return {
         ID_NO: params.id,
         comments: prod_monitor_comment.find({"ID_NO": params.id }, {sort:['SEQ_NO']}).fetch(),

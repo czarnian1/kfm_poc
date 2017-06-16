@@ -161,6 +161,7 @@ export default class CF {
 
     judgeStatus(spent,ary){
         if(spent==undefined)    return  {error:true};
+        if(spent < 0)    return  {error:true};
 
         if(ary==undefined)  return  {error:true};
         if(ary.length<=0)   return  {error:true};

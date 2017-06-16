@@ -191,6 +191,8 @@ import { Session } from 'meteor/session'
 export default PanelMain = createContainer(() => {
 //    console.log("PanelMain:createContainer");
     
+    Meteor.user();  // This require in the createContainer(). Unless this, this program does not react, componentDidUpdate() is not triggered.
+
     var f={};
     // Production status (means 1 hour limit)
     Session.setDefault("productionStatus", {"$gte" : new Date(1)} );

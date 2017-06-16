@@ -11,7 +11,7 @@ const T = i18n.createComponent(); // translater component for json lookup univer
 export class PanelLocationHealth extends Component {
     
     updateDisplay(){
-//        console.log("PanelLocationHealth:updateDisplay");
+        // console.log("PanelLocationHealth:updateDisplay");
         if(this.props.product == undefined)    return;
         var p=this.props.product;
         if(p.LOCATION_STATUS == undefined)    return;
@@ -20,7 +20,7 @@ export class PanelLocationHealth extends Component {
         var i,t,s;
         
         // Location
-//        console.log("PanelLocationHealth:updateDisplay: Location");
+        // console.log("PanelLocationHealth:updateDisplay: Location");
         if(r.error) $("#state_Location").html("System error.");
         else{
             $("#state_Location").html(
@@ -32,6 +32,7 @@ export class PanelLocationHealth extends Component {
         }
         
         // SHIPPING_STATUS
+        // console.log("PanelLocationHealth:updateDisplay: SHIPPING_STATUS");
         if(r.error) $("#state_ShippingStatus").html("System error.");
         else        $("#state_ShippingStatus").html(i18n.__(ShippingStatuses[p.SHIPPING_STATUS]));
         
@@ -50,6 +51,7 @@ export class PanelLocationHealth extends Component {
         }
         
         // Time until area Threshhold
+        // console.log("PanelLocationHealth:updateDisplay: Time until area Threshhold");
         if(r.error) $("#state_TimeThreshold").html("System error.");
         else{
             if(r.isOnGoing){
@@ -74,6 +76,7 @@ export class PanelLocationHealth extends Component {
         }
       
         // Health
+        // console.log("PanelLocationHealth:updateDisplay: Health");
         if(r.error) $("#state_Health").html("System error.");
         else{
             if(r.isOnGoing){
@@ -86,10 +89,13 @@ export class PanelLocationHealth extends Component {
         /*
          * For each LOCATION_STATUS
          */
-        for(i=1;i<=14;++i){
-            if(r[i]!=undefined && r[i]!=null)    $('#LOCATION_STATUS'+i+' .health').html('<span style="color:'+r[i].thresholdColor+'">'+i18n.__(r[i].thresholdMessage)+'</span>');
+        // console.log("PanelLocationHealth:updateDisplay: For each LOCATION_STATUS");
+        if(r.error) $('#LOCATION_STATUS'+i+' .health').html("System error.");
+        else{
+            for(i=1;i<=14;++i){
+                if(r[i]!=undefined && r[i]!=null)    $('#LOCATION_STATUS'+i+' .health').html('<span style="color:'+r[i].thresholdColor+'">'+i18n.__(r[i].thresholdMessage)+'</span>');
+            }
         }
-
 
     }
 

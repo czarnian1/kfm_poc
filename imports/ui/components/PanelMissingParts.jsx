@@ -108,6 +108,9 @@ export class PanelMissingParts extends Component {
  import { createContainer } from 'meteor/react-meteor-data';
 
 export default PanelMissingParts = createContainer(({params}) => {
+
+    Meteor.user();  // This require in the createContainer(). Unless this, this program does not react, componentDidUpdate() is not triggered.
+
     return {
         ID_NO: params.id,
         parts: prod_monitor_parts.find({"ID_NO":params.id}).fetch(),
