@@ -49,6 +49,12 @@ i {
   content: "\e907";
 }
 
+.kubota-pad-icon-text {
+  position: relative;
+  top: -10px; /* MSJ: 23-Jun-17 : Move location status icon text slightly to align centrally with kubota icon at font size 32 */
+  left: 1px;
+}
+
 .kubota-mls {
   margin-left: .25em;
 }

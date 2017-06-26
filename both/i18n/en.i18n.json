@@ -5,7 +5,7 @@
 	"common": {
 		"Start": "Start",
 		"End": "End",
-		"MonthlySequenceNo": "Monthly Sequence No",
+		"MonthlySequenceNo": "Month Seq No",
 		"IdNo": "IDNO",
 		"ModelCode": "Model Code",
 		"ModelDescription": "Model Description",
@@ -73,7 +73,7 @@
 	},
 	"navbar": {
 		"ToggleNavigation": "Toggle navigation",
-        "ProductionStatus": "Production status",
+        "ProductionStatus": "Production Monitoring Status",
         "OneoHour": "One hour",
         "Overdue": "Overdue",
         "DataExport": "Export for Excel",

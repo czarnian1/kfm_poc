@@ -79,7 +79,7 @@ export class PanelMain extends Component {
         
         var formatLocationStatus=(cell,row,formatExtraData,rowIdx)=>{
             if(row.LOCATION_STATUS==undefined)  return <span>Incorrect LOCATION_STATUS</span>;
-            return  '<i class="kubota-fs-32 '+LocationIcons[row.LOCATION_STATUS]+'"></i>'+i18n.__(LocationTitles[row.LOCATION_STATUS]);
+            return  '<i class="kubota-fs-32 '+LocationIcons[row.LOCATION_STATUS]+'"></i><span class ="kubota-pad-icon-text">'+i18n.__(LocationTitles[row.LOCATION_STATUS])+"</span>";
 //            return  '<span><i class="kubota-fs-32 '+LocationIcons[cell]+'"></i><T>'+LocationTitles[cell]+'</T></span>';
 //            return  (<i class="kubota-fs-32 {LocationIcons[cell]}"></i><T>{LocationTitles[cell]}</T>);
 //            return  (<i class="kubota-fs-32 {LocationIcons[cell]}"></i>);
