@@ -8,6 +8,7 @@ import RootContainer from '../containers/RootContainer.jsx';
 import PanelLogin from '../components/PanelLogin.jsx';
 import PanelManageAccount from '../components/PanelManageAccount.jsx';
 import PanelMain from '../components/PanelMain.jsx'
+import PanelScreen from '../components/PanelScreen.jsx'
 import PanelComments from '../components/PanelComments.jsx'
 import PanelMissingParts from '../components/PanelMissingParts.jsx'
 import PanelNotFound from '../components/PanelNotFound.jsx';
@@ -19,24 +20,23 @@ export const renderRoutes = () => (
 	<Router history={browserHistory}>
         <Route path="/Login"  component={PanelLogin}/>
         <Redirect from="/" to="/Main" />
-		<Route path="/" component={RootContainer} >
+	<Route path="/" component={RootContainer} >
             <Route path="/Main" component={PanelMain}/>
-            <Route path="/ManageUsers"  component={PanelManageUsers}/>
-        
-            <Route path="/ManageAccount" component={PanelManageAccount}/>
-/*        
-            <Route path="/ManageAccount">
+		/* MSJ : Samsung screen browser default */
+		<Route path="/Screen" component={PanelScreen}/>
+            	<Route path="/ManageUsers"  component={PanelManageUsers}/>
+            	<Route path="/ManageAccount" component={PanelManageAccount}/>
+/*       <Route path="/ManageAccount">
                 <Route path=":id" component={PanelManageAccount}/>
             </Route>
 */        
-        
-            <Route path="/Comments" >
-                <Route path=":id" component={PanelComments}/>
-            </Route>
-            <Route path="/MissingParts" >
-                <Route path=":id" component={PanelMissingParts}/>
-            </Route>
-            <Route path="*" component={PanelNotFound} />
+            	<Route path="/Comments" >
+                	<Route path=":id" component={PanelComments}/>
+            	</Route>
+            	<Route path="/MissingParts" >
+                	<Route path=":id" component={PanelMissingParts}/>
+            	</Route>
+            	<Route path="*" component={PanelNotFound} />
         </Route>
     </Router>
 );

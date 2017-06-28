@@ -222,6 +222,7 @@ export default class CF {
         /*
          * LOCATION_STATUS
          */
+        if(p.LOCATION_STATUS==undefined || p.LOCATION_STATUS==null) p.LOCATION_STATUS=0;    // UKUS 28June2017. null means Pre-production.
         if(p.LOCATION_STATUS < 0 || 14 < p.LOCATION_STATUS)   return  {error:true};
 
         //  00 - pre - production - exported from SAP 

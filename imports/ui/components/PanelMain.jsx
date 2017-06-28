@@ -66,7 +66,7 @@ export class PanelMain extends Component {
             if(r.error || r[row.LOCATION_STATUS]==undefined || r[row.LOCATION_STATUS].thresholdClassName==undefined)  return row.ID_NO.trim();
             return row.ID_NO.trim() +' '+ r[row.LOCATION_STATUS].thresholdClassName;
         }
-        
+     // UKUS 28June2017.
         var formatIdNo=(cell,row,formatExtraData,rowIdx)=>{
             return  '<a href="/Comments/' + row.ID_NO.trim() + '">' + row.ID_NO.trim() + '</a>';
             
@@ -78,7 +78,9 @@ export class PanelMain extends Component {
         }
         
         var formatLocationStatus=(cell,row,formatExtraData,rowIdx)=>{
-            if(row.LOCATION_STATUS==undefined)  return <span>Incorrect LOCATION_STATUS</span>;
+//            if(row.LOCATION_STATUS==undefined)  return <span>Incorrect LOCATION_STATUS</span>;        // UKUS 28June2017.
+            if(row.LOCATION_STATUS==undefined)  row.LOCATION_STATUS=0;      // UKUS 28June2017. "null" means Pre-production.
+
             return  '<i class="kubota-fs-32 '+LocationIcons[row.LOCATION_STATUS]+'"></i><span class ="kubota-pad-icon-text">'+i18n.__(LocationTitles[row.LOCATION_STATUS])+"</span>";
 //            return  '<span><i class="kubota-fs-32 '+LocationIcons[cell]+'"></i><T>'+LocationTitles[cell]+'</T></span>';
 //            return  (<i class="kubota-fs-32 {LocationIcons[cell]}"></i><T>{LocationTitles[cell]}</T>);
