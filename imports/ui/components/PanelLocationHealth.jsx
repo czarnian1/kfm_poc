@@ -33,7 +33,7 @@ export class PanelLocationHealth extends Component {
             $("#state_Location").html(
                 '<span style="color:'+r[p.LOCATION_STATUS].thresholdColor+'">'
                 +'<i class="kubota-fs-32 '+LocationIcons[p.LOCATION_STATUS]+'"></i>'
-                +i18n.__(LocationTitles[p.LOCATION_STATUS])
+                +'<span class="kubota-pad-icon-text">'+i18n.__(LocationTitles[p.LOCATION_STATUS])+'</span>'
                 +'</span>'
             );
         }
