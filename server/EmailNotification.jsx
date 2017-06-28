@@ -63,7 +63,7 @@ export function EmailNotification(prod_monitor){
         var s=cf.productStatus(p);  //  s:productStatus 
         
         // Email Threshold Notification
-        if(s[p.LOCATION_STATUS]==undefined || s[p.LOCATION_STATUS]==null)   thresholdIndex=0;   // UKUS 28June2017.
+        if(s[p.LOCATION_STATUS]==undefined || s[p.LOCATION_STATUS].thresholdIndex==undefined || s[p.LOCATION_STATUS].thresholdIndex==null)   thresholdIndex=0;   // UKUS 28June2017.
         else    thresholdIndex=s[p.LOCATION_STATUS].thresholdIndex;
         
         if( 0 < thresholdIndex && prod_monitor_notification.find({'ID_NO':p.ID_NO, 'LOCATION_STATUS':p.LOCATION_STATUS, 'thresholdIndex':thresholdIndex}).count() <=0 ){
