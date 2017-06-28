@@ -25,6 +25,15 @@ export function EmailNotification(prod_monitor){
 
     var ProductLineEvent=(p,le,m)=>{  // p:product. le:LineEvent. m:message.
         if( prod_monitor_notification.find({'ID_NO':p.ID_NO, 'LineEvent':le}).count() <=0 ){
+
+            // Add to prod_monitor_notification in MongoDB
+            var argv=[];
+            argv["ID_NO"]=p.ID_NO;
+            argv["LineEvent"]= le;
+            argv["SENT_DATE"]=new Date();
+            prod_monitor_notification.insert(argv);
+
+            // Send an email to each user.
             for(var i in users){
                 var u=users[i];
                 if(u.profile==undefined || u.profile.EmailLineEventNotification==undefined || u.profile.EmailLineEventNotification[le]==undefined)    continue;
@@ -33,14 +42,8 @@ export function EmailNotification(prod_monitor){
                 
                 sendEmailLineEventNotification(p,le,m,u);
             }   // for each user
-
-            // Add to prod_monitor_notification
-            var argv=[];
-            argv["ID_NO"]=p.ID_NO;
-            argv["LineEvent"]= le;
-            argv["SENT_DATE"]=new Date();
-            prod_monitor_notification.insert(argv);
         }
+
     }
 
 
@@ -51,16 +54,30 @@ export function EmailNotification(prod_monitor){
     if(products.length <= 0)    return;
         
     for(var i in products){
+        var thresholdIndex;
         var p=products[i];
         console.log('----------'+p.ID_NO+'--------------------------------------');
 
-        if(p.LOCATION_STATUS==undefined || p.LOCATION_STATUS==null) return;
+        if(p.LOCATION_STATUS==undefined || p.LOCATION_STATUS==null) p.LOCATION_STATUS=0;    // UKUS 28June2017. "null" means Pre-production.
+        
         var s=cf.productStatus(p);  //  s:productStatus 
         
         // Email Threshold Notification
-        var thresholdIndex=s[p.LOCATION_STATUS].thresholdIndex;
+        if(s[p.LOCATION_STATUS]==undefined || s[p.LOCATION_STATUS]==null)   thresholdIndex=0;   // UKUS 28June2017.
+        else    thresholdIndex=s[p.LOCATION_STATUS].thresholdIndex;
         
         if( 0 < thresholdIndex && prod_monitor_notification.find({'ID_NO':p.ID_NO, 'LOCATION_STATUS':p.LOCATION_STATUS, 'thresholdIndex':thresholdIndex}).count() <=0 ){
+
+            // Add to prod_monitor_notification in MongoDB
+            var argv=[];
+            argv["ID_NO"]=p.ID_NO;
+            argv["LOCATION_STATUS"]= p.LOCATION_STATUS;
+            argv["thresholdIndex"]=thresholdIndex;
+            argv["SENT_DATE"]=new Date();
+            //console.log('Inserting into prod_monitor_notification');
+            //console.log(argv);
+            prod_monitor_notification.insert(argv);
+            
             for(var i in users){
                 var u=users[i];
                 if(u.profile==undefined || u.profile.EmailThresholdNotification==undefined)    continue;
@@ -103,15 +120,6 @@ export function EmailNotification(prod_monitor){
                 
             }   // for each user
 
-            // Add to prod_monitor_notification
-            var argv=[];
-            argv["ID_NO"]=p.ID_NO;
-            argv["LOCATION_STATUS"]= p.LOCATION_STATUS;
-            argv["thresholdIndex"]=thresholdIndex;
-            argv["SENT_DATE"]=new Date();
-            //console.log('Inserting into prod_monitor_notification');
-            //console.log(argv);
-            prod_monitor_notification.insert(argv);
         }
         
         // Email Line Event Notification
@@ -155,7 +163,7 @@ export function EmailNotification(prod_monitor){
             if(p.REWORK_DUR_INSP_END_DATE!=undefined   && p.REWORK_DUR_INSP_END_DATE!=null)     ProductLineEvent(p, 'ReworkDuringInspectionEnd',    'Rework of '+p.ID_NO+' During Inspection is ending.');
             break;
         case 14:
-            if(p.SHIPPING_DATE!=undefined && p.SHIPPING_DATE!=null)                             ProductLineEvent(p, 'ShippedEndd',                  p.ID_NO+' has been shipped.');
+            if(p.SHIPPING_DATE!=undefined && p.SHIPPING_DATE!=null)                             ProductLineEvent(p, 'ShippedEnd',                   p.ID_NO+' has been shipped.');
             break;
         default:
         }   // switch
@@ -170,7 +178,6 @@ function sendEmailThresholdNotification(p,s,u){     // p:product. s:productStatu
         "from": "do_not_reply@KFM_Production_portal",
         "to": u.emails[0].address,
         "subject": p.ID_NO +' , '+ i18n.__(LocationTitles[p.LOCATION_STATUS]) +' , '+ i18n.__('ui.manageAccount.EmailThresholdNotification'),
-//        "text": 'The production of ' + p.ID_NO + ' is experiencing an issue in ' + i18n.__(LocationTitles[p.LOCATION_STATUS])
         "text": 'The state of ' + p.ID_NO + ' is changing to ' +i18n.__(s[p.LOCATION_STATUS]['thresholdMessage'])+ ' in ' + i18n.__(LocationTitles[p.LOCATION_STATUS])
     });
 }

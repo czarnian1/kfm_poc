@@ -14,7 +14,8 @@ export class PanelLocationHealth extends Component {
         // console.log("PanelLocationHealth:updateDisplay");
         if(this.props.product == undefined)    return;
         var p=this.props.product;
-        if(p.LOCATION_STATUS == undefined)    return;
+        // if(p.LOCATION_STATUS == undefined)    return;
+        if(p.LOCATION_STATUS == undefined)    p.LOCATION_STATUS=0;  // UKUS 28June2017. null means Pre-production.
         var r=cf.productStatus(this.props.product);
         
         var i,t,s;
@@ -22,6 +23,12 @@ export class PanelLocationHealth extends Component {
         // Location
         // console.log("PanelLocationHealth:updateDisplay: Location");
         if(r.error) $("#state_Location").html("System error.");
+        else if(r[p.LOCATION_STATUS]==undefined){
+            $("#state_Location").html(
+                    '<i class="kubota-fs-32 '+LocationIcons[p.LOCATION_STATUS]+'"></i>'
+                    +i18n.__(LocationTitles[p.LOCATION_STATUS])
+                );
+        }
         else{
             $("#state_Location").html(
                 '<span style="color:'+r[p.LOCATION_STATUS].thresholdColor+'">'
@@ -80,7 +87,8 @@ export class PanelLocationHealth extends Component {
         if(r.error) $("#state_Health").html("System error.");
         else{
             if(r.isOnGoing){
-                $("#state_Health").html(i18n.__("ui.locationHealth.Health") + '<span style="color:'+r[p.LOCATION_STATUS].thresholdColor+'">'+i18n.__(r[p.LOCATION_STATUS].thresholdMessage)+'.</span>');
+                if(r[p.LOCATION_STATUS].thresholdColor==undefined)  $("#state_Health").html(i18n.__("ui.locationHealth.Health") + i18n.__(r[p.LOCATION_STATUS].thresholdMessage)+'.');
+                else    $("#state_Health").html(i18n.__("ui.locationHealth.Health") + '<span style="color:'+r[p.LOCATION_STATUS].thresholdColor+'">'+i18n.__(r[p.LOCATION_STATUS].thresholdMessage)+'.</span>');
             }
             else    $("#state_Health").html( i18n.__("ui.locationHealth.NotApplicable") );
         }

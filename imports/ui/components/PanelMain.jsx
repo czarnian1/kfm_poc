@@ -78,7 +78,9 @@ export class PanelMain extends Component {
         }
         
         var formatLocationStatus=(cell,row,formatExtraData,rowIdx)=>{
-            if(row.LOCATION_STATUS==undefined)  return <span>Incorrect LOCATION_STATUS</span>;
+//            if(row.LOCATION_STATUS==undefined)  return <span>Incorrect LOCATION_STATUS</span>;    // UKUS 28June2017. null means Pre-production.
+            if(row.LOCATION_STATUS==undefined)  row.LOCATION_STATUS=0;      // UKUS 28June2017. null means Pre-production.
+            
             return  '<i class="kubota-fs-32 '+LocationIcons[row.LOCATION_STATUS]+'"></i>'+i18n.__(LocationTitles[row.LOCATION_STATUS]);
 //            return  '<span><i class="kubota-fs-32 '+LocationIcons[cell]+'"></i><T>'+LocationTitles[cell]+'</T></span>';
 //            return  (<i class="kubota-fs-32 {LocationIcons[cell]}"></i><T>{LocationTitles[cell]}</T>);
