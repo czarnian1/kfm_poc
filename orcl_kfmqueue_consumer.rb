@@ -48,7 +48,11 @@ while true
     hash['PLAN_PROD_FINISH_DATE']=DateTime.strptime(hash['PLAN_PROD_FINISH_DATE'], '%Y-%m-%dT%H:%M:%S');
   end
   
-  hash['LOCATION_STATUS']=hash['LOCATION_STATUS'].to_i(10);
+  if hash['LOCATION_STATUS']==""
+    hash['LOCATION_STATUS']=0
+  else
+    hash['LOCATION_STATUS']=hash['LOCATION_STATUS'].to_i(10);
+  end
 
   if hash['PARTS_PREPARATION_STATUS']==""
     hash.delete('PARTS_PREPARATION_STATUS')

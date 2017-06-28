@@ -268,13 +268,13 @@ db.prod_monitor.insert(
 )
 
 db.prod_monitor.update(
-                        {"_id":ObjectId("593378b480a3f11b5dc037e3")},
+                        {"_id":ObjectId("593f4f691cb74f6a876a5f82")},
                         {$set:{
                             "UPDATE_DATE":new Date(),
                             "UPDATE_BY":'UKUS20',
                             "MONTHLY_SEQ":'20170100050',
                             "REMARKS":'UKUS20',
-                            "LOCATION_STATUS":5,
+                            "LOCATION_STATUS":null,
                         }}
                     );
                     
