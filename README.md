@@ -768,7 +768,7 @@ cd kfm_poc
 $ pm2-meteor init
 ```
 Answer the config questions
-Edit the pm2-meteor.json and put the following details in the json keys
+Edit the pm2-meteor.json and put the following details in the json keys, tis example will deploy on the same VM from the devops git controlled source directory to a production directory on the same machine. To deploy to a second production ready VM (clone) - the server section should be updated with the VM IP address.
 pm2-meteor.json
 ```json
 {
