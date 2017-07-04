@@ -67,7 +67,9 @@ message_properties => message_properties,
 payload => msg,
 msgid => msg_id);
 END enqueue_message;
+```
 Create the associated Procedure to dequeue a message
+```
 create or replace procedure dequeue_message
 (
   payload out varchar2
@@ -86,9 +88,11 @@ msgid => msg_id
   ); -- the queue name must match the queue created in sqlplus
   payload := msg.json;
 END dequeue_message;
+```
 Create new trigger to monitor for data changes, right click on the Trigger icon and select New Trigger
 ![image alt text](image_3.png)
 Create the PROD_MONITOR_QUEUE_TRIG as below:-
+```
 SQL> CREATE OR REPLACE TRIGGER "HUBADMIN"."PROD_MONITOR_QUEUE_TRIG" AFTER INSERT OR UPDATE OF UPDATE_DATE ON PROD_MONITOR
 FOR EACH ROW
 DECLARE
@@ -139,31 +143,24 @@ END;
 ALTER TRIGGER "HUBADMIN"."PROD_MONITOR_QUEUE_TRIG" ENABLE;
 commit;
 ```
-
 ### Missing Parts Consumer
-
 Perform the same workflow for missing parts
-
 Create the consumer queue for MISSING_PARTS messages using this message_t
-
+```
 sqlplus> execute DBMS_AQADM.CREATE_QUEUE_TABLE(queue_table => 'KFMQUEUE_PARTS_TAB',     queue_payload_type => 'message_t' );
-
+```
 Create a queue for PROD_MONITOR using the above queue table.
-
+```
 sqlplus> execute DBMS_AQADM.CREATE_QUEUE(queue_name => 'KFMQUEUE_PARTS', queue_table => 'KFMQUEUE_PARTS_TAB');
-
+```
 Start the queue
-
+```
 sqlplus> execute DBMS_AQADM.START_QUEUE(queue_name => 'KFMQUEUE_PARTS');
-
+```
 This will create the following visible entry in SQL Developer , the owner will be HUBADMIN in Oracle for PRDTST service ID
-
 ![image alt text](image_4.png)
-
 ### Parts Consumer
-
 Create the procedure that will be called to enqueue and dequeue messages from the queue for MISSING_PARTS. This can be done in sqldeveloper right click on Procedures
-
 ![image alt text](image_5.png)
 
 ```
@@ -209,9 +206,7 @@ msgid => msg_id
 END dequeue_parts_message;
 ```
 Create new trigger to monitor for data changes, right click on the Trigger icon and select New Trigger
-
 ![image alt text](image_6.png)
-
 Create the PROD_MONITOR_PARTS_QUEUE_TRIG as below:-
 ```
 create or replace TRIGGER "HUBADMIN"."PROD_MONITOR_PARTS_QUEUE_TRIG" 
@@ -243,21 +238,16 @@ END;
 ALTER TRIGGER "HUBADMIN"."PROD_MONITOR_PARTS_QUEUE_TRIG" ENABLE;
 commit;
 ```
-
 ### Step 3 : Confirm via SQLDEVELOPER triggers/messages/Procedures as expected
-
 As HUBADMIN, check that the following now exist
-
 ![image alt text](image_7.png) 
-
 ## Consumer Scripts : Test Connectivity
-
 The consumers scripts connect to Oracle PRDTST service using Basic Auth initially and check the triggers dispatch JSON objects for :-
 on update of PROD_MONITOR.UPDATE_DATE, this is updated by the PM_RFID_RAW_EVENTS trigger and finite state logic with PROD_MONITOR.UPDATE_BY set as the scanner ID.
 
-on insert or update if ID_NO,SEQ_NO on PROD_MONITOR_PARTS.
+on insert or update of ID_NO,SEQ_NO on PROD_MONITOR_PARTS.
 The ruby oci8 library object used to connect to PRDTST has a constructor param setting of:-
-oc = OCI8.new('HUBADMIN', 'HUBADMIN','//172.20.84.36:1521/PRDTST')
+oc = OCI8.new('HUBADMIN', 'HUBADMIN','//172.xx.xx.xx:1521/PRDTST') - replace the IP with correct load balanced Oracle instance
 This is found on the web portal VM in the two consumer scripts orcl_kfmqueue_consumer.rb  orcl_kfmqueue_parts_consumer.rb and orcl_kfmqueue_consumer_KFMPROD.rb  orcl_kfmqueue_parts_consumer_KFMPROD.rb for production environment
 These two scripts for PRDTST have been adjusted accordingly for the KFM environment and are controlled now via systemd services
 Contents of orcl_kfmqueue_consumer_KFMPROD.rb (copied to /usr/bin by root)
@@ -278,7 +268,7 @@ require 'logger'
 log = Logger.new('/var/log/consumer.log','daily')
 log.level = Logger::INFO
 #reduce oci8 client logging verbosity and redirect to /var/log file
-oc = OCI8.new('HUBADMIN', 'HUBADMIN','//172.20.84.38:1521/PRDTST')
+oc = OCI8.new('HUBADMIN', 'HUBADMIN','//172.xx.xx.xx:1521/PRDTST')
 log.info "Oracle connector OK"
 #Reduce Mongo client verbosity and send to log file
 Mongo::Logger.logger.level = Logger::FATAL
@@ -430,7 +420,6 @@ while true
 end
 ```
 Contents of parts consumer
-
 ```ruby
 #!/usr/bin/env ruby
 #**********************************************************************************************
@@ -511,9 +500,7 @@ while true
   log.info "Dequeue Parts committed OK"
 end
 ```
-
 # Build CentOS 7 Prod Monitoring Vanilla VM
-
 Create mongodb repository
 ```
  vi mongodb-org-3.4.repo
@@ -527,7 +514,6 @@ gpgcheck=1
 enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
 ```
-
 Update with the new repo
 ```
 yum update
@@ -542,10 +528,8 @@ Updating:
 Wait for cleanup and verify stages, once Now install mongodb
 ```
 Install mongodb
-
 ```
 yum install -y mongodb-org
-
 Loaded plugins: fastestmirror, langpacks
 Loading mirror speeds from cached hostfile
  * base: mirror.airenetworks.es
@@ -559,12 +543,9 @@ Resolving Dependencies
 ..
 Complete!
 ```
-
 Turn off selinux
-
 ```
 cat /etc/selinux/config
-
 # This file controls the state of SELinux on the system.
 # SELINUX= can take one of these three values:
 #     enforcing - SELinux security policy is enforced.
@@ -587,7 +568,7 @@ After restart log back in and then check mongodb service ok
 ```
 systemctl start mongodb
 systemctl status mongod
-```
+
 ● mongod.service - High-performance, schema-free document-oriented database
    Loaded: loaded (/usr/lib/systemd/system/mongod.service; enabled; vendor preset: disabled)
    Active: active (running) since Thu 2017-06-15 15:53:01 CEST; 1min 13s ago
@@ -603,7 +584,7 @@ Jun 15 15:53:01 KfmProdMonWS.kfme.fr systemd[1]: Started High-performance, schem
 Jun 15 15:53:03 KfmProdMonWS.kfme.fr mongod[973]: about to fork child process, waiting until server is ready for connections.
 Jun 15 15:53:03 KfmProdMonWS.kfme.fr mongod[973]: forked process: 1619
 Jun 15 15:53:04 KfmProdMonWS.kfme.fr mongod[973]: child process started successfully, parent exiting
-
+```
 Set mongodb set to start after system restart
 ```
 systemctl enable mongod.service
@@ -611,7 +592,6 @@ systemctl enable mongod.service
 Install node by adding the node source repository
 ```
 wget [https://rpm.nodesource.com/pub_6.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm](https://rpm.nodesource.com/pub_6.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm)
-```
 https://rpm.nodesource.com/pub_6.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm
 Resolving rpm.nodesource.com (rpm.nodesource.com)... 54.230.79.15, 54.230.79.140, 54.230.79.39, ...
 Connecting to rpm.nodesource.com (rpm.nodesource.com)|54.230.79.15|:443... connected.
@@ -620,8 +600,7 @@ Length: 6460 (6.3K) [application/x-rpm]
 Saving to: ‘nodesource-release-el7-1.noarch.rpm’
 100%[========================================================>] 6,460       --.-K/s   in 0s
 2017-06-15 16:00:00 (466 MB/s) - ‘nodesource-release-el7-1.noarch.rpm’ saved [6460/6460]
-
-
+```
 Install node source via yum
 ```
 yum localinstall nodesource-release-el7-1.noarch.rpm
@@ -685,8 +664,7 @@ useradd -m prodmon
 passwd prodmon
 su - prodmon
 ```
-Add prodmon to sudo level with visudo as root
-Notes on using screen to prevent devops application stopping on ssh disconnect
+Add prodmon to sudo level with visudo as root. Some notes on using screen to prevent devops application stopping on ssh disconnect
 ```
 prodmon$screen
 ```
@@ -780,9 +758,7 @@ cd kfm_poc
 $ pm2-meteor init
 ```
 Answer the config questions
-
 Edit the pm2-meteor.json and put the following details in the json keys
-
 pm2-meteor.json
 ```json
 {
@@ -901,7 +877,6 @@ Down/Upgrade to 4 instances
 $ pm2-meteor scale 4
 ```
 ### CentOS systemd Settings
-
 /etc/systemd/system/consumer.service
 ```
 [Unit]
