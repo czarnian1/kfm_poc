@@ -5,7 +5,7 @@
 ### Step 1 : Give HUBADMIN execute rights for AQ messaging for the consumers
 
 As user sys as sysdba via sqlplus
-````
+```
 SQL> grant EXECUTE on SYS.DBMS_AQ to HUBADMIN;
 SQL> grant EXECUTE on DBMS_AQ to HUBADMIN;
 SQL> grant EXECUTE on SYS.DBMS_AQADM to HUBADMIN;
