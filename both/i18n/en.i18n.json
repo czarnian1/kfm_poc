@@ -39,7 +39,8 @@
 		"RoleProduction": "Production",
 		"RoleMaterial": "Material",
 		"RoleAdmin": "Admin",
-		"BackToMainScreen": "Back to Main screen"
+		"BackToMainScreen": "Back to Main screen",
+                "BackToManageUsers": "User Management"
 	},
 	"shippingStatus": {
 		"StateErr": "Unknown Status",
