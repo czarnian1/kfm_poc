@@ -730,13 +730,14 @@ Edit the nginx config as below:-
 sudo vi /etc/nginx/nginx.conf
 ```
 Replace the code block in nginx.conf 
-```json
+```
 location / {
 }
-
-with
+```
+with (note replace xx with correct load balanced Oracle instance)
+```json
 location / {
-    proxy_pass http://172.20.84.86:80;
+    proxy_pass http://172.xx.xx.xx:80;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
