@@ -90,7 +90,9 @@ msgid => msg_id
 END dequeue_message;
 ```
 Create new trigger to monitor for data changes, right click on the Trigger icon and select New Trigger
+
 ![image alt text](image_3.png)
+
 Create the PROD_MONITOR_QUEUE_TRIG as below:-
 ```
 SQL> CREATE OR REPLACE TRIGGER "HUBADMIN"."PROD_MONITOR_QUEUE_TRIG" AFTER INSERT OR UPDATE OF UPDATE_DATE ON PROD_MONITOR
@@ -158,9 +160,12 @@ Start the queue
 sqlplus> execute DBMS_AQADM.START_QUEUE(queue_name => 'KFMQUEUE_PARTS');
 ```
 This will create the following visible entry in SQL Developer , the owner will be HUBADMIN in Oracle for PRDTST service ID
+
 ![image alt text](image_4.png)
+
 ### Parts Consumer
 Create the procedure that will be called to enqueue and dequeue messages from the queue for MISSING_PARTS. This can be done in sqldeveloper right click on Procedures
+
 ![image alt text](image_5.png)
 
 ```
@@ -206,7 +211,9 @@ msgid => msg_id
 END dequeue_parts_message;
 ```
 Create new trigger to monitor for data changes, right click on the Trigger icon and select New Trigger
+
 ![image alt text](image_6.png)
+
 Create the PROD_MONITOR_PARTS_QUEUE_TRIG as below:-
 ```
 create or replace TRIGGER "HUBADMIN"."PROD_MONITOR_PARTS_QUEUE_TRIG" 
@@ -240,7 +247,9 @@ commit;
 ```
 ### Step 3 : Confirm via SQLDEVELOPER triggers/messages/Procedures as expected
 As HUBADMIN, check that the following now exist
+
 ![image alt text](image_7.png) 
+
 ## Consumer Scripts : Test Connectivity
 The consumers scripts connect to Oracle PRDTST service using Basic Auth initially and check the triggers dispatch JSON objects for :-
 on update of PROD_MONITOR.UPDATE_DATE, this is updated by the PM_RFID_RAW_EVENTS trigger and finite state logic with PROD_MONITOR.UPDATE_BY set as the scanner ID.
@@ -248,7 +257,7 @@ on update of PROD_MONITOR.UPDATE_DATE, this is updated by the PM_RFID_RAW_EVENTS
 on insert or update of ID_NO,SEQ_NO on PROD_MONITOR_PARTS.
 The ruby oci8 library object used to connect to PRDTST has a constructor param setting of:-
 oc = OCI8.new('HUBADMIN', 'HUBADMIN','//172.xx.xx.xx:1521/PRDTST') - replace the IP with correct load balanced Oracle instance
-This is found on the web portal VM in the two consumer scripts orcl_kfmqueue_consumer.rb  orcl_kfmqueue_parts_consumer.rb and orcl_kfmqueue_consumer_KFMPROD.rb  orcl_kfmqueue_parts_consumer_KFMPROD.rb for production environment
+This is found on the web portal VM in the two consumer scripts orcl_kfmqueue_consumer.rb  orcl_kfmqueue_parts_consumer.rb and orcl_kfmqueue_consumer_KFMPROD.rb  orcl_kfmqueue_parts_consumer_KFMPROD.rb for production environment.
 These two scripts for PRDTST have been adjusted accordingly for the KFM environment and are controlled now via systemd services
 Contents of orcl_kfmqueue_consumer_KFMPROD.rb (copied to /usr/bin by root)
 ```ruby
