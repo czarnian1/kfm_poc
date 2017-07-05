@@ -5,7 +5,8 @@ require 'oci8'
 require 'mongo'
 require 'yajl'
 
-oc = OCI8.new('testuser1', 'testuser1')
+#oc = OCI8.new('testuser1', 'testuser1')
+oc = OCI8.new('HUBADMIN', 'HUBADMIN','//172.20.84.38:1521/PRDTST')
 
 mongo_client =  Mongo::Client.new('mongodb://localhost:27017/production_kfm_db')
 
@@ -38,147 +39,155 @@ while true
 
 
   hash.delete('_id')
-     
-  hash['CREATE_DATE']=DateTime.strptime(hash['CREATE_DATE'], '%Y-%m-%dT%H:%M:%S');
-  hash['UPDATE_DATE']=DateTime.strptime(hash['UPDATE_DATE'], '%Y-%m-%dT%H:%M:%S');
+
+  #if a dml_type of D delete is sent in JSON the CREATE/UPDATE_DATE will be null
+  #code updated to not fail on strptime. Add try/catch ruby equivalemt structure
+  #here begin/rescue/ensure
+  unless hash['dml_type'] =='D'   #use an unless to avoid null in date fields in hash
+
+    hash['CREATE_DATE']=DateTime.strptime(hash['CREATE_DATE'], '%Y-%m-%dT%H:%M:%S');
+    hash['UPDATE_DATE']=DateTime.strptime(hash['UPDATE_DATE'], '%Y-%m-%dT%H:%M:%S');
  
-  if hash['PLAN_PROD_FINISH_DATE']==""
-    hash.delete('PLAN_PROD_FINISH_DATE')
-  else
-    hash['PLAN_PROD_FINISH_DATE']=DateTime.strptime(hash['PLAN_PROD_FINISH_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['PLAN_PROD_FINISH_DATE']==""
+      hash.delete('PLAN_PROD_FINISH_DATE')
+    else
+      hash['PLAN_PROD_FINISH_DATE']=DateTime.strptime(hash['PLAN_PROD_FINISH_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['LOCATION_STATUS']==""
-    hash['LOCATION_STATUS']=0
-  else
-    hash['LOCATION_STATUS']=hash['LOCATION_STATUS'].to_i(10);
-  end
+    if hash['LOCATION_STATUS']==""
+      hash['LOCATION_STATUS']=0
+    else
+      hash['LOCATION_STATUS']=hash['LOCATION_STATUS'].to_i(10);
+    end
 
-  if hash['PARTS_PREPARATION_STATUS']==""
-    hash.delete('PARTS_PREPARATION_STATUS')
-  else
-    hash['PARTS_PREPARATION_STATUS']=hash['PARTS_PREPARATION_STATUS'].to_i(10);
-  end
+    if hash['PARTS_PREPARATION_STATUS']==""
+      hash.delete('PARTS_PREPARATION_STATUS')
+    else
+      hash['PARTS_PREPARATION_STATUS']=hash['PARTS_PREPARATION_STATUS'].to_i(10);
+    end
 
-  if hash['CHASSIS_LINE_START_DATE']==""
-    hash.delete('CHASSIS_LINE_START_DATE')
-  else
-    hash['CHASSIS_LINE_START_DATE']=DateTime.strptime(hash['CHASSIS_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S')
-  end
+    if hash['CHASSIS_LINE_START_DATE']==""
+      hash.delete('CHASSIS_LINE_START_DATE')
+    else
+      hash['CHASSIS_LINE_START_DATE']=DateTime.strptime(hash['CHASSIS_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S')
+    end
   
-  if hash['CHASSIS_LINE_END_DATE']==""
-    hash.delete('CHASSIS_LINE_END_DATE')
-  else
-    hash['CHASSIS_LINE_END_DATE']=DateTime.strptime(hash['CHASSIS_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['CHASSIS_LINE_END_DATE']==""
+      hash.delete('CHASSIS_LINE_END_DATE')
+    else
+      hash['CHASSIS_LINE_END_DATE']=DateTime.strptime(hash['CHASSIS_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['PAINT_LINE_START_DATE']==""
-    hash.delete('PAINT_LINE_START_DATE')
-  else
+    if hash['PAINT_LINE_START_DATE']==""
+      hash.delete('PAINT_LINE_START_DATE')
+    else
     hash['PAINT_LINE_START_DATE']=DateTime.strptime(hash['PAINT_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    end
   
-  if hash['PAINT_LINE_END_DATE']==""
-    hash.delete('PAINT_LINE_END_DATE')
-  else
-    hash['PAINT_LINE_END_DATE']=DateTime.strptime(hash['PAINT_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['PAINT_LINE_END_DATE']==""
+      hash.delete('PAINT_LINE_END_DATE')
+    else
+      hash['PAINT_LINE_END_DATE']=DateTime.strptime(hash['PAINT_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['TRACTOR_LINE_START_DATE']==""
-    hash.delete('TRACTOR_LINE_START_DATE')
-  else
-    hash['TRACTOR_LINE_START_DATE']=DateTime.strptime(hash['TRACTOR_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['TRACTOR_LINE_START_DATE']==""
+      hash.delete('TRACTOR_LINE_START_DATE')
+    else
+      hash['TRACTOR_LINE_START_DATE']=DateTime.strptime(hash['TRACTOR_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['TRACTOR_LINE_END_DATE']==""
-    hash.delete('TRACTOR_LINE_END_DATE')
-  else
-    hash['TRACTOR_LINE_END_DATE']=DateTime.strptime(hash['TRACTOR_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['TRACTOR_LINE_END_DATE']==""
+      hash.delete('TRACTOR_LINE_END_DATE')
+    else
+      hash['TRACTOR_LINE_END_DATE']=DateTime.strptime(hash['TRACTOR_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['REWORK_BEFORE_MQ_START_DATE']==""
-    hash.delete('REWORK_BEFORE_MQ_START_DATE')
-  else
-    hash['REWORK_BEFORE_MQ_START_DATE']=DateTime.strptime(hash['REWORK_BEFORE_MQ_START_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['REWORK_BEFORE_MQ_START_DATE']==""
+      hash.delete('REWORK_BEFORE_MQ_START_DATE')
+    else
+      hash['REWORK_BEFORE_MQ_START_DATE']=DateTime.strptime(hash['REWORK_BEFORE_MQ_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['REWORK_BEFORE_MQ_END_DATE']==""
-    hash.delete('REWORK_BEFORE_MQ_END_DATE')
-  else
-    hash['REWORK_BEFORE_MQ_END_DATE']=DateTime.strptime(hash['REWORK_BEFORE_MQ_END_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['REWORK_BEFORE_MQ_END_DATE']==""
+      hash.delete('REWORK_BEFORE_MQ_END_DATE')
+    else
+      hash['REWORK_BEFORE_MQ_END_DATE']=DateTime.strptime(hash['REWORK_BEFORE_MQ_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['MQ_LINE_START_DATE']==""
-    hash.delete('MQ_LINE_START_DATE')
-  else
-    hash['MQ_LINE_START_DATE']=DateTime.strptime(hash['MQ_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['MQ_LINE_START_DATE']==""
+      hash.delete('MQ_LINE_START_DATE')
+    else
+      hash['MQ_LINE_START_DATE']=DateTime.strptime(hash['MQ_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['MQ_LINE_END_DATE']==""
-    hash.delete('MQ_LINE_END_DATE')
-  else
-    hash['MQ_LINE_END_DATE']=DateTime.strptime(hash['MQ_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['MQ_LINE_END_DATE']==""
+      hash.delete('MQ_LINE_END_DATE')
+    else
+      hash['MQ_LINE_END_DATE']=DateTime.strptime(hash['MQ_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['REWORK_AFTER_MQ_START_DATE']==""
-    hash.delete('REWORK_AFTER_MQ_START_DATE')
-  else
-    hash['REWORK_AFTER_MQ_START_DATE']=DateTime.strptime(hash['REWORK_AFTER_MQ_START_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['REWORK_AFTER_MQ_START_DATE']==""
+      hash.delete('REWORK_AFTER_MQ_START_DATE')
+    else
+      hash['REWORK_AFTER_MQ_START_DATE']=DateTime.strptime(hash['REWORK_AFTER_MQ_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['REWORK_AFTER_MQ_END_DATE']==""
-    hash.delete('REWORK_AFTER_MQ_END_DATE')
-  else
-    hash['REWORK_AFTER_MQ_END_DATE']=DateTime.strptime(hash['REWORK_AFTER_MQ_END_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['REWORK_AFTER_MQ_END_DATE']==""
+      hash.delete('REWORK_AFTER_MQ_END_DATE')
+    else
+      hash['REWORK_AFTER_MQ_END_DATE']=DateTime.strptime(hash['REWORK_AFTER_MQ_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['PRODUCTION_END_DATE']==""
-    hash.delete('PRODUCTION_END_DATE')
-  else
-    hash['PRODUCTION_END_DATE']=DateTime.strptime(hash['PRODUCTION_END_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['PRODUCTION_END_DATE']==""
+      hash.delete('PRODUCTION_END_DATE')
+    else
+      hash['PRODUCTION_END_DATE']=DateTime.strptime(hash['PRODUCTION_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['INSPECTION_START_DATE']==""
-    hash.delete('INSPECTION_START_DATE')
-  else
-    hash['INSPECTION_START_DATE']=DateTime.strptime(hash['INSPECTION_START_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['INSPECTION_START_DATE']==""
+      hash.delete('INSPECTION_START_DATE')
+    else
+      hash['INSPECTION_START_DATE']=DateTime.strptime(hash['INSPECTION_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['INSPECTION_END_DATE']==""
-    hash.delete('INSPECTION_END_DATE')
-  else
-    hash['INSPECTION_END_DATE']=DateTime.strptime(hash['INSPECTION_END_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['INSPECTION_END_DATE']==""
+      hash.delete('INSPECTION_END_DATE')
+    else
+      hash['INSPECTION_END_DATE']=DateTime.strptime(hash['INSPECTION_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['REWORK_DUR_INSP_START_DATE']==""
-    hash.delete('REWORK_DUR_INSP_START_DATE')
-  else
-    hash['REWORK_DUR_INSP_START_DATE']=DateTime.strptime(hash['REWORK_DUR_INSP_START_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['REWORK_DUR_INSP_START_DATE']==""
+      hash.delete('REWORK_DUR_INSP_START_DATE')
+    else
+      hash['REWORK_DUR_INSP_START_DATE']=DateTime.strptime(hash['REWORK_DUR_INSP_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['REWORK_DUR_INSP_END_DATE']==""
-    hash.delete('REWORK_DUR_INSP_END_DATE')
-  else
-    hash['REWORK_DUR_INSP_END_DATE']=DateTime.strptime(hash['REWORK_DUR_INSP_END_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['REWORK_DUR_INSP_END_DATE']==""
+      hash.delete('REWORK_DUR_INSP_END_DATE')
+    else
+      hash['REWORK_DUR_INSP_END_DATE']=DateTime.strptime(hash['REWORK_DUR_INSP_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  if hash['SHIPPING_STATUS']==""
-    hash.delete('SHIPPING_STATUS')
-  else
-    hash['SHIPPING_STATUS']=hash['SHIPPING_STATUS'].to_i(10);
-  end
+    if hash['SHIPPING_STATUS']==""
+      hash.delete('SHIPPING_STATUS')
+    else
+      hash['SHIPPING_STATUS']=hash['SHIPPING_STATUS'].to_i(10);
+    end
   
-  if hash['SHIPPING_DATE']==""
-    hash.delete('SHIPPING_DATE')
-  else
-    hash['SHIPPING_DATE']=DateTime.strptime(hash['SHIPPING_DATE'], '%Y-%m-%dT%H:%M:%S');
-  end
+    if hash['SHIPPING_DATE']==""
+      hash.delete('SHIPPING_DATE')
+    else
+      hash['SHIPPING_DATE']=DateTime.strptime(hash['SHIPPING_DATE'], '%Y-%m-%dT%H:%M:%S');
+    end
   
-  # print
-  puts hash.inspect
+    # print
+    puts hash.inspect
+  end #of unless hash dml_type is delete
 
   if hash['dml_type'] == 'D'
-    col.remove({'ID_NO' => hash['ID_NO']})
+    #puts col.methods
+    #col.remove({'ID_NO' => hash['ID_NO']})
+    col.delete_one({'ID_NO' => hash['ID_NO']})
   else
     hash.delete('dml_type')
     col.update_one(
@@ -188,6 +197,7 @@ while true
     )
   end
 
-  # remove from AQ.  dequeue isn't complete until this happens
+  # remove from AQ.  dequeue isn't complete until this happens and the event that triggered
+  # the message will remain in the enqueue table in Oracle
   oc.commit
 end

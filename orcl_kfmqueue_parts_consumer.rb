@@ -5,7 +5,8 @@ require 'oci8'
 require 'mongo'
 require 'yajl'
 
-oc = OCI8.new('testuser1', 'testuser1')
+#oc = OCI8.new('testuser1', 'testuser1')
+oc = OCI8.new('HUBADMIN', 'HUBADMIN','//172.20.84.38:1521/PRDTST')
 
 mongo_client =  Mongo::Client.new('mongodb://localhost:27017/production_kfm_db')
 
