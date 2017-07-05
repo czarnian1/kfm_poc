@@ -40,9 +40,11 @@ export default class PanelNavbar extends Component {
         Meteor.users.update(
             {"_id":Meteor.userId()},
             {$set:{
-                "profile.defaultLocale":i18n.getLocale(),
+                "profile.defaultLocale":locale,
             }}
         );
+        
+        localStorage.setItem("meteor.locale", locale);
     }
     
     onClickLogout(p){
