@@ -231,7 +231,7 @@ export class PanelManageAccount extends Component {
         
         return (
             <div className="container">
-                <a href="/Main" ><T>ui.common.BackToMainScreen</T></a> <a href="/ManageUsers" ><T>ui.common.BackToManageUsers</T></a>
+                <a href="/Main" ><T>ui.common.BackToMainScreen</T></a>
                 <h1 className="text-center"><T>{this.props.params.id==Meteor.userId() ? 'ui.manageAccount.ManageAccount' : 'ui.manageAccount.ManageOtherUser'}</T></h1>
             
                 { error.length > 0 ? <div className="alert alert-danger fade in">{error}</div> :''}

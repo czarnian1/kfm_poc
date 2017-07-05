@@ -115,17 +115,13 @@ export class PanelScreen extends Component {
         return (
             <div className="container">
 
-                <BootstrapTable data={this.props.products} trClassName={trClassName} search scrollTop={'Top'} options={{'defaultSortName':'MONTHLY_SEQ','defaultSortOrder':'asc'}}>
+                <BootstrapTable data={this.props.products} trClassName={trClassName} scrollTop={'Top'} options={{'defaultSortName':'MONTHLY_SEQ','defaultSortOrder':'asc'}}>
                 
-                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='MONTHLY_SEQ'                 dataFormat={cf.formatString} dataSort filter={{type:'TextFilter',placeholder:' '}} hidden={hide('MonthlySequenceNo')}><T>ui.common.MonthlySequenceNo</T></TableHeaderColumn>
-                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='ID_NO'                       dataFormat={formatIdNo} dataSort filter={{type:'TextFilter',placeholder:' '}} isKey><T>ui.common.IdNo</T></TableHeaderColumn>
-                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='90px'  dataField='MODEL_CODE'                  dataFormat={cf.formatString} searchable={false} hidden><T>ui.common.ModelCode</T></TableHeaderColumn>
-                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='120px' dataField='REMARKS'                     dataFormat={cf.formatString} searchable={false} hidden><T>ui.common.ModelDescription</T></TableHeaderColumn>
-                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='250px' dataField='PLAN_PROD_FINISH_DATE'       dataFormat={cf.formatDateTime} dataSort filter={{type:'DateFilter'}}><T>ui.common.PlannedFinish</T></TableHeaderColumn>
-                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='Comments'                    dataFormat={formatComment} searchable={false}><T>ui.common.Comments</T></TableHeaderColumn>
-                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='120px' dataField='LOCATION_STATUS'             dataFormat={formatLocationStatus} dataSort searchable={false} filter={filterLocationStatus}><T>ui.common.LocationStatus</T></TableHeaderColumn>
-                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='MissingParts'                dataFormat={formatMissingParts} searchable={false} filter={filterMissingParts}><T>ui.common.MissingParts</T></TableHeaderColumn>
-                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='CHASSIS_LINE_START_DATE'     dataFormat={cf.formatDateTime} dataSort hidden={hide('ChassisLine')}><T>ui.common.ChassisLine</T><br /><T>ui.common.Start</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='MONTHLY_SEQ'                 dataFormat={cf.formatString}  ><T>ui.common.MonthlySequenceNo</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='ID_NO'                       dataFormat={formatIdNo} isKey><T>ui.common.IdNo</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='120px' dataField='LOCATION_STATUS'             dataFormat={formatLocationStatus} ><T>ui.common.LocationStatus</T></TableHeaderColumn>
+                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='MissingParts'                dataFormat={formatMissingParts} ><T>ui.common.MissingParts</T></TableHeaderColumn>
+                   <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='CHASSIS_LINE_START_DATE'     dataFormat={cf.formatDateTime} dataSort hidden={hide('ChassisLine')}><T>ui.common.ChassisLine</T><br /><T>ui.common.Start</T></TableHeaderColumn>
                     <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='CHASSIS_LINE_END_DATE'       dataFormat={cf.formatDateTime} dataSort hidden={hide('ChassisLine')}><T>ui.common.ChassisLine</T><br /><T>ui.common.End</T></TableHeaderColumn>
                     <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='PAINT_LINE_START_DATE'       dataFormat={cf.formatDateTime} dataSort hidden={hide('PaintLine')}><T>ui.common.PaintLine</T><br /><T>ui.common.Start</T></TableHeaderColumn>
                     <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='PAINT_LINE_END_DATE'         dataFormat={cf.formatDateTime} dataSort hidden={hide('PaintLine')}><T>ui.common.PaintLine</T><br /><T>ui.common.End</T></TableHeaderColumn>
@@ -142,9 +138,6 @@ export class PanelScreen extends Component {
                     <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='INSPECTION_END_DATE'         dataFormat={cf.formatDateTime} dataSort hidden={hide('Inspection')}><T>ui.common.Inspection</T><br /><T>ui.common.End</T></TableHeaderColumn>
                     <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='REWORK_DUR_INSP_START_DATE'  dataFormat={cf.formatDateTime} dataSort hidden={hide('ReworkDuringInspection')}><T>ui.common.ReworkDuringInspection</T><br /><T>ui.common.Start</T></TableHeaderColumn>
                     <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='REWORK_DUR_INSP_END_DATE'    dataFormat={cf.formatDateTime} dataSort hidden={hide('ReworkDuringInspection')}><T>ui.common.ReworkDuringInspection</T><br /><T>ui.common.End</T></TableHeaderColumn>
-                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='120px' dataField='SHIPPING_STATUS'             dataFormat={formatShippingStatus} dataSort searchable={false} filter={filterShippingStatus}><T>ui.common.ShippingStatus</T></TableHeaderColumn>
-                    <TableHeaderColumn dataAlign="center" thStyle={cellStyle} tdStyle={cellStyle} width='100px' dataField='SHIPPING_DATE'               dataFormat={cf.formatDateTime} searchable={false}  ><T>ui.common.Shipping</T></TableHeaderColumn>
-                    
                 </BootstrapTable>
 
             </div>
