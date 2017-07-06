@@ -177,7 +177,7 @@ export class PanelManageAccount extends Component {
                 	<a href="/Main" ><T>ui.common.BackToMainScreen</T></a>	
 		</span>
             );
-        } 
+        }
         
         const error = this.state.error;
         
@@ -192,8 +192,9 @@ export class PanelManageAccount extends Component {
             if(user.roles!=undefined && user.roles[Roles.GLOBAL_GROUP]!=undefined && user.roles[Roles.GLOBAL_GROUP][0]!=undefined) r=user.roles[Roles.GLOBAL_GROUP][0];
 
             if (cf.Role(Meteor.user()).AdminScreen && user._id!=Meteor.userId() ) {
-                return ( 
+                return (
                         <span id="Role">
+
                             User role:&nbsp;
                             <select defaultValue={r}>{
                                 cf.Roles().map(
@@ -232,6 +233,9 @@ export class PanelManageAccount extends Component {
         return (
             <div className="container">
                 <a href="/Main" ><T>ui.common.BackToMainScreen</T></a>
+		 &nbsp; {/* MSJ : Add link back to other users screen */}
+		 <a href="/ManageUsers" ><T>ui.common.BackToManageUsers</T></a>
+
                 <h1 className="text-center"><T>{this.props.params.id==Meteor.userId() ? 'ui.manageAccount.ManageAccount' : 'ui.manageAccount.ManageOtherUser'}</T></h1>
             
                 { error.length > 0 ? <div className="alert alert-danger fade in">{error}</div> :''}

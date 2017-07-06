@@ -160,6 +160,9 @@ export default class CF {
     }
 
     judgeStatus(spent,ary){
+        console.log("cf::judgeStatus");
+        console.log(spent);
+        console.log(ary);
         if(spent==undefined)    return  {error:true};
         if(spent < 0)    return  {error:true};
 
@@ -167,7 +170,8 @@ export default class CF {
         if(ary.length<=0)   return  {error:true};
 
         spent= Math.floor(spent/1000/60);
-
+	console.log("cf:judgeStatus::spent");
+        console.log(spent);
         var i;
         var duration=null,index=null,thresholdOver=null,message=null,color=null, className=null;
         for(i=0,c=''; i < ary.length; ++i){
@@ -224,7 +228,8 @@ export default class CF {
          */
         if(p.LOCATION_STATUS==undefined || p.LOCATION_STATUS==null) p.LOCATION_STATUS=0;    // UKUS 28June2017. null means Pre-production.
         if(p.LOCATION_STATUS < 0 || 14 < p.LOCATION_STATUS)   return  {error:true};
-
+	//Added here archive status 99 || 15 in future
+	//
         //  00 - pre - production - exported from SAP 
 
         //  01 - chassis State
@@ -258,7 +263,11 @@ export default class CF {
         //  03 - assembly (tractor) State
         //  TRACTOR_LINE_START_DATE
         if(p.TRACTOR_LINE_START_DATE!=undefined){
+            console.log("cf::tractor line start");
             if(p.LOCATION_STATUS==3) ret["isOnGoing"]=true;
+            console.log(p.TRACTOR_LINE_START_DATE.getTime());
+            console.log(ij.ProductionThresholds.TRACTOR_LINE);
+            console.log(now.getTime());
             ret[3]=this.judgeStatus(now.getTime() - p.TRACTOR_LINE_START_DATE.getTime(), ij.ProductionThresholds.TRACTOR_LINE);
         }
                 
