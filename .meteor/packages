@@ -27,3 +27,4 @@ ian:accounts-ui-bootstrap-3
 universe:i18n
 email@1.2.1
 alanning:roles
+dispatch:login-token

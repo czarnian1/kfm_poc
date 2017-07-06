@@ -16,6 +16,47 @@ Meteor.startup(() => {
 
 
 function initAccount(){
-Accounts.ui.config({
-});
+    Accounts.ui.config({
+    });
 }
+
+// Get locale.
+var locale='en';
+        
+if(Meteor.user()==undefined || Meteor.user().profile==undefined || Meteor.user().profile.defaultLocale==undefined){
+    // Get from local storage if possible.
+    switch(localStorage.getItem("meteor.locale")){
+    case 'en':
+        locale='en';
+        break;
+    case 'fr':
+        locale='fr';
+        break;
+    case 'ja':
+        locale='ja';
+        break;
+    default:
+        locale='en';
+    }
+}        
+else{
+    // Get from the user's profile.
+    switch(Meteor.user().profile.defaultLocale){
+    case 'en':
+        locale='en';
+        break;
+    case 'fr':
+        locale='fr';
+        break;
+    case 'ja':
+        locale='ja';
+        break;
+    default:
+        locale='en';
+    }
+} 
+
+// Set language
+i18n.setLocale(locale);
+accountsUIBootstrap3.setLanguage(locale);
+localStorage.setItem("meteor.locale", locale);

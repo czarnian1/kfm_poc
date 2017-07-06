@@ -1,0 +1,28 @@
+{
+  "appName": "ProductionMonitoringSystem",
+  "appLocation": {
+    "local": "/home/prodmon/kfm_poc"
+  },
+  "meteorSettingsLocation": "/home/prodmon/kfm_poc/settings.json",
+  "meteorSettingsInRepo": false,
+  "prebuildScript": "",
+  "meteorBuildFlags": "--architecture os.linux.x86_64",
+  "env": {
+    "ROOT_URL": "http://172.20.84.86",
+    "PORT": "8080",
+    "MONGO_URL": "mongodb://localhost:27017/production_kfm_db"
+  },
+  "server": {
+    "host": "localhost",
+    "username": "prodmon",
+    "password": "nec2017",
+    "deploymentDir": "/home/prodmon/meteor-apps",
+    "loadProfile": "",
+    "nvm": {
+      "bin": "",
+      "use": ""
+    },
+    "exec_mode": "cluster_mode",
+    "instances": 1
+  }
+}

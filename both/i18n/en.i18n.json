@@ -14,7 +14,7 @@
 		"LocationStatus": "Location Status",
 		"MissingParts": "Missing Parts",
 		"PreProduction": "Pre production",
-		"ChassisLine": "Chasis Line",
+		"ChassisLine": "Chassis Line",
 		"PaintLine": "Paint Line",
 		"TractorLine": "Tractor Line",
 		"ReworkBeforeMQ": "Rework before MQ",
@@ -39,7 +39,8 @@
 		"RoleProduction": "Production",
 		"RoleMaterial": "Material",
 		"RoleAdmin": "Admin",
-		"BackToMainScreen": "Back to Main screen"
+		"BackToMainScreen": "Back to Main screen",
+                "BackToManageUsers": "User Management"
 	},
 	"shippingStatus": {
 		"StateErr": "Unknown Status",

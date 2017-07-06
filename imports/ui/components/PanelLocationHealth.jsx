@@ -14,10 +14,15 @@ export class PanelLocationHealth extends Component {
         // console.log("PanelLocationHealth:updateDisplay");
         if(this.props.product == undefined)    return;
         var p=this.props.product;
+        console.log("========================");
+        console.log(p.LOCATION_STATUS);
         // if(p.LOCATION_STATUS == undefined)    return;
         if(p.LOCATION_STATUS == undefined)    p.LOCATION_STATUS=0;  // UKUS 28June2017. null means Pre-production.
         var r=cf.productStatus(this.props.product);
-        
+        console.log("----p-----");
+        console.log(p);
+        console.log("----r-----");
+        console.log(r); 
         var i,t,s;
         
         // Location
@@ -49,6 +54,10 @@ export class PanelLocationHealth extends Component {
             if(r.isOnGoing){
                 t=r[p.LOCATION_STATUS].thresholdSpent;
                 s = i18n.__("ui.locationHealth.AgeSinceAssemblyStarted");
+                console.log("----t-----");
+		console.log(t);
+                console.log("----s-----");
+                console.log(s);
                 s+= (60*24<=t)? Math.floor(t/60/24)+' days ' : "";
                 s+= (Math.floor(t/60))%24+' hours ';
                 s+= Math.floor(t%60)+' minutes.';
