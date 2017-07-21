@@ -1,3 +1,5 @@
+This markdown file will be updated from MISD MISD20170714002 PRDTST QA document - please refer i first instance to Word document
+
 ## Setup PRDTST Messaging and Queuing Environment
 
 ![image alt text](image_0.png)
