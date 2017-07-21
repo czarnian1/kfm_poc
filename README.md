@@ -1,4 +1,4 @@
-This markdown file will be updated from MISD MISD20170714002 PRDTST QA document - please refer i first instance to Word document
+This markdown file will be updated from controlled document MISD20170714002 PRDTST QA document - please refer in first instance to Word document
 
 ## Setup PRDTST Messaging and Queuing Environment
 
