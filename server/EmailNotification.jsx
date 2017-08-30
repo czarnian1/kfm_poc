@@ -11,7 +11,7 @@ const prod_monitor_notification = new Mongo.Collection('prod_monitor_notificatio
 
 /*
  * Email notification
- * In a live system, do not forget specifying the MAIL_URL environment valiavle
+ * In a live system, do not forget specifying the MAIL_URL environment variable
  *  export MAIL_URL=smtp://USERNAME:PASSWORD@HOST:PORT
  * ex. 
  *  export MAIL_URL=smtp://localhost:25
@@ -19,11 +19,12 @@ const prod_monitor_notification = new Mongo.Collection('prod_monitor_notificatio
  * 
  */
 export function EmailNotification(prod_monitor){
-    console.log('EmailNotification');
+    //console.log('EmailNotification::');
 
     var users=Meteor.users.find().fetch();
 
     var ProductLineEvent=(p,le,m)=>{  // p:product. le:LineEvent. m:message.
+        //console.log(prod_monitor_notification.find({'ID_NO':p.ID_NO, 'LineEvent':le}).count());
         if( prod_monitor_notification.find({'ID_NO':p.ID_NO, 'LineEvent':le}).count() <=0 ){
 
             // Add to prod_monitor_notification in MongoDB
@@ -36,6 +37,7 @@ export function EmailNotification(prod_monitor){
             // Send an email to each user.
             for(var i in users){
                 var u=users[i];
+                //console.log(u);
                 if(u.profile==undefined || u.profile.EmailLineEventNotification==undefined || u.profile.EmailLineEventNotification[le]==undefined)    continue;
 
                 if( ! u.profile.EmailLineEventNotification[le] )    continue;
@@ -56,7 +58,7 @@ export function EmailNotification(prod_monitor){
     for(var i in products){
         var thresholdIndex;
         var p=products[i];
-        console.log('----------'+p.ID_NO+'--------------------------------------');
+        //console.log('----------'+p.ID_NO+'--------------------------------------');
 
         if(p.LOCATION_STATUS==undefined || p.LOCATION_STATUS==null) p.LOCATION_STATUS=0;    // UKUS 28June2017. "null" means Pre-production.
         
@@ -175,7 +177,7 @@ function sendEmailThresholdNotification(p,s,u){     // p:product. s:productStatu
     if(u.emails==undefined || u.emails[0]==undefined || u.emails[0].address==undefined) return;
 
     Email.send({
-        "from": "do_not_reply@KFM_Production_portal",
+        "from": "do_not_reply@KFM_production_portal",
         "to": u.emails[0].address,
         "subject": p.ID_NO +' , '+ i18n.__(LocationTitles[p.LOCATION_STATUS]) +' , '+ i18n.__('ui.manageAccount.EmailThresholdNotification'),
         "text": 'The state of ' + p.ID_NO + ' is changing to ' +i18n.__(s[p.LOCATION_STATUS]['thresholdMessage'])+ ' in ' + i18n.__(LocationTitles[p.LOCATION_STATUS])
@@ -185,9 +187,9 @@ function sendEmailThresholdNotification(p,s,u){     // p:product. s:productStatu
 
 function sendEmailLineEventNotification(p,le,m,u){     // p:product. le:LineEvent. m:message. u:user.
     if(u.emails==undefined || u.emails[0]==undefined || u.emails[0].address==undefined) return;
-
+    console.log("sendEmailLineEventNotification::");
     Email.send({
-        "from": "do_not_reply@KFM_Production_portal",
+        "from": "do_not_reply@KFM_production_portal",
         "to": u.emails[0].address,
         "subject": p.ID_NO +' , '+ i18n.__(LocationTitles[p.LOCATION_STATUS]) +' , '+ le,
         "text": m

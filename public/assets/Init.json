@@ -1,60 +1,60 @@
 {
 	"ProductionThresholds":{
 		"CHASSIS_LINE":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"green", "className":""},
-			{"duration": 61,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 70,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"#5cb85c", "className":""},
+			{"duration": 61,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
+			{"duration": 70,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
+			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"PAINT_LINE":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"green", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration":130,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"#5cb85c", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
+			{"duration":130,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"TRACTOR_LINE":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"green", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"#5cb85c", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
+			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
+			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"REWORK_BEFORE_MQ":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good","color":"green", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 50,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good","color":"#5cb85c", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
+			{"duration": 50,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
+			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"MQ_LINE":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
+			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
+			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"REWORK_AFTER_MQ":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 50,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
+			{"duration": 50,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
+			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"PRODUCTION_END":[
-			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration":1200,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":1440,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration":1200,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
+			{"duration":1440,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"INSPECTION":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
+			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
+			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"REWORK_DUR_INSP":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"SHIPPING":[
-			{"duration":    0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"green", "className":""},
-			{"duration": 5760,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"darkorange", "className":"warning"},
-			{"duration":10080,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"magenta", "className":"info"},
-			{"duration":17280,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"red", "className":"danger"}
+			{"duration":    0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration": 5760,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
+			{"duration":10080,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
+			{"duration":17280,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		]
 	},
 	"Roles":[

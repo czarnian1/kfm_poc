@@ -13,7 +13,7 @@ import PanelComments from '../components/PanelComments.jsx'
 import PanelMissingParts from '../components/PanelMissingParts.jsx'
 import PanelNotFound from '../components/PanelNotFound.jsx';
 import PanelManageUsers from '../components/PanelManageUsers.jsx';
-
+import FactoryDash from '../components/FactoryDash.jsx';
 
 //create react-router hierarchy
 export const renderRoutes = () => (
@@ -24,6 +24,7 @@ export const renderRoutes = () => (
             <Route path="/Main" component={PanelMain}/>
 		/* MSJ : Samsung screen browser default */
 		<Route path="/Screen" component={PanelScreen}/>
+                <Route path="/FactoryDash" component={FactoryDash}/>
             	<Route path="/ManageUsers"  component={PanelManageUsers}/>
             	<Route path="/ManageAccount" component={PanelManageAccount}/>
 /*       <Route path="/ManageAccount">

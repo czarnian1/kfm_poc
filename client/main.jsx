@@ -9,7 +9,9 @@ import PanelNavbar from '../imports/ui/components/PanelNavbar.jsx';
 
 Meteor.startup(() => {
    //initAccount();
-
+    //load gauge javascript libraries
+    //$.getScript('d3/d3.js', false);
+    $.getScript('d3simple_gauge.js'); 
     render(<PanelNavbar />, document.getElementById('render-Nav-Bar'));
     render(renderRoutes(), document.getElementById('react-root-render-container'));
 });

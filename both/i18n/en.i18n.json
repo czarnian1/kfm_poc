@@ -4,6 +4,7 @@
 	
 	"common": {
 		"Start": "Start",
+                "StartPreProduction": "SAP Import",
 		"End": "End",
 		"MonthlySequenceNo": "Month Seq No",
 		"IdNo": "IDNO",
@@ -105,15 +106,20 @@
 	},
 	"locationHealth": {
 		"information": "Information",
-    	"none": "None",
-    	"good": "On time",
-    	"warning": "Minor delays",
-	    "delayed": "Delayed",
-	    "trouble": "Trouble",
-		"AgeSinceAssemblyStarted": "Age since assembly started: ",
-		"TimeUntilAreaThreshhold": "Time until area threshhold: ",
-		"TimeOverAreaThreshhold": "Time over area threshhold: ",
-		"NotApplicable": "Not in production",
-		"Health": "Health "
+    		"none": "None",
+    		"good": "On time",
+    		"warning": "Minor delays",
+        	"delayed": "Delayed",
+		"trouble": "Trouble",
+		"AgeSinceAssemblyStarted": "Age since SAP import",
+		"TimeUntilAreaThreshhold": "Time until area threshhold",
+		"TimeOverAreaThreshhold": "Time before ",
+        	"Threshold": " threshold",
+		"OverdueBy": "overdue ",
+		"NotApplicable": "Not active in a production area",
+		"Health": " health ",
+                "TAKT": "TAKT",
+                "Remain": "Remain",
+                "TimeUsed": "Time used"
 	}
 }

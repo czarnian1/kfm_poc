@@ -98,3 +98,21 @@ i {
 	width: 100%;
         margin: 0%;
 }
+.chart_state_Age {
+  height: 0px;
+}
+
+.radial-svg {
+  height: 100px;
+}
+
+.component {
+  height :100px;
+}
+
+#factoryMapDiv {
+	width: 100%;
+	height:1024px;
+        margin: 10px;
+        padding: 5px;
+}

@@ -1,26 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import { prod_monitor } from '../../api/prod_monitor.js';
 import { Link } from 'react-router';
-import  DoughnutGraph from '../classes/Doughnut.jsx';
-import ReactDOM from 'react-dom';
 
 import CF, {LocationTitles, LocationIcons, ShippingStatuses} from '../classes/CommonFunctions.jsx';
-
 const cf=new CF();
 
 const T = i18n.createComponent(); // translater component for json lookup universe:i18n
 
 //Production Task component - represents a single tractor item
 export class PanelLocationHealth extends Component {
-
+    
     updateDisplay(){
         // console.log("PanelLocationHealth:updateDisplay");
         if(this.props.product == undefined)    return;
         var p=this.props.product;
+        console.log("========================");
+        console.log(p.LOCATION_STATUS);
         // if(p.LOCATION_STATUS == undefined)    return;
         if(p.LOCATION_STATUS == undefined)    p.LOCATION_STATUS=0;  // UKUS 28June2017. null means Pre-production.
         var r=cf.productStatus(this.props.product);
-        var i,t,s,sChartTitle;
+        console.log("----p-----");
+        console.log(p);
+        console.log("----r-----");
+        console.log(r); 
+        var i,t,s;
         
         // Location
         // console.log("PanelLocationHealth:updateDisplay: Location");
@@ -51,99 +54,40 @@ export class PanelLocationHealth extends Component {
             if(r.isOnGoing){
                 t=r[p.LOCATION_STATUS].thresholdSpent;
                 s = i18n.__("ui.locationHealth.AgeSinceAssemblyStarted");
-                productionTimeOverdue=cf.valueBetween(100*((Date.now()-p.CREATE_DATE.getTime())/(p.PLAN_PROD_FINISH_DATE.getTime() - p.CREATE_DATE.getTime())),0,100);
-		productionTimeOverdue=Math.round(((productionTimeOverdue+0.00001)*100)/100);
-                if (productionTimeOverdue < 100 ) {
-		  s+=(" "+ productionTimeOverdue+"%");
-                  //sChartTitle+= String.fromCharCode(13);
-		} else {
-		  s+= (" 100%");
-                  sChartTitle+=i18n.__("ui.locationHealth.OverdueBy");
-		};
-                sChartTitle= (60*24<=t)? Math.floor(t/60/24)+'d ' : "";
-                sChartTitle+= (Math.floor(t/60))%24+'h ';
-                sChartTitle+= Math.floor(t%60)+'m';
-
-                $('#state_Age').html(s+" " + sChartTitle);
-                m_data = {
-                        labels: [
-                                i18n.__("ui.locationHealth.TAKT"),
-                                i18n.__("ui.locationHealth.Remain"),
-                        ],
-                        datasets: [{
-				label: sChartTitle,
-                                data: [productionTimeOverdue, 100-productionTimeOverdue],
-                                backgroundColor: [
-                                '#009999',
-                                '#36A2EB'
-                                ],
-                        hoverBackgroundColor: [
-                                '#009999',
-                                '#36A2EB'
-                        ]
-                	}]
-		};
-            	ReactDOM.render(<DoughnutGraph gauge_data={m_data}/>,document.getElementById("gauge_ageSinceSAPImport"));
+                console.log("----t-----");
+		console.log(t);
+                console.log("----s-----");
+                console.log(s);
+                s+= (60*24<=t)? Math.floor(t/60/24)+' days ' : "";
+                s+= (Math.floor(t/60))%24+' hours ';
+                s+= Math.floor(t%60)+' minutes.';
+                $('#state_Age').html(s);
             }
             else    $("#state_Age").html( i18n.__("ui.locationHealth.NotApplicable") );
         }
         
         // Time until area Threshhold
-        //console.log("PanelLocationHealth:updateDisplay: Time until area Threshhold");
+        // console.log("PanelLocationHealth:updateDisplay: Time until area Threshhold");
         if(r.error) $("#state_TimeThreshold").html("System error.");
         else{
             if(r.isOnGoing){
-                s = i18n.__("ui.locationHealth.TimeOverAreaThreshhold");
-                s+= i18n.__(LocationTitles[p.LOCATION_STATUS]);
-                s+= i18n.__("ui.locationHealth.Threshold");
-                t=r[p.LOCATION_STATUS].thresholdDuration - r[p.LOCATION_STATUS].thresholdSpent; 
-                //javascript time calc in milliseconds since unix epoch
-                //access to dot notation object via variables target is  p.PAINT_LINE_START_DATE
-                stageStartTime=(p[cf.ProductionAreaStart([p.LOCATION_STATUS])]).getTime();
-                stageExpectedEndTime=(r[p.LOCATION_STATUS].thresholdDuration*1000*60 + stageStartTime);
-		stageDeltaTime=Date.now()-stageStartTime;
-		timeTaktMaxPercent=cf.valueBetween(100*(1-((stageExpectedEndTime-stageStartTime-stageDeltaTime)/(stageExpectedEndTime-stageStartTime))),0,100);
-                timeTaktMaxPercent=Math.round(((timeTaktMaxPercent+0.00001)*100)/100);
-                if (timeTaktMaxPercent < 100) {
-			s+=(" "+ (Math.round((timeTaktMaxPercent+0.00001)*100)/100)+"%");
-	  	} else {
-			s+=(" 100%");
-		}
-
+                t=r[p.LOCATION_STATUS].thresholdDuration - r[p.LOCATION_STATUS].thresholdSpent;
                 if(0 < t){
-                    sChartTitle= (60*24<=t)? Math.floor(t/60/24)+'d ' : "";
-                    sChartTitle+= (Math.floor(t/60))%24+'h ';
-                    sChartTitle+= t%60+'m';
+                    s = i18n.__("ui.locationHealth.TimeUntilAreaThreshhold");
+                    s+= (60*24<=t)? Math.floor(t/60/24)+' days ' : "";
+                    s+= (Math.floor(t/60))%24+' hours ';
+                    s+= t%60+' minutes.';
+                    $("#state_TimeThreshold").html(s);
                 }
                 else{
                     t = -t;
-                    sChartTitle = i18n.__("ui.locationHealth.OverdueBy");
-		    sChartTitle += (60*24<=t)? Math.floor(t/60/24)+'d ' : "";
-                    sChartTitle += (Math.floor(t/60))%24+'h ';
-                    sChartTitle += t%60+'m';
-                };
-		$("#state_TimeThreshold").html(s+ " " + sChartTitle);
-		m_data = {
-                         labels: [
-                                 i18n.__("ui.locationHealth.TimeUsed"),
-                                 i18n.__("ui.locationHealth.Remain"),
-                                 ],
-                         datasets: [{
-                                   label: sChartTitle,
-                                   data: [timeTaktMaxPercent, 100-timeTaktMaxPercent],
-                                   backgroundColor: [
-                                        '#009999',
-                                        '#36A2EB'
-                                   ],
-                                   hoverBackgroundColor: [
-                                        '#009999',
-                                        '#36A2EB'
-                                        ]
-                                }]
-                };
-                ReactDOM.render(<DoughnutGraph gauge_data={m_data}/>,document.getElementById("gauge_TimeThreshold"));
-
-	    }
+                    s = i18n.__("ui.locationHealth.TimeOverAreaThreshhold");
+                    s+= (60*24<=t)? Math.floor(t/60/24)+' days ' : "";
+                    s+= (Math.floor(t/60))%24+' hours ';
+                    s+= t%60+' minutes.';
+                    $("#state_TimeThreshold").html(s);
+                }
+            }
             else    $("#state_TimeThreshold").html( i18n.__("ui.locationHealth.NotApplicable") );
         }
       
@@ -152,8 +96,8 @@ export class PanelLocationHealth extends Component {
         if(r.error) $("#state_Health").html("System error.");
         else{
             if(r.isOnGoing){
-                if(r[p.LOCATION_STATUS].thresholdColor==undefined)  $("#state_Health").html(i18n.__(LocationTitles[p.LOCATION_STATUS]) + i18n.__("ui.locationHealth.Health") + i18n.__(r[p.LOCATION_STATUS].thresholdMessage)+'.');
-                else    $("#state_Health").html(i18n.__(LocationTitles[p.LOCATION_STATUS]) + i18n.__("ui.locationHealth.Health") + '<span style="color:'+r[p.LOCATION_STATUS].thresholdColor+'">'+i18n.__(r[p.LOCATION_STATUS].thresholdMessage)+'</span>');
+                if(r[p.LOCATION_STATUS].thresholdColor==undefined)  $("#state_Health").html(i18n.__("ui.locationHealth.Health") + i18n.__(r[p.LOCATION_STATUS].thresholdMessage)+'.');
+                else    $("#state_Health").html(i18n.__("ui.locationHealth.Health") + '<span style="color:'+r[p.LOCATION_STATUS].thresholdColor+'">'+i18n.__(r[p.LOCATION_STATUS].thresholdMessage)+'.</span>');
             }
             else    $("#state_Health").html( i18n.__("ui.locationHealth.NotApplicable") );
         }
@@ -174,7 +118,7 @@ export class PanelLocationHealth extends Component {
 
     render(){
         var r=this.props.product;
-	
+
         return(
             <div className="panel panel-default container-fluid">
                 <br />
@@ -182,7 +126,7 @@ export class PanelLocationHealth extends Component {
                     <thead>
                         <tr style={{"backgroundColor":"silver"}}>
                             <td><center><T>ui.common.IdNo</T></center></td>
-                            <td><center><T>ui.common.StartPreProduction</T></center></td>
+                            <td><center><T>ui.common.Start</T></center></td>
                             <td><center><T>ui.common.LocationStatus</T></center></td>
                             <td><center><T>ui.common.ShippingStatus</T></center></td>
                         </tr>
@@ -200,23 +144,9 @@ export class PanelLocationHealth extends Component {
                 <br />
                 <div>
                     <div className="row">
-                        <div className="col-md-5">
-			  <span className="glyphicon glyphicon-time" />  
-			  <span id="state_Age"/>  
-			  <div className="chart_state_Age"></div>
-			  <div id="gauge_ageSinceSAPImport"></div>
-			</div>
-                        <div className="col-md-5">
-			  <span className="glyphicon glyphicon-time" /> 
-			  <span id="state_TimeThreshold"/>  
-			  <div className="chart_state_Threshold"></div>
-			  <div id="gauge_TimeThreshold"></div>
-			</div>
-                        <div className="col-md-2">
-			  <span className="glyphicon glyphicon-time" /> 
-			  <span id="state_Health" /> 
-			  <div className="chart_state_Health"></div>
-			</div>
+                        <div className="col-md-5"><span className="glyphicon glyphicon-hourglass" /> <span id="state_Age"/></div>
+                        <div className="col-md-5"><span className="glyphicon glyphicon-time" /> <span id="state_TimeThreshold"/></div>
+                        <div className="col-md-2"><span className="glyphicon glyphicon-flag" /> <span id="state_Health"/></div>
                     </div>
                 </div>
                 <br />
@@ -301,14 +231,12 @@ export class PanelLocationHealth extends Component {
     }
 
     componentDidMount() {
-	//console.log("PanelLocationHealth:componentDidMount");
+//        console.log("PanelLocationHealth:componentDidMount");
         // Set timer to update the displayed values.
-	
         this.setState({
             'timerId': Meteor.setInterval(
                 ()=>{
                     this.updateDisplay();
-                    ReactDOM.render(<Pie />, document.getElementById('chart_state_Age'))
                 }, 
                 60000
             )

@@ -57,7 +57,7 @@ export default class CF {
 // require() does not allow users to modify Init.json file, because it includes
 // Init.json file when compile, not run time.
             
-            console.log('CommonFunctions:constructor():Meteor.isServer');
+            //console.log('CommonFunctions:constructor():Meteor.isServer');
 
             var fs = Npm.require('fs');
             fs.readFile(
@@ -115,6 +115,27 @@ export default class CF {
         default: return null;
         }
     }
+
+    ProductionAreaStart(LOCATION_STATUS) {
+	switch(parseInt(LOCATION_STATUS)) {
+        case 0: return  null; //pre-prod (0) 
+        case 1: return "CHASSIS_LINE_START_DATE"; 
+        case 2: return "PAINT_LINE_START_DATE"; 
+        case 3: return "TRACTOR_LINE_START_DATE";
+        case 4: return "MQLINE_LINE_START_DATE";
+        case 5: return "REWORK_BEFORE_MQ_LINE_START_DATE";
+        case 6: return "REWORK_AFTER_MQ_LINE_START_DATE";
+        case 7: return "PRODUCTION_START_DATE";
+        case 8: return "INSPECTION_START_DATE";
+        case 9: return "REWORK_DUR_INSP_START_DATE";
+        case 10: return null; // SAP and MES states
+        case 11: return null;
+        case 12: return null;
+        case 13: return null;
+        case 14: return "SHIPPING_DATE";
+        default: return null;
+	}
+    }
     
     i18nLocationTitles(){
         var ret={};
@@ -134,6 +155,10 @@ export default class CF {
             ret[index]=i18n.__(ij.Roles[index].message);
         }
         return  ret;
+    }
+
+    valueBetween (value, minValue, maxValue) {
+	return (Math.min(maxValue, Math.max(minValue,value)));
     }
     
     Roles(){
@@ -160,9 +185,9 @@ export default class CF {
     }
 
     judgeStatus(spent,ary){
-        console.log("cf::judgeStatus");
-        console.log(spent);
-        console.log(ary);
+        //console.log("cf::judgeStatus");
+        //console.log(spent);
+        //console.log(ary);
         if(spent==undefined)    return  {error:true};
         if(spent < 0)    return  {error:true};
 
@@ -170,8 +195,8 @@ export default class CF {
         if(ary.length<=0)   return  {error:true};
 
         spent= Math.floor(spent/1000/60);
-	console.log("cf:judgeStatus::spent");
-        console.log(spent);
+	//console.log("cf:judgeStatus::spent");
+        //console.log(spent);
         var i;
         var duration=null,index=null,thresholdOver=null,message=null,color=null, className=null;
         for(i=0,c=''; i < ary.length; ++i){
@@ -199,6 +224,7 @@ export default class CF {
     
     
     productStatus(p){
+        //console.log(p);
         if(p==undefined){
             console.log('CommonFunctions:productStatus(p), "p" is undefined.');
             return  {error:true};
@@ -250,6 +276,11 @@ export default class CF {
         //  PAINT_LINE_START_DATE
         if(p.PAINT_LINE_START_DATE!=undefined){
             if(p.LOCATION_STATUS==2) ret["isOnGoing"]=true;
+            //console.log("paint line");
+            //console.log(now.getTime());
+            //console.log(p.PAINT_LINE_START_DATE.getTime());
+            //console.log(ij.ProductionThresholds.PAINT_LINE);
+            //console.log("send to judgeStatus");
             ret[2]=this.judgeStatus(now.getTime() - p.PAINT_LINE_START_DATE.getTime(), ij.ProductionThresholds.PAINT_LINE);
         }
 
@@ -263,11 +294,11 @@ export default class CF {
         //  03 - assembly (tractor) State
         //  TRACTOR_LINE_START_DATE
         if(p.TRACTOR_LINE_START_DATE!=undefined){
-            console.log("cf::tractor line start");
+            //console.log("cf::tractor line start");
             if(p.LOCATION_STATUS==3) ret["isOnGoing"]=true;
-            console.log(p.TRACTOR_LINE_START_DATE.getTime());
-            console.log(ij.ProductionThresholds.TRACTOR_LINE);
-            console.log(now.getTime());
+            //console.log(p.TRACTOR_LINE_START_DATE.getTime());
+            //console.log(ij.ProductionThresholds.TRACTOR_LINE);
+            //console.log(now.getTime());
             ret[3]=this.judgeStatus(now.getTime() - p.TRACTOR_LINE_START_DATE.getTime(), ij.ProductionThresholds.TRACTOR_LINE);
         }
                 
@@ -376,7 +407,9 @@ export default class CF {
 
     formatDateTime(d){
         var r="";
-        
+        //console.log("cf::formatDateTime");
+        //console.log(d);
+         
         if(d==undefined)    return "";
         if(!(d instanceof Date))    return "";
 

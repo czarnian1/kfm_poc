@@ -1,5 +1,7 @@
 import {Router, Route, browserHistory, IndexRoute} from 'react-router'
-
+//
+//meteor add faisalman:ua-parser-js or
+//meteor npm install --save user-agent-parser
 var parse = require('user-agent-parser');
 console.log(parse(navigator.userAgent).os.name);
 
