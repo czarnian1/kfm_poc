@@ -67,7 +67,7 @@ export class PanelLocationHealth extends Component {
                 $('#state_Age').html(s+" " + sChartTitle);
                 m_data = {
                         labels: [
-                                i18n.__("ui.locationHealth.TAKT"),
+                                i18n.__("ui.locationHealth.TimeUsed"),
                                 i18n.__("ui.locationHealth.Remain"),
                         ],
                         datasets: [{
@@ -201,20 +201,20 @@ export class PanelLocationHealth extends Component {
                 <div>
                     <div className="row">
                         <div className="col-md-5">
-			  <span className="glyphicon glyphicon-time" />  
-			  <span id="state_Age"/>  
+			  <span className="glyphicon glyphicon-time kubota-fs-24" />  
+			  <span id="state_Age" className="glyphSpace"/>  
 			  <div className="chart_state_Age"></div>
 			  <div id="gauge_ageSinceSAPImport"></div>
 			</div>
                         <div className="col-md-5">
-			  <span className="glyphicon glyphicon-time" /> 
-			  <span id="state_TimeThreshold"/>  
+			  <span className="glyphicon glyphicon-time kubota-fs-24" /> 
+			  <span id="state_TimeThreshold" className="glyphSpace"/>  
 			  <div className="chart_state_Threshold"></div>
 			  <div id="gauge_TimeThreshold"></div>
 			</div>
                         <div className="col-md-2">
-			  <span className="glyphicon glyphicon-time" /> 
-			  <span id="state_Health" /> 
+			  <span className="glyphicon glyphicon-dashboard kubota-fs-24" /> 
+			  <span id="state_Health" className="glyphSpace"/> 
 			  <div className="chart_state_Health"></div>
 			</div>
                     </div>

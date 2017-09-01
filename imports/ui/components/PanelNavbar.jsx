@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
 import AccountsUIWrapper from '../../ui/components/AccountsUIWrapper.jsx';
+import Clock from 'react-live-clock';
 
 import { Session } from 'meteor/session'
 
@@ -109,7 +110,7 @@ export default class PanelNavbar extends Component {
                  cf.AllowSelfRegistration() ?  <li><a href="#"><AccountsUIWrapper /></a></li>
                  : <li><h4 style={{margin:'15px'}}><label id="displayUsername" className="label label-success"></label></h4></li>
            }
-                  
+		<Clock className={'KubotaClock'} format={'HH:mm:ss'} ticking={true} timezone={'Europe/Paris'} />
             <li className="dropdown">
               <a href="#" className="dropdown-toggle" data-toggle="dropdown"><T>ui.navbar.Admin</T><strong className="caret"></strong></a>
               <ul className="dropdown-menu">
