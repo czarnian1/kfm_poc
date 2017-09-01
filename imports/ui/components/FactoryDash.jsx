@@ -60,6 +60,9 @@ export class FactoryDash extends Component {
 	} else {
           circleElement.attr({fill: r[p.LOCATION_STATUS].thresholdColor, opacity: 0.5, fill_opacity: 0.5});
           //console.log(circleElement.node.id);
+
+          //matrix calc to adapt added (not active) yet if screen is resized svg is scaled - not taken into account yet in matrix calcs
+          //hence animating directly svg element in file
 	  var offset = $("#factoryMap")[0].getBoundingClientRect();
 
           //get bounding box cords of circle count in area
@@ -71,14 +74,17 @@ export class FactoryDash extends Component {
 	  //get absolute cords using transform matrix
 	  var absX = (matrix.a * middleX) + (matrix.c * middleY) + matrix.e - offset.left;
           var absY = (matrix.b * middleX) + (matrix.d * middleY) + matrix.f - offset.top;
-          var origCX = circleElement.attr('rx');
-          var origCY = circleElement.attr('ry');
+          var origRX = circleElement.attr('rx');
+          var origRY = circleElement.attr('ry');
 	  
 	  circleElement.animate({opacity:0.0, ry:circleElement.attr('ry')*2, rx:circleElement.attr('rx')*2}, 1000, function(){
-		circleElement.animate({opacity: 1.0, ry:circleElement.attr('ry')/2, rx:circleElement.attr('rx')/2}, 1000, function(){
+		circleElement.animate({opacity: 1.0, ry:circleElement.attr('ry')/2, rx:circleElement.attr('rx')/2}, 500, function(){
 	        });
 	  });
-
+          circleElement.attr({
+            ry: origRY,
+            rx: origRX
+          });
           //console.log(circleElement.attr("ry"));
           //console.log(circleElement.attr('cx'));
           //console.log(circleElement.attr('cy'));
