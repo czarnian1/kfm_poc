@@ -4,6 +4,7 @@
 
         "common": {
                 "Start": "Début",
+		"StartPreProduction": "SAP Import",
                 "End": "Fin",
                 "MonthlySequenceNo": "Numéro de sequence mensuelle",
                 "IdNo": "IDNO",
@@ -39,7 +40,8 @@
                 "RoleProduction": "Production",
                 "RoleMaterial": "Material",
                 "RoleAdmin": "Admin",
-                "BackToMainScreen": "Retour à l'écran principal"
+                "BackToMainScreen": "Retour à l'écran principal",
+		"BackToManageUsers": "Retour à Users"
         },
         "shippingStatus": {
                 "StateErr": "Statut inconnu",
@@ -104,15 +106,20 @@
         },
         "locationHealth": {
                 "information": "Information",
-        "none": "Aucun",
-        "good": "Dans les temps",
-        "warning": "Retards mineurs",
-            "delayed": "Retardé",
-            "trouble": "Problème",
+        	"none": "Aucun",
+        	"good": "Dans les temps",
+        	"warning": "Retards mineurs",
+            	"delayed": "Retardé",
+            	"trouble": "Problème",
                 "AgeSinceAssemblyStarted": "Temps écoulé depuis le debut de production:",
                 "TimeUntilAreaThreshhold": "Temps jusqu'au seuil:",
                 "TimeOverAreaThreshhold": "Temps au dessus du seuil:",
+		"Threshold": "Threshold",
+		"OverdueBy": "overdue",
                 "NotApplicable": "Pas applicable",
-                "Health": "Santé"
+                "Health": "Santé",
+		"TAKT": "TAKT",
+		"Remain": "Remain",
+		"TimeUsed": "Time used"
         }
 }

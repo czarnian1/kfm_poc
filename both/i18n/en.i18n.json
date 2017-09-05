@@ -111,7 +111,7 @@
     		"warning": "Minor delays",
         	"delayed": "Delayed",
 		"trouble": "Trouble",
-		"AgeSinceAssemblyStarted": "Age since SAP import",
+		"AgeSinceAssemblyStarted": "Time since Sequence import",
 		"TimeUntilAreaThreshhold": "Time until area threshhold",
 		"TimeOverAreaThreshhold": "Time before ",
         	"Threshold": " threshold",

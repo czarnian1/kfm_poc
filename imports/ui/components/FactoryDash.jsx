@@ -78,7 +78,7 @@ export class FactoryDash extends Component {
           var origRY = circleElement.attr('ry');
 	  
 	  circleElement.animate({opacity:0.0, ry:circleElement.attr('ry')*2, rx:circleElement.attr('rx')*2}, 1000, function(){
-		circleElement.animate({opacity: 1.0, ry:circleElement.attr('ry')/2, rx:circleElement.attr('rx')/2}, 500, function(){
+		circleElement.animate({opacity: 0.5, ry: origRY, rx: origRX}, 500, function(){
 	        });
 	  });
           circleElement.attr({

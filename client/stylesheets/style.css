@@ -51,9 +51,20 @@ i {
 
 .kubota-pad-icon-text {
   position: relative;
+  line-height: 10px;
   top: -10px; /* MSJ: 23-Jun-17 : Move location status icon text slightly to align centrally with kubota icon at font size 32 */
-  left: 1px;
+  left: 2px;
 }
+/* MSJ: 23-Jun-17 : Move location status icon text slightly to align centrally with kubota icon at font size 32 for IE10 and above */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .kubota-pad-icon-text {
+    position: relative;
+    line-height: 10px;
+    left: 2px;
+    top: 5px;
+  }
+  }
 
 .kubota-mls {
   margin-left: .25em;
@@ -118,9 +129,10 @@ i {
 
 .KubotaClock {
   color: #01a3b2;
-  margin: auto;
+  line-height: 50px;
+  height: 100%;
   width: 50%;
-  padding: 10px;
+  padding: 20px;
 }
 
 .glyphSpace {
