@@ -308,7 +308,6 @@ export class PanelLocationHealth extends Component {
             'timerId': Meteor.setInterval(
                 ()=>{
                     this.updateDisplay();
-                    ReactDOM.render(<Pie />, document.getElementById('chart_state_Age'))
                 }, 
                 60000
             )

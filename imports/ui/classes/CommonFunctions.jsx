@@ -122,7 +122,7 @@ export default class CF {
         case 1: return "CHASSIS_LINE_START_DATE"; 
         case 2: return "PAINT_LINE_START_DATE"; 
         case 3: return "TRACTOR_LINE_START_DATE";
-        case 4: return "MQLINE_LINE_START_DATE";
+        case 4: return "MQ_LINE_START_DATE";
         case 5: return "REWORK_BEFORE_MQ_LINE_START_DATE";
         case 6: return "REWORK_AFTER_MQ_LINE_START_DATE";
         case 7: return "PRODUCTION_START_DATE";
