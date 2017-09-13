@@ -80,7 +80,7 @@ export class PanelManageUsers extends Component {
         
         var formatAction=(cell,row,formatExtraData,rowIdx)=>{
             if(Meteor.userId()==row._id){
-                return  <label className="label label-success">Yourself</label>;
+                return  <label className="label label-success kubota-label-success">Yourself</label>;
             }
             else{
                 return (
@@ -96,7 +96,7 @@ export class PanelManageUsers extends Component {
             }
         
             if(Meteor.userId()==row._id){
-                return  <label className="label label-success">Yourself</label>;
+                return  <label className="label label-success kubota-label-success">Yourself</label>;
             }
             else{
                 return (

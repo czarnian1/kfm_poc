@@ -104,12 +104,12 @@ export default class PanelNavbar extends Component {
               </ul>
             </li>
           </ul>
-          
           <ul className="nav navbar-nav navbar-right">
            {
                  cf.AllowSelfRegistration() ?  <li><a href="#"><AccountsUIWrapper /></a></li>
-                 : <li><h4 style={{margin:'15px'}}><label id="displayUsername" className="label label-success"></label></h4></li>
+                 : <li><h4 style={{margin:'15px'}}><label id="displayUsername" className="label label-success kubota-label-success"></label></h4></li>
            }
+            <li> <p className="kubota-placeholder-fs" style={{margin:'15px'}}><label id="displayUserrole" className="kubota-placeholder-fs"></label></p></li> 
             <li className="dropdown">
               <a href="#" className="dropdown-toggle" data-toggle="dropdown"><T>ui.navbar.Admin</T><strong className="caret"></strong></a>
               <ul className="dropdown-menu">
@@ -151,7 +151,7 @@ export default class PanelNavbar extends Component {
           if(Meteor.user()==undefined)  return;
           
           $('#displayUsername').html(Meteor.user().username);
-          
+          $('#displayUserrole').html(i18n.__(cf.Role(Meteor.user()).message)); 
           if( cf.Role(Meteor.user()).AdminScreen ){
               $('#LiManageUsers').css('pointer-events', 'auto');
               $('#LiManageUsers').css('opacity', 1.0);

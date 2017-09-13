@@ -119,6 +119,14 @@ i {
   height: 0px;
 }
 
+.gauge_scale {
+  /*-ms-transform: scale(0.5,0.5);
+  -webkit-transform: scale (0.5,0.5);
+  transform: scale(0.5,0.5); */
+  height: 50%;
+  width: 50%;
+}
+
 .radial-svg {
   height: 100px;
 }
@@ -138,6 +146,14 @@ i {
 .glyphSpace {
   padding: 2px;
   margin: 2px;
+}
+
+.kubota-label-success {
+  background-color: #009999;
+}
+
+.kubota-placeholder-fs {
+  font-size: 14px;
 }
 
 #factoryMapDiv {

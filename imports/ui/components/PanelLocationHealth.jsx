@@ -204,13 +204,13 @@ export class PanelLocationHealth extends Component {
 			  <span className="glyphicon glyphicon-time kubota-fs-24" />  
 			  <span id="state_Age" className="glyphSpace"/>  
 			  <div className="chart_state_Age"></div>
-			  <div id="gauge_ageSinceSAPImport"></div>
+			  <div id="gauge_ageSinceSAPImport" className="gauge_scale"></div>
 			</div>
                         <div className="col-md-5">
 			  <span className="glyphicon glyphicon-time kubota-fs-24" /> 
 			  <span id="state_TimeThreshold" className="glyphSpace"/>  
 			  <div className="chart_state_Threshold"></div>
-			  <div id="gauge_TimeThreshold"></div>
+			  <div id="gauge_TimeThreshold" className="gauge_scale"></div>
 			</div>
                         <div className="col-md-2">
 			  <span className="glyphicon glyphicon-dashboard kubota-fs-24" /> 
