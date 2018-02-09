@@ -1,0 +1,450 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CASIOREADER
+</name>
+</assembly>
+<members>
+<member name="M:CASIOREADER.clsDatabase.#ctor">
+ ================================================================================
+ <summary>
+     Constructor - call init()
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.open">
+ ================================================================================
+ <summary>
+     Open connection
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.close">
+ ================================================================================
+ <summary>
+     Close connection
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.pfGetCon">
+ ================================================================================
+ <summary>
+     Return connection status
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2015/10/07  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.pfQuery(System.String,System.Collections.ArrayList)">
+ ================================================================================
+ <summary>
+     Send query and get dataset
+ </summary>
+	<param name="strSql"></param>
+	<param name="arrParams"></param>
+	<returns></returns>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.pfQueryOneRow(System.String,System.Collections.ArrayList)">
+ ================================================================================
+ <summary>
+     Get and return the first row from DataSet
+ </summary>
+	<param name="strSql"></param>
+	<param name="arrParams"></param>
+	<returns></returns>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.pfGetText(System.Data.DataRow,System.String)">
+ ================================================================================
+ <summary>
+    Return trimmed text or "" from DataRow
+ </summary>
+	<param name="dr"></param>
+	<param name="strName"></param>
+	<returns></returns>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.pfSetParam(System.String,Devart.Data.Oracle.OracleDbType,System.String)">
+ ================================================================================
+ <summary>
+    Set OracleParameter
+ </summary>
+	<param name="strColumnName"></param>
+	<param name="odtType"></param>
+	<param name="strValue"></param>
+	<returns></returns>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.pfGetRowCount(System.Data.DataSet)">
+ ================================================================================
+ <summary>
+     Get row count from DataSet
+ </summary>
+	<param name="ds"></param>
+	<returns></returns>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.pfExecute(System.String,System.Collections.ArrayList)">
+ ================================================================================
+ <summary>
+     Excecute query
+ </summary>
+	<param name="strSql"></param>
+	<param name="arrParams"></param>
+	<returns></returns>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.psBeginTran">
+ ================================================================================
+ <summary>
+     Begin Transaction
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.psCommitTran">
+ ================================================================================
+ <summary>
+     Commit Transaction
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.psRollbackTran">
+ ================================================================================
+ <summary>
+     Rollback Transaction
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsDatabase.psSetFatalError(Devart.Data.Oracle.OracleException)">
+ ================================================================================
+ <summary>
+     Handle fatal errors (OracleException)
+ </summary>
+	<param name="ex"></param>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/29  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="T:CASIOREADER.clsDatabase">
+ ================================================================================
+ [KFM Production Monitoring System]  Read Program for Handheld RFID Scanners 
+ ================================================================================
+ <summary>
+     DB Access Class
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2017/05/08  Ver.1.0.0.0  Binoy Pereira  This class is from Pokayoke
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsCasioReader.#ctor">
+ ================================================================================
+ <summary>
+     Constructor
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2017/07/14  Ver.1.0.0.0  Binoy Pereira     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsCasioReader.psConnect">
+ ================================================================================
+ <summary>
+     Connect to the imager driver
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2017/07/14  Ver.1.0.0.0  Binoy Pereira     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsCasioReader.psDisconnect">
+ ================================================================================
+ <summary>
+     Disconnect and close the imeger driver
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/11/16  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsCasioReader.psSetUserDefineKey(System.Boolean)">
+ ================================================================================
+ <summary>
+     Set or delete UserDefineKey
+ </summary>
+	<param name="bFlag"></param>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2017/07/14  Ver.1.0.0.0  Binoy Pereira     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsCasioReader.pfIMGWaitForDecode">
+ ================================================================================
+ <summary>
+     Read and decode QR/Barcode
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2017/07/14  Ver.1.0.0.0  Binoy Pereira     First Edition
+ ================================================================================
+
+</member><member name="T:CASIOREADER.clsCasioReader">
+ ================================================================================
+ [KFM Assembly Line] Production Monitoring System - Barcode Reader
+ ================================================================================
+ <summary>
+     Casio Reader 
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2017/07/14  Ver.1.0.0.0  Binoy Pereira     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsCommon.pfGetConfig(System.String)">
+ ================================================================================
+ <summary>
+     Read app.config by a key (for Compact Framework)
+ </summary>
+	<param name="strKey"></param>
+	<returns></returns>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/27  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsCommon.psSetConfig(System.String,System.String)">
+ ================================================================================
+ <summary>
+     Update App.Config (for Compact Framework)
+ </summary>
+	<param name="strKey"></param>
+	<param name="strValue"></param>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/10/27  Ver.1.0.0.0  Kanako Ono     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsCommon.psSetErrorLog(System.String,System.Exception)">
+ ================================================================================
+ <summary>
+    Logging (for Compact Framework)
+ </summary>
+	<param name="strMessage"></param>
+	<param name="eException"></param>
+	<remarks>You need to grant permission to create a custom event log: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog</remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2017/05/08  Ver.1.0.0.0  Binoy Pereira     First Edition
+ ================================================================================
+
+</member><member name="M:CASIOREADER.clsCommon.psAppExit">
+ ================================================================================
+ <summary>
+     To show and enable the taskbar, close DB, close MHL driver
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2017/05/08  Ver.1.0.0.0  Binoy Pereira     First Edition
+ ================================================================================
+
+</member><member name="T:CASIOREADER.clsCommon">
+ ================================================================================
+ [KFM Production Monitoring System]  Barcode Reader
+ ================================================================================
+ <summary>
+     Common Class - App.Config and Windows Log
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by     Description
+ --------------------------------------------------------------------------------
+ 2014/05/08  Ver.1.0.0.0  Binoy Pereira    First Edition
+ ================================================================================
+
+</member><member name="T:CASIOREADER.frmBCReaderMain">
+ ================================================================================
+ [KFM Production Monitoring] RFID Handheld Scanner
+ ================================================================================
+ <summary>
+     Main Form
+ </summary>
+	<remarks></remarks>
+ --------------------------------------------------------------------------------
+ Date        Version      Created by        Description
+ --------------------------------------------------------------------------------
+ 2017/07/14  Ver.1.0.0.0  Binoy Pereira     First Edition
+ ================================================================================
+
+</member><member name="P:CASIOREADER.My.Resources.ResourceEN.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceEN.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceEN.BCREADER_E_001">
+	<summary>
+  Looks up a localized string similar to Config file error.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceEN.BCREADER_E_002">
+	<summary>
+  Looks up a localized string similar to Database Error.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceEN.BCREADER_E_003">
+	<summary>
+  Looks up a localized string similar to Cannot connect to database.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceEN.BCREADER_E_004">
+	<summary>
+  Looks up a localized string similar to Barcode Reader Error.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceEN.BCREADER_E_005">
+	<summary>
+  Looks up a localized string similar to Database update failed.
+</summary>
+</member><member name="T:CASIOREADER.My.Resources.ResourceEN">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:CASIOREADER.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceFR.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceFR.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceFR.BCREADER_E_001">
+	<summary>
+  Looks up a localized string similar to Config file error.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceFR.BCREADER_E_002">
+	<summary>
+  Looks up a localized string similar to Database Error.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceFR.BCREADER_E_003">
+	<summary>
+  Looks up a localized string similar to Cannot connect to database.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceFR.BCREADER_E_004">
+	<summary>
+  Looks up a localized string similar to Barcode Reader Error.
+</summary>
+</member><member name="P:CASIOREADER.My.Resources.ResourceFR.BCREADER_E_005">
+	<summary>
+  Looks up a localized string similar to Database update failed.
+</summary>
+</member><member name="T:CASIOREADER.My.Resources.ResourceFR">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+</members>
+</doc>
