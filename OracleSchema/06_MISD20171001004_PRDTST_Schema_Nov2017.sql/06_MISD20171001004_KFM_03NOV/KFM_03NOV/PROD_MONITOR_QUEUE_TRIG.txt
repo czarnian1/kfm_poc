@@ -1,0 +1,49 @@
+create or replace TRIGGER "HUBADMIN"."PROD_MONITOR_QUEUE_TRIG" AFTER INSERT OR UPDATE OR DELETE OF UPDATE_DATE ON PROD_MONITOR
+FOR EACH ROW
+DECLARE
+json VARCHAR2(4000);
+BEGIN
+execute immediate 'alter session set NLS_DATE_FORMAT=''yyyy-mm-dd"T"hh24:mi:ss''';
+-- For simplicity sake for POC simple concatenations.  Production
+-- JSON serialization code should do character escaping (double quotes,
+-- newlines, etc).
+IF INSERTING OR UPDATING THEN
+SYS.DBMS_OUTPUT.PUT_LINE('Updating');
+json := '{"ID_NO":"' || :new.ID_NO;
+json := json|| '","CREATE_DATE":"' || :new.CREATE_DATE;
+json := json|| '","CREATE_BY":"' || TRIM(:new.CREATE_BY);
+json := json|| '","UPDATE_DATE":"' || :new.UPDATE_DATE;
+json := json|| '","UPDATE_BY":"' || TRIM(:new.UPDATE_BY);
+json := json|| '","MONTHLY_SEQ":"' || TRIM(:new.MONTHLY_SEQ);
+json := json|| '","MODEL_CODE":"' || TRIM(TRANSLATE(:new.MODEL_CODE,'x'||CHR(10)||CHR(13), 'x'));
+json := json|| '","REMARKS":"' || TRIM(TRANSLATE(:new.REMARKS,'x'||CHR(10)||CHR(13), 'x'));
+json := json|| '","PLAN_PROD_FINISH_DATE":"' || :new.PLAN_PROD_FINISH_DATE;
+json := json|| '","LOCATION_STATUS":"' || :new.LOCATION_STATUS;
+json := json|| '","PARTS_PREPARATION_STATUS":"' || :new.PARTS_PREPARATION_STATUS;
+json := json|| '","CHASSIS_LINE_START_DATE":"' || :new.CHASSIS_LINE_START_DATE;
+json := json|| '","CHASSIS_LINE_END_DATE":"' || :new.CHASSIS_LINE_END_DATE;
+json := json|| '","PAINT_LINE_START_DATE":"' || :new.PAINT_LINE_START_DATE;
+json := json|| '","PAINT_LINE_END_DATE":"' || :new.PAINT_LINE_END_DATE;
+json := json|| '","TRACTOR_LINE_START_DATE":"' || :new.TRACTOR_LINE_START_DATE;
+json := json|| '","TRACTOR_LINE_END_DATE":"' || :new.TRACTOR_LINE_END_DATE;
+json := json|| '","REWORK_BEFORE_MQ_START_DATE":"' || :new.REWORK_BEFORE_MQ_START_DATE;
+json := json|| '","REWORK_BEFORE_MQ_END_DATE":"' || :new.REWORK_BEFORE_MQ_END_DATE;
+json := json|| '","MQ_LINE_START_DATE":"' || :new.MQ_LINE_START_DATE;
+json := json|| '","MQ_LINE_END_DATE":"'|| :new.MQ_LINE_END_DATE;
+json := json|| '","REWORK_AFTER_MQ_START_DATE":"' || :new.REWORK_AFTER_MQ_START_DATE;
+json := json|| '","REWORK_AFTER_MQ_END_DATE":"' || :new.REWORK_AFTER_MQ_END_DATE;
+json := json|| '","PRODUCTION_END_DATE":"' || :new.PRODUCTION_END_DATE;
+json := json|| '","INSPECTION_START_DATE":"' || :new.INSPECTION_START_DATE;
+json := json|| '","INSPECTION_END_DATE":"' || :new.INSPECTION_END_DATE;
+json := json|| '","REWORK_DUR_INSP_START_DATE":"' || :new.REWORK_DUR_INSP_START_DATE;
+json := json|| '","REWORK_DUR_INSP_END_DATE":"' || :new.REWORK_DUR_INSP_END_DATE;
+json := json|| '","SHIPPING_STATUS":"' || :new.SHIPPING_STATUS;
+json := json|| '","SHIPPING_DATE":"' || :new.SHIPPING_DATE || '","dml_type":"';
+json := json|| CASE WHEN INSERTING THEN 'I' ELSE 'U' END || '"}';
+ELSE
+json := '{"ID_NO":"' || :old.ID_NO || '","dml_type":"D"}';
+SYS.DBMS_OUTPUT.PUT_LINE('--------- JSON -------- ');
+END IF;
+--SYS.DBMS_OUTPUT.PUT_LINE(json);
+enqueue_message(json);
+END;
