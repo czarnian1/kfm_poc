@@ -7,6 +7,7 @@ Meteor.startup(() => {
 	export const prod_monitor = new Mongo.Collection('prod_monitor',{"idGeneration":"MONGO"});
 	export const prod_monitor_comment = new Mongo.Collection('prod_monitor_comment',{"idGeneration":"MONGO"});
 	export const prod_monitor_parts = new Mongo.Collection('prod_monitor_parts',{"idGeneration":"MONGO"});
+	export const pm_dashboard = new Mongo.Collection('pm_dashboard',{"idGeneration":"MONGO"});
 
 	export const token = LoginToken.createTokenForUser("4Ehjznmj8Nk4mBAeh");
 	console.log(token);
@@ -26,6 +27,9 @@ Meteor.startup(() => {
 		});
 		Meteor.publish('prod_monitor_parts', function() {
 		    return prod_monitor_parts.find();
+		});
+		Meteor.publish('pm_dashboard', function() {
+		    return pm_dashboard.find();
 		});
 		Meteor.publish('users', function() {
 		    return Meteor.users.find();

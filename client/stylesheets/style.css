@@ -51,9 +51,20 @@ i {
 
 .kubota-pad-icon-text {
   position: relative;
+  line-height: 10px;
   top: -10px; /* MSJ: 23-Jun-17 : Move location status icon text slightly to align centrally with kubota icon at font size 32 */
-  left: 1px;
+  left: 2px;
 }
+/* MSJ: 23-Jun-17 : Move location status icon text slightly to align centrally with kubota icon at font size 32 for IE10 and above */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .kubota-pad-icon-text {
+    position: relative;
+    line-height: 10px;
+    left: 2px;
+    top: 5px;
+  }
+  }
 
 .kubota-mls {
   margin-left: .25em;
@@ -63,6 +74,12 @@ i {
   font-size: 48px;
   color: #01a3b2;
   margin-right: .35em;
+}
+
+.kubota-fs-24 {
+  font-size: 24px;
+  color: #01a3b2;
+  vertical-align: top;
 }
 
 .kubota-fs-32 {
@@ -102,12 +119,42 @@ i {
   height: 0px;
 }
 
+.gauge_scale {
+  /*-ms-transform: scale(0.5,0.5);
+  -webkit-transform: scale (0.5,0.5);
+  transform: scale(0.5,0.5); */
+  height: 50%;
+  width: 50%;
+}
+
 .radial-svg {
   height: 100px;
 }
 
 .component {
   height :100px;
+}
+
+.KubotaClock {
+  /*color: #01a3b2;*/
+  color: black;
+  line-height: 50px;
+  height: 100%;
+  width: 50%;
+  padding: 20px;
+}
+
+.glyphSpace {
+  padding: 2px;
+  margin: 2px;
+}
+
+.kubota-label-success {
+  background-color: #009999;
+}
+
+.kubota-placeholder-fs {
+  font-size: 14px;
 }
 
 #factoryMapDiv {

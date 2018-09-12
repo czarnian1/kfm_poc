@@ -29,8 +29,16 @@ export class FactoryDash extends Component {
    
     constructor(props) {
 	super(props);
+        const self: Object = this;
+
+        self.test = this.test.bind(this);
     } 
 
+    test(a) {
+      console.log(a);
+      return(1);
+    }
+ 
     updateTextElements(areaElement, circleElement, count, ids, collection) {
       mIds=[];
       collection.map((p)=>{
@@ -51,32 +59,71 @@ export class FactoryDash extends Component {
 	  return
 	} else {
           circleElement.attr({fill: r[p.LOCATION_STATUS].thresholdColor, opacity: 0.5, fill_opacity: 0.5});
+          //console.log(circleElement.node.id);
+
+          //matrix calc to adapt added (not active) yet if screen is resized svg is scaled - not taken into account yet in matrix calcs
+          //hence animating directly svg element in file
+	  var offset = $("#factoryMap")[0].getBoundingClientRect();
+
+          //get bounding box cords of circle count in area
+          var bbox = circleElement.getBBox();
+          var middleX = bbox.x + (bbox.width/2);
+          var middleY = bbox.y + (bbox.height/2);
+          var matrix = $("#"+circleElement.node.id)[0].getScreenCTM();
+
+	  //get absolute cords using transform matrix
+	  var absX = (matrix.a * middleX) + (matrix.c * middleY) + matrix.e - offset.left;
+          var absY = (matrix.b * middleX) + (matrix.d * middleY) + matrix.f - offset.top;
+          var origRX = circleElement.attr('rx');
+          var origRY = circleElement.attr('ry');
+	  
+	  circleElement.animate({opacity:0.0, ry:circleElement.attr('ry')*2, rx:circleElement.attr('rx')*2}, 1000, function(){
+		circleElement.animate({opacity: 0.5, ry: origRY, rx: origRX}, 500, function(){
+	        });
+	  });
+          circleElement.attr({
+            ry: origRY,
+            rx: origRX
+          });
+          //console.log(circleElement.attr("ry"));
+          //console.log(circleElement.attr('cx'));
+          //console.log(circleElement.attr('cy'));
+
+          //var bullet1 = s.circle(absX,absY,1);
+          //var bullet2 = s.circle(absX,absY,1);
+          //bullet1.attr({
+	  //  fill: r[p.LOCATION_STATUS].thresholdColor,
+          //  opacity: 0.1
+	  //});
+          //bullet2.attr({
+          //  fill: r[p.LOCATION_STATUS].thresholdColor,
+          //  opacity: 0.1
+          //});
+
+	  //bullet1.animate({r:60, opacity:0.0},1500, mina.easeout,function() {
+	   //bullet1.remove();
+	  //bullet2.animate({r:70, opacity:0.0},1500, mina.easein,function() {
+          //bullet1.remove()
+	  //bullet2.remove();
+          // });
+         //});
+
         }
       });
       //change height of rectangle element to accomodate number of tspans
       areaElementHeight=areaElement.attr('height');
       areaElement.attr({height: Math.round(collection.length/DIVIDER) <=0 ? AREA_HEIGHT: AREA_HEIGHT*Math.ceil(collection.length/DIVIDER), opacity: 0.8 });
+
     }
-
-    //var hoverover =  function(){
-    //  console.log("o");
-//
-//    }
-
-//    var hoverout = function() {
-//      console.log("t");
-//    }
 
     afterSnapLoadFunction() {
         s=Snap('#factoryMap');
-        //mq=Snap.select("[id^='area_mqline']");
 	this.arrayProductionAreas = s.selectAll("[id^='area_']");
         boundingBoxes = this.arrayProductionAreas.items.map(function(productionArea) {
-                return({key: productionArea.node.id, boundingbox: productionArea.getBBox()})
+		return({key: productionArea.node.id, boundingbox: productionArea.getBBox()})
         });
         pa=s.select("[id^='circle_count_paint']"); 
 	paArea=s.select("[id^='area_paint']");
-	//`pa.hover(this.hoverover, this.hoverout);
         paTextCount=s.select("[id^='text_paint_count']");
         paTextIds=s.select("[id^='text_ids_in_paint']");
         ca=s.select("[id^='circle_count_chassis']");
@@ -116,7 +163,7 @@ export class FactoryDash extends Component {
         this.updateTextElements(reworkArea, rework, reworkTextCount, reworkTextIds, this.props.inRework);
         this.updateTextElements(rfsArea, rfs, rfsTextCount, rfsTextIds, this.props.inRfs);
         this.updateTextElements(futureArea, future, futureTextCount, futureTextIds, this.props.inFuture);
-
+        
     }
 
     updateDisplay(){
@@ -128,7 +175,6 @@ export class FactoryDash extends Component {
     render() {
         return (
             <span>
-	    <Clock format={'HH:mm:ss'} ticking={true} timezone={'Europe/Paris'} />
             <div id="factoryMapDiv">
               <svg id="factoryMap" width="100%" height="100%" viewBox="0 0 1280 1024" preserveAspectRatio="xMinYMin"></svg>
             </div>
@@ -137,6 +183,7 @@ export class FactoryDash extends Component {
     }
 
     componentDidMount() {
+        //console.log($("#factoryMap")[0].getScreenCTM());
         // Set timer to update the graphic
         this.setState({
             'timerId': Meteor.setInterval(

@@ -20,7 +20,6 @@ const prod_monitor_notification = new Mongo.Collection('prod_monitor_notificatio
  */
 export function EmailNotification(prod_monitor){
     //console.log('EmailNotification::');
-    console.log(process.memoryUsage());
 
     var users=Meteor.users.find().fetch();
 
@@ -40,9 +39,7 @@ export function EmailNotification(prod_monitor){
                 var u=users[i];
                 //console.log(u);
                 if(u.profile==undefined || u.profile.EmailLineEventNotification==undefined || u.profile.EmailLineEventNotification[le]==undefined)    continue;
-
                 if( ! u.profile.EmailLineEventNotification[le] )    continue;
-                
                 sendEmailLineEventNotification(p,le,m,u);
             }   // for each user
         }
@@ -172,18 +169,16 @@ export function EmailNotification(prod_monitor){
         }   // switch
         
     };  // for each product
-    console.log("---- memory after Email ----");
-    console.log(process.memoryUsage());
 }
 
 function sendEmailThresholdNotification(p,s,u){     // p:product. s:productStatus. u:user.
     if(u.emails==undefined || u.emails[0]==undefined || u.emails[0].address==undefined) return;
 
     Email.send({
-        "from": "do_not_reply@KFM_production_portal",
+        "from": "no.reply@kubota.com",
         "to": u.emails[0].address,
         "subject": p.ID_NO +' , '+ i18n.__(LocationTitles[p.LOCATION_STATUS]) +' , '+ i18n.__('ui.manageAccount.EmailThresholdNotification'),
-        "text": 'The state of ' + p.ID_NO + ' is changing to ' +i18n.__(s[p.LOCATION_STATUS]['thresholdMessage'])+ ' in ' + i18n.__(LocationTitles[p.LOCATION_STATUS])
+        "text": 'The state of ' + p.ID_NO + ' is changing to ' +i18n.__(s[p.LOCATION_STATUS]['thresholdMessage'])+ ' in ' + i18n.__(LocationTitles[p.LOCATION_STATUS])+ ' Production Monitor Node is development : ' + Meteor.isDevelopment
     });
 }
 
@@ -192,10 +187,10 @@ function sendEmailLineEventNotification(p,le,m,u){     // p:product. le:LineEven
     if(u.emails==undefined || u.emails[0]==undefined || u.emails[0].address==undefined) return;
     console.log("sendEmailLineEventNotification::");
     Email.send({
-        "from": "do_not_reply@KFM_production_portal",
+        "from": "no.reply@kubota.com",
         "to": u.emails[0].address,
         "subject": p.ID_NO +' , '+ i18n.__(LocationTitles[p.LOCATION_STATUS]) +' , '+ le,
-        "text": m
+        "text": m + ' Production Monitor Node is development : ' + Meteor.isDevelopment
     });
 }
 

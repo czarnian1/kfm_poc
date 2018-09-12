@@ -4,6 +4,7 @@
 	
 	"common": {
 		"Start": "開始",
+		"StartPreProduction": "SAP インポート",
 		"End": "終了",
 		"MonthlySequenceNo": "月次連番",
 		"IdNo": "製造番号",
@@ -39,7 +40,8 @@
 		"RoleProduction": "製造担当者",
 		"RoleMaterial": "資材担当者",
 		"RoleAdmin": "システム管理者",
-		"BackToMainScreen": "Main画面へ戻る"
+		"BackToMainScreen": "Main画面へ戻る",
+		"BackToManageUsers": "ユーザー管理"
 	},
 	"shippingStatus": {
 		"StateErr": "未定義状態",
@@ -104,16 +106,21 @@
 	},
 	"locationHealth": {
 		"information": "通知",
-    	"none": "無し",
-    	"good": "良好",
-    	"warning": "注意",
-	    "delayed": "遅延",
-	    "trouble": "トラブル",
+    		"none": "無し",
+    		"good": "良好",
+    		"warning": "注意",
+	    	"delayed": "遅延",
+	    	"trouble": "トラブル",
 		"AgeSinceAssemblyStarted": "経過時間: ",
 		"TimeUntilAreaThreshhold": "残り時間: ",
 		"TimeOverAreaThreshhold": "超過時間: ",
+		"Threshold": "&nbsp閾値&nbsp",
+		"OverdueBy": "&nbsp延滞&nbsp",
 		"NotApplicable": "作業外",
-		"Health": "状態 "
+		"Health": "&nbsp状態&nbsp",
+		"TAKT": "TAKT",
+		"Remain": "残る",
+		"TimeUsed": "使用時間"
 	}
 }
 
