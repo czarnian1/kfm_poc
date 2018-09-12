@@ -112,12 +112,14 @@ RootContainer.contextTypes = {
 import prod_monitor from '../../api/prod_monitor.js';
 import prod_monitor_comment from '../../api/prod_monitor_comment.js';
 import prod_monitor_parts from '../../api/prod_monitor_parts.js';
+import pm_dashboard from '../../api/pm_dashboard.js';
 import { createContainer } from 'meteor/react-meteor-data';
 
 export default RootContainer = createContainer(() => {
     Meteor.subscribe('prod_monitor');
     Meteor.subscribe('prod_monitor_comment');
     Meteor.subscribe('prod_monitor_parts');
+    Meteor.subscribe('pm_dashboard');
 
     return {
     };

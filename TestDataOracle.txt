@@ -1,5 +1,29 @@
 The followings were used to test the Ruby consumer script.
 
+
+Insert into PM_DASHBOARD (
+  PROD_TARGET, BF_TARGET, SHIP_TARGET, MQ_TARGET, TA_TARGET, ID
+) values (
+  34, 33, 35, 32, 31, 1
+);
+
+commit;
+
+
+update PM_DASHBOARD 
+set 
+  PROD_TARGET=24
+, BF_TARGET=23
+, SHIP_TARGET=25
+, MQ_TARGET=22
+, TA_TARGET=21
+where ID=1;
+
+commit;
+
+
+
+
 Insert into TESTUSER1.PROD_MONITOR (
  ID_NO
 , CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY
@@ -13,22 +37,22 @@ Insert into TESTUSER1.PROD_MONITOR (
 , SHIPPING_STATUS, SHIPPING_DATE
 ) values (
  '30GO01110'
-, to_date('2017-06-12 00:01:25','YYYY-MM-DD HH24:MI:SS'), 'KK11'
+, to_date('2018-09-12 00:01:25','YYYY-MM-DD HH24:MI:SS'), 'KK11'
 , sysdate, 'KK22'
-, '20170500044', '3J21000058', 'UKUS', to_date('2017-06-12 09:45:25','YYYY-MM-DD HH24:MI:SS')
+, '20170500044', '3J21000058', 'UKUS', to_date('2018-09-12 09:45:25','YYYY-MM-DD HH24:MI:SS')
 , 14
 , null
-, to_date('2017-06-12 00:01:25','YYYY-MM-DD HH24:MI:SS'), to_date('2017-06-12 00:10:25','YYYY-MM-DD HH24:MI:SS')
-, to_date('2017-06-12 00:20:25','YYYY-MM-DD HH24:MI:SS'), to_date('2017-06-12 01:58:25','YYYY-MM-DD HH24:MI:SS')
-, to_date('2017-06-12 02:00:25','YYYY-MM-DD HH24:MI:SS'), to_date('2017-06-12 02:55:25','YYYY-MM-DD HH24:MI:SS')
-, to_date('2017-06-12 03:10:25','YYYY-MM-DD HH24:MI:SS'), null
-, to_date('2017-06-12 04:02:25','YYYY-MM-DD HH24:MI:SS'), to_date('2017-06-12 04:59:20','YYYY-MM-DD HH24:MI:SS')
-, to_date('2017-06-12 05:10:25','YYYY-MM-DD HH24:MI:SS')
-, to_date('2017-06-12 05:20:25','YYYY-MM-DD HH24:MI:SS'), to_date('2017-06-12 06:45:25','YYYY-MM-DD HH24:MI:SS')
-, to_date('2017-06-12 07:03:25','YYYY-MM-DD HH24:MI:SS'), to_date('2017-06-12 07:20:25','YYYY-MM-DD HH24:MI:SS')
-, to_date('2017-06-12 08:03:25','YYYY-MM-DD HH24:MI:SS'), to_date('2017-06-12 08:30:25','YYYY-MM-DD HH24:MI:SS')
+, to_date('2018-09-12 00:01:25','YYYY-MM-DD HH24:MI:SS'), to_date('2018-09-12 00:10:25','YYYY-MM-DD HH24:MI:SS')
+, to_date('2018-09-12 00:20:25','YYYY-MM-DD HH24:MI:SS'), to_date('2018-09-12 01:58:25','YYYY-MM-DD HH24:MI:SS')
+, to_date('2018-09-12 02:00:25','YYYY-MM-DD HH24:MI:SS'), to_date('2018-09-12 02:55:25','YYYY-MM-DD HH24:MI:SS')
+, to_date('2018-09-12 03:10:25','YYYY-MM-DD HH24:MI:SS'), null
+, to_date('2018-09-12 04:02:25','YYYY-MM-DD HH24:MI:SS'), to_date('2018-09-12 04:59:20','YYYY-MM-DD HH24:MI:SS')
+, to_date('2018-09-12 05:10:25','YYYY-MM-DD HH24:MI:SS')
+, to_date('2018-09-12 05:20:25','YYYY-MM-DD HH24:MI:SS'), to_date('2018-09-12 06:45:25','YYYY-MM-DD HH24:MI:SS')
+, to_date('2018-09-12 07:03:25','YYYY-MM-DD HH24:MI:SS'), to_date('2018-09-12 07:20:25','YYYY-MM-DD HH24:MI:SS')
+, to_date('2018-09-12 08:03:25','YYYY-MM-DD HH24:MI:SS'), to_date('2018-09-12 08:30:25','YYYY-MM-DD HH24:MI:SS')
 , 1
-, to_date('2017-06-12 08:40:25','YYYY-MM-DD HH24:MI:SS')
+, to_date('2018-09-12 08:40:25','YYYY-MM-DD HH24:MI:SS')
 );
 
 
@@ -58,3 +82,26 @@ Insert into TESTUSER1.PROD_MONITOR_PARTS (
 , 'Item 2', 'Item 2 description'
 , 3, 1
 );
+
+
+
+
+
+Insert into TESTUSER1.PM_DASHBOARD (
+PROD_TARGET,BF_TARGET,SHIP_TARGET,MQ_TARGET,TA_TARGET,ID
+) values (
+         11,      14,         17,       20,       23, 1
+);
+Insert into TESTUSER1.PM_DASHBOARD (
+PROD_TARGET,BF_TARGET,SHIP_TARGET,MQ_TARGET,TA_TARGET,ID
+) values (
+         11,      14,         17,       20,       23, 2
+);
+Insert into TESTUSER1.PM_DASHBOARD (
+PROD_TARGET,BF_TARGET,SHIP_TARGET,MQ_TARGET,TA_TARGET,ID
+) values (
+         34,       33,         35,       32,       31, 1
+);
+
+
+

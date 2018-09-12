@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
 import AccountsUIWrapper from '../../ui/components/AccountsUIWrapper.jsx';
+import Clock from 'react-live-clock';
 
 import { Session } from 'meteor/session'
 
@@ -103,13 +104,12 @@ export default class PanelNavbar extends Component {
               </ul>
             </li>
           </ul>
-
           <ul className="nav navbar-nav navbar-right">
            {
                  cf.AllowSelfRegistration() ?  <li><a href="#"><AccountsUIWrapper /></a></li>
-                 : <li><h4 style={{margin:'15px'}}><label id="displayUsername" className="label label-success"></label></h4></li>
+                 : <li><h4 style={{margin:'15px'}}><label id="displayUsername" className="label label-success kubota-label-success"></label></h4></li>
            }
-                  
+            <li> <p className="kubota-placeholder-fs" style={{margin:'15px'}}><label id="displayUserrole" className="kubota-placeholder-fs"></label></p></li> 
             <li className="dropdown">
               <a href="#" className="dropdown-toggle" data-toggle="dropdown"><T>ui.navbar.Admin</T><strong className="caret"></strong></a>
               <ul className="dropdown-menu">
@@ -123,12 +123,10 @@ export default class PanelNavbar extends Component {
                 <li>
                   <a href="#" onClick={ ()=>{this.setLocale('ja');} }>日本語</a>
                 </li>
-
                 <li className="divider"></li>
                 <li id="LiManageUsers">
                   <a href="/ManageUsers"><T>ui.manageAccount.ManageUsers</T></a>
                 </li>
-                  
                 <li className="divider"></li>
                 <li id="LiManageAccount">
                   <a href={"/ManageAccount/"+Meteor.userId()}><T>ui.manageAccount.ManageAccount</T></a>
@@ -140,7 +138,7 @@ export default class PanelNavbar extends Component {
                 </li>
               </ul>
             </li>
-                  
+	    <li><Clock className={'KubotaClock'} format={'HH:mm:ss'} ticking={true} timezone={'Europe/Paris'} /></li>
           </ul>
         </div>
       </nav>
@@ -153,7 +151,7 @@ export default class PanelNavbar extends Component {
           if(Meteor.user()==undefined)  return;
           
           $('#displayUsername').html(Meteor.user().username);
-          
+          $('#displayUserrole').html(i18n.__(cf.Role(Meteor.user()).message)); 
           if( cf.Role(Meteor.user()).AdminScreen ){
               $('#LiManageUsers').css('pointer-events', 'auto');
               $('#LiManageUsers').css('opacity', 1.0);
@@ -168,3 +166,4 @@ export default class PanelNavbar extends Component {
   }
   
 }
+

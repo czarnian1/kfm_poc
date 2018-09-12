@@ -80,7 +80,7 @@ export class PanelManageUsers extends Component {
         
         var formatAction=(cell,row,formatExtraData,rowIdx)=>{
             if(Meteor.userId()==row._id){
-                return  <label className="label label-success">Yourself</label>;
+                return  <label className="label label-success kubota-label-success">Yourself</label>;
             }
             else{
                 return (
@@ -96,7 +96,7 @@ export class PanelManageUsers extends Component {
             }
         
             if(Meteor.userId()==row._id){
-                return  <label className="label label-success">Yourself</label>;
+                return  <label className="label label-success kubota-label-success">Yourself</label>;
             }
             else{
                 return (
@@ -139,9 +139,10 @@ export class PanelManageUsers extends Component {
 
 export default PanelManageUsers = createContainer(() => {
 //    console.log("PanelManageUsers:createContainer");
-    
+
     Meteor.subscribe( 'users' );
-    
+//    Meteor.user();  // This require in the createContainer(). Unless this, this program does not react, componentDidUpdate() is not triggered.
+
     if( cf.Role(Meteor.user()).AdminScreen ){
 /*        
         users=Meteor.users.find().fetch();

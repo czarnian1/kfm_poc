@@ -20,6 +20,7 @@ const prod_monitor_notification = new Mongo.Collection('prod_monitor_notificatio
  */
 export function EmailNotification(prod_monitor){
     //console.log('EmailNotification::');
+    console.log(process.memoryUsage());
 
     var users=Meteor.users.find().fetch();
 
@@ -171,6 +172,8 @@ export function EmailNotification(prod_monitor){
         }   // switch
         
     };  // for each product
+    console.log("---- memory after Email ----");
+    console.log(process.memoryUsage());
 }
 
 function sendEmailThresholdNotification(p,s,u){     // p:product. s:productStatus. u:user.

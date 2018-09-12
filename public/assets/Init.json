@@ -1,67 +1,231 @@
 {
 	"ProductionThresholds":{
 		"CHASSIS_LINE":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"#5cb85c", "className":""},
-			{"duration": 61,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
-			{"duration": 70,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
-			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
+			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration":2880,"thresholdOver":true ,"message":"ui.locationHealth.warning","color":"#0000ff", "className":"warning"},
+			{"duration":4320,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#ffa22b", "className":"info"},
+			{"duration":5760,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"PAINT_LINE":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"#5cb85c", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
-			{"duration":130,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
+			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration":2880,"thresholdOver":true ,"message":"ui.locationHealth.warning","color":"#0000ff", "className":"warning"},
+			{"duration":4320,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#ffa22b", "className":"info"},
+			{"duration":5760,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"TRACTOR_LINE":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good" ,"color":"#5cb85c", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
-			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
-			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
+			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration":2880,"thresholdOver":true ,"message":"ui.locationHealth.warning","color":"#0000ff", "className":"warning"},
+			{"duration":4320,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#ffa22b", "className":"info"},
+			{"duration":5760,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"REWORK_BEFORE_MQ":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good","color":"#5cb85c", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
-			{"duration": 50,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
-			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
+			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration":2880,"thresholdOver":true ,"message":"ui.locationHealth.warning","color":"#0000ff", "className":"warning"},
+			{"duration":4320,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#ffa22b", "className":"info"},
+			{"duration":5760,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"MQ_LINE":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
-			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
-			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
+			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration":2880,"thresholdOver":true ,"message":"ui.locationHealth.warning","color":"#0000ff", "className":"warning"},
+			{"duration":4320,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#ffa22b", "className":"info"},
+			{"duration":5760,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"REWORK_AFTER_MQ":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
-			{"duration": 50,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
-			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
+			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration":2880,"thresholdOver":true ,"message":"ui.locationHealth.warning","color":"#0000ff", "className":"warning"},
+			{"duration":4320,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#ffa22b", "className":"info"},
+			{"duration":5760,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"PRODUCTION_END":[
 			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
-			{"duration":1200,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
-			{"duration":1440,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
+			{"duration":2880,"thresholdOver":true ,"message":"ui.locationHealth.warning","color":"#0000ff", "className":"warning"},
+			{"duration":4320,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#ffa22b", "className":"info"},
+			{"duration":5760,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"INSPECTION":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
-			{"duration": 40,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
-			{"duration": 60,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
-			{"duration":120,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
+			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration":2880,"thresholdOver":true ,"message":"ui.locationHealth.warning","color":"#0000ff", "className":"warning"},
+			{"duration":4320,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#ffa22b", "className":"info"},
+			{"duration":5760,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"REWORK_DUR_INSP":[
-			{"duration":  0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
-			{"duration":100,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
+			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration":2880,"thresholdOver":true ,"message":"ui.locationHealth.warning","color":"#0000ff", "className":"warning"},
+			{"duration":4320,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#ffa22b", "className":"info"},
+			{"duration":5760,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		],
 		"SHIPPING":[
-			{"duration":    0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
-			{"duration": 5760,"thresholdOver":false,"message":"ui.locationHealth.warning","color":"#ffa22b", "className":"warning"},
-			{"duration":10080,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#eac282", "className":"info"},
-			{"duration":17280,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
+			{"duration":   0,"thresholdOver":false,"message":"ui.locationHealth.good"   ,"color":"#5cb85c", "className":""},
+			{"duration":2880,"thresholdOver":true ,"message":"ui.locationHealth.warning","color":"#0000ff", "className":"warning"},
+			{"duration":4320,"thresholdOver":true ,"message":"ui.locationHealth.delayed","color":"#ffa22b", "className":"info"},
+			{"duration":5760,"thresholdOver":true ,"message":"ui.locationHealth.trouble","color":"#ff0000", "className":"danger"}
 		]
+
 	},
+	
 	"Roles":[
 		{"role":"Standard",  "message":"ui.common.RoleStandard",  "Comments":false,"GoodsReceipt":false,"AdminScreen":false},
 		{"role":"Production","message":"ui.common.RoleProduction","Comments":true, "GoodsReceipt":false,"AdminScreen":false},
 		{"role":"Material",  "message":"ui.common.RoleMaterial",  "Comments":false,"GoodsReceipt":true, "AdminScreen":false},
 		{"role":"Admin",     "message":"ui.common.RoleAdmin",     "Comments":true, "GoodsReceipt":true, "AdminScreen":true }
 	],
-	"AllowSelfRegistration":false
+
+	"AllowSelfRegistration":false,
+
+	"StackedColumnCharts": {
+		"chart": {
+			"type": "column",
+			"height": "60%"
+		},
+		"colors":["#7cb5ec","#434348"],
+		"credits": {
+			"enabled": false
+		},
+		"title": {
+			"align": "left",
+			"useHTML": true,
+			"text": "<font style=\"font-size:30px\">Production monthly results</font>"
+		},
+		"xAxis": {
+			"labels": {
+				"style": {
+					"fontSize": "30px"
+				}
+			},
+			"categories": ["Tractor assembly", "MQ line", "Backflashed", "Shipped"]
+		},
+		"yAxis": {
+			"min": 0,
+			"title": {
+				"text": "Quantity"
+			},
+			"stackLabels": {
+				"enabled": false
+			}
+		},
+		"legend": {
+			"align": "left",
+			"x": 80,
+			"verticalAlign": "top",
+			"backgroundColor": "white",
+			"shadow": false,
+			"itemStyle": {
+				"fontSize": "30px"
+			}
+		},
+		"plotOptions": {
+			"column": {
+				"stacking": "normal",
+				"dataLabels": {
+					"enabled": true,
+					"color": "black",
+					"style": {
+						"fontSize": "30px",
+						"color": "black"
+					}
+				}
+			}
+		},
+		"series": [
+			{
+				"name": " Not produced"
+			},
+			{
+				"name": " Produced"
+			}
+		]
+	},
+	
+	"ProductionTargetPieChart": {
+		"chart": {
+			"type": "pie",
+			"height": "100%"
+		},
+		"colors":["#434348","#7cb5ec"],
+		"credits": {
+			"enabled": false
+		},
+		"title": {
+			"align": "center",
+			"useHTML": true,
+			"text": "<font style=\"font-size:30px\">Production Target</font>"
+		},
+		"plotOptions": {
+			"pie": {
+				"size": "70%",
+				"dataLabels": {
+					"enabled": true,
+					"crop": false,
+					"overflow": "none",
+					"format": "{point.y}-{point.percentage:.1f}%",
+					"style": {
+						"fontSize": "30px",
+						"color": "black"
+					}
+				}
+			}
+		},
+		"series": [
+			{
+				"data": [
+					{
+						"name": "Produced",
+						"y": "this.props.counts.PROD"
+					},
+					{
+						"name": "Not produced",
+						"y": "'this.props.target.PROD_TARGET - this.props.counts.PROD'",
+						"sliced": true
+					}
+				]
+			}
+		]
+	},
+
+	"ShippedTargetPieChart": {
+		"chart": {
+			"type": "pie",
+			"height": "100%"
+		},
+		"colors":["#434348","#7cb5ec"],
+		"credits": {
+			"enabled": false
+		},
+		"title": {
+			"align": "center",
+			"useHTML": true,
+			"text": "<font style=\"font-size:30px\">Shipped Target</font>"
+		},
+		"plotOptions": {
+			"pie": {
+				"size": "70%",
+				"dataLabels": {
+					"enabled": true,
+					"crop": false,
+					"overflow": "none",
+					"format": "{point.y}-{point.percentage:.1f}%",
+					"style": {
+						"fontSize": "30px",
+						"color": "black"
+					}
+				}
+			}
+		},
+		"series": [
+			{
+				"data": [
+					{
+						"name": "Shipped",
+						"y": "this.props.counts.SHIP"
+					},
+					{
+						"name": "Not shipped",
+						"y": "'this.props.target.SHIP_TARGET - this.props.counts.SHIP'",
+						"sliced": true
+					}
+				]
+			}
+		]
+	}
 }
+

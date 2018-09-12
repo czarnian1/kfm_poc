@@ -1,0 +1,31 @@
+--------------------------------------------------------
+--  DDL for Trigger PROD_MONITOR_PARTS_QUEUE_TRIG
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "HUBADMIN"."PROD_MONITOR_PARTS_QUEUE_TRIG" 
+ AFTER INSERT OR UPDATE OR DELETE OF ID_NO,SEQ_NO ON PROD_MONITOR_PARTS
+FOR EACH ROW
+DECLARE
+json VARCHAR2(4000);
+BEGIN
+execute immediate 'alter session set NLS_DATE_FORMAT=''yyyy-mm-dd"T"hh24:mi:ss''';
+-- For simplicity sake For POC simple concatenations.  Production
+-- JSON serialization code should do character escaping (double quotes,
+-- newlines, etc).
+IF INSERTING OR UPDATING THEN
+json := '{"ID_NO":"' || :new.ID_NO;
+json := json|| '","SEQ_NO":"' || :new.SEQ_NO;
+json := json|| '","LOCATION":"' || :new.LOCATION;
+json := json|| '","CALCULATED_DATE":"' || :new.CALCULATED_DATE;
+json := json|| '","ITEM_NUMBER":"' || :new.ITEM_NUMBER;
+json := json|| '","ITEM_DESCRIPTION":"' || TRIM(TRANSLATE(:new.ITEM_DESCRIPTION,'x'||CHR(10)||CHR(13), 'x'));
+json := json|| '","REQUIREMENT_QTY":"' || :new.REQUIREMENT_QTY;
+json := json|| '","MISSING_QTY":"' || :new.MISSING_QTY;
+json := json|| CASE WHEN INSERTING THEN 'I' ELSE 'U' END || '"}';
+ELSE
+json := '{"ID_NO":"' || :old.ID_NO || '","dml_type":"D"}';
+END IF;
+enqueue_parts_message(json);
+END;
+/
+ALTER TRIGGER "HUBADMIN"."PROD_MONITOR_PARTS_QUEUE_TRIG" ENABLE;

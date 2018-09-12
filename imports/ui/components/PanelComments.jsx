@@ -100,7 +100,8 @@ export class PanelComments extends Component {
                                             {
                                                 cf.Role(Meteor.user()).Comments ? (
                                                     <td className="TableCell text-center">
-                                                        {n.CREATE_BY==Meteor.user().username?<input className="rowCheck" type="checkbox" />:""}
+                                                        {(n.CREATE_BY==Meteor.user().username) || (Meteor.user().username=="administrator" )?
+							  <input className="rowCheck" type="checkbox" />:""}
                                                     </td>
                                                 )
                                                 :(
@@ -118,16 +119,13 @@ export class PanelComments extends Component {
                                                     cf.Role(Meteor.user()).Comments ? (
                                                         <span>
                                                             <br />
-                                                            {n.CREATE_BY==Meteor.user().username?<input type="text" className="rowText" style={{width:"100%"}} />:""}
+                                                            {n.CREATE_BY==Meteor.user().username?<input type="text" className="rowText input-lg kubota-placeholder-fs" style={{width:"100%"}} />:""}
                                                         </span>
                                                     )
                                                     :(
                                                         null
                                                     )
                                                 }
-
-                                                
-                                                
                                             </td>
                                         </tr>
                                     );
@@ -150,7 +148,7 @@ export class PanelComments extends Component {
                                             <tr>
                                                 <td className="col-md-11">
                                                     <T _translateProps={['placeholder']}>
-                                                        <input type="text" id="addingComment" className="form-control input-lg" placeholder="ui.comments.Guide004"/>
+                                                        <input type="text" id="addingComment" className="form-control input-lg kubota-placeholder-fs" placeholder="ui.comments.Guide004"/>
                                                     </T>
                                                 </td>
                                                 <td className="col-md-1">

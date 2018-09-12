@@ -8,7 +8,7 @@ console.log(parse(navigator.userAgent).os.name);
 Tracker.autorun(function(c) {
 	var userId = Meteor.userId();
 	console.log(parse(navigator.userAgent).browser);
-	 if((parse(navigator.userAgent).os.name == "Linux"))
+	 if(parse(navigator.userAgent).os.name == "Linux")
         {
            console.log("detect Samsung");
            let username = "samsung";
@@ -20,7 +20,7 @@ Tracker.autorun(function(c) {
                 		});
             		} else
 			{
-                		browserHistory.push('/Screen');
+                		browserHistory.push('/Dashboard');
             		}
 			});
         }
@@ -30,8 +30,7 @@ Tracker.autorun(function(c) {
           return
         }
 	if (userId) {
-		console.log(" redirecting to dashboard");
-		//redirect to dashboard
+		console.log(" redirecting to /Main");
 		browserHistory.push('/Main');
 	} else
 	{

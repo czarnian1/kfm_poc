@@ -1,5 +1,3 @@
-var ij;     //  Array which comes from  Init.json
-
 export const LocationTitles={
     0:'ui.common.PreProduction',
     1:'ui.common.ChassisLine',
@@ -48,6 +46,8 @@ export const ShippingStatuses={
 
 
 export default class CF {
+    
+    ij;
     
     constructor(){
 //        console.log('CommonFunctions:constructor()');
@@ -122,7 +122,7 @@ export default class CF {
         case 1: return "CHASSIS_LINE_START_DATE"; 
         case 2: return "PAINT_LINE_START_DATE"; 
         case 3: return "TRACTOR_LINE_START_DATE";
-        case 4: return "MQLINE_LINE_START_DATE";
+        case 4: return "MQ_LINE_START_DATE";
         case 5: return "REWORK_BEFORE_MQ_LINE_START_DATE";
         case 6: return "REWORK_AFTER_MQ_LINE_START_DATE";
         case 7: return "PRODUCTION_START_DATE";
@@ -195,9 +195,9 @@ export default class CF {
         if(ary.length<=0)   return  {error:true};
 
         spent= Math.floor(spent/1000/60);
-	//console.log("cf:judgeStatus::spent");
+		//console.log("cf:judgeStatus::spent");
         //console.log(spent);
-        var i;
+        var i,c;
         var duration=null,index=null,thresholdOver=null,message=null,color=null, className=null;
         for(i=0,c=''; i < ary.length; ++i){
             if(duration==null && ary[i].thresholdOver)   duration=ary[i].duration;
@@ -254,8 +254,8 @@ export default class CF {
          */
         if(p.LOCATION_STATUS==undefined || p.LOCATION_STATUS==null) p.LOCATION_STATUS=0;    // UKUS 28June2017. null means Pre-production.
         if(p.LOCATION_STATUS < 0 || 14 < p.LOCATION_STATUS)   return  {error:true};
-	//Added here archive status 99 || 15 in future
-	//
+		//Added here archive status 99 || 15 in future
+
         //  00 - pre - production - exported from SAP 
 
         //  01 - chassis State
@@ -438,6 +438,10 @@ export default class CF {
         if(s==undefined)    return "";
 
         return s.toString().trim();
+    }
+    
+    InitJson(){
+        return  ij;
     }
     
 }
