@@ -486,7 +486,241 @@ These two scripts for PRDTST have been adjusted accordingly for the KFM environm
 
 Contents of orcl_kfmqueue_consumer_KFMPROD.rb (copied to /usr/bin by root)
 
-#!/usr/bin/env ruby# -*- coding: utf-8 -*-#**********************************************************************************************#* Title       : Production Ready Consumer service (use systemctrl to start | stop | status)#* Version     : 0.1#* Date        : 28-Jun-2017#* Last update : MSJ 28-June#* Description : Added ruby logging / added mongo log to file / added Oracle log to file - linked to .service file in /etc/systemd/system#**********************************************************************************************# coding: utf-8require 'oci8'require 'mongo'require 'yajl'require 'logger'log = Logger.new('/var/log/consumer.log','daily')log.level = Logger::INFO#reduce oci8 client logging verbosity and redirect to /var/log fileoc = OCI8.new('HUBADMIN', 'HUBADMIN','//172.20.84.38:1521/PRDTST')log.info "Oracle connector OK"#Reduce Mongo client verbosity and send to log fileMongo::Logger.logger.level = Logger::FATALMongo::Logger.logger = Logger.new('/var/log/consumer_mongo.log')mongo_client =  Mongo::Client.new('mongodb://localhost:27017/production_kfm_db')log.info "MongoDB connector OK"mongo_db = mongo_client.databasecols = mongo_db.collection_namescol = mongo_db.collection('prod_monitor')oc.exec("alter session set NLS_DATE_FORMAT='yyyy-mm-dd\"T\"hh24:mi:ss'")cur = oc.parse('BEGIN dequeue_message(:p); END;')log.info "Oracle cursor OK "log.info cur#bind_param(key, param, type = nil, length = nil) ⇒ Object#:p is the param variable name expected by oci8 ruby gemcur.bind_param(':p', nil, String, 4000)#Bind the object returned back from Oracle as JSON simple Stringwhile true  # retrieve message  cur.exec()  json = Yajl::Parser.new  json.inspect  #this hash can fail if trailing white space comes across from Oracle - in the enqueue procedure ensure TRIM(string) is used  begin    hash = json.parse(cur[':p'])    hash.delete('_id')  rescue    log.fatal "rescue: cannot parse message into json object - check enqueue message_t content"    log.fatal cur[:p]  ensure    #create a hash from the Oracle JSON object as a String binding to param called :p    log.info "ensure: hash could not be created"  end  #if a dml_type of D delete is sent in JSON the CREATE/UPDATE_DATE will be null  #code updated to not fail on strptime. Add try/catch ruby equivalemt structure  #here begin/rescue/ensure  unless hash.nil? || hash['dml_type'] == 'D'         hash['CREATE_DATE']=DateTime.strptime(hash['CREATE_DATE'], '%Y-%m-%dT%H:%M:%S');    hash['UPDATE_DATE']=DateTime.strptime(hash['UPDATE_DATE'], '%Y-%m-%dT%H:%M:%S');    begin # catch errors - note until an oc.commit is successful this could cause repeated attempts at begin/rescue/ensure loops      if hash['PLAN_PROD_FINISH_DATE']==""        hash.delete('PLAN_PROD_FINISH_DATE')      else        hash['PLAN_PROD_FINISH_DATE']=DateTime.strptime(hash['PLAN_PROD_FINISH_DATE'], '%Y-%m-%dT%H:%M:%S');      end            hash['LOCATION_STATUS']=hash['LOCATION_STATUS'].to_i(10);      if hash['PARTS_PREPARATION_STATUS']==""        hash.delete('PARTS_PREPARATION_STATUS')      else        hash['PARTS_PREPARATION_STATUS']=hash['PARTS_PREPARATION_STATUS'].to_i(10);      end      if hash['CHASSIS_LINE_START_DATE']==""        hash.delete('CHASSIS_LINE_START_DATE')      else        hash['CHASSIS_LINE_START_DATE']=DateTime.strptime(hash['CHASSIS_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S')      end            if hash['CHASSIS_LINE_END_DATE']==""        hash.delete('CHASSIS_LINE_END_DATE')      else        hash['CHASSIS_LINE_END_DATE']=DateTime.strptime(hash['CHASSIS_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['PAINT_LINE_START_DATE']==""        hash.delete('PAINT_LINE_START_DATE')      else        hash['PAINT_LINE_START_DATE']=DateTime.strptime(hash['PAINT_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['PAINT_LINE_END_DATE']==""        hash.delete('PAINT_LINE_END_DATE')      else        hash['PAINT_LINE_END_DATE']=DateTime.strptime(hash['PAINT_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['TRACTOR_LINE_START_DATE']==""        hash.delete('TRACTOR_LINE_START_DATE')      else        hash['TRACTOR_LINE_START_DATE']=DateTime.strptime(hash['TRACTOR_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['TRACTOR_LINE_END_DATE']==""        hash.delete('TRACTOR_LINE_END_DATE')      else        hash['TRACTOR_LINE_END_DATE']=DateTime.strptime(hash['TRACTOR_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['REWORK_BEFORE_MQ_START_DATE']==""        hash.delete('REWORK_BEFORE_MQ_START_DATE')      else        hash['REWORK_BEFORE_MQ_START_DATE']=DateTime.strptime(hash['REWORK_BEFORE_MQ_START_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['REWORK_BEFORE_MQ_END_DATE']==""        hash.delete('REWORK_BEFORE_MQ_END_DATE')      else        hash['REWORK_BEFORE_MQ_END_DATE']=DateTime.strptime(hash['REWORK_BEFORE_MQ_END_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['MQ_LINE_START_DATE']==""        hash.delete('MQ_LINE_START_DATE')      else        hash['MQ_LINE_START_DATE']=DateTime.strptime(hash['MQ_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['MQ_LINE_END_DATE']==""        hash.delete('MQ_LINE_END_DATE')      else        hash['MQ_LINE_END_DATE']=DateTime.strptime(hash['MQ_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['REWORK_AFTER_MQ_START_DATE']==""        hash.delete('REWORK_AFTER_MQ_START_DATE')      else        hash['REWORK_AFTER_MQ_START_DATE']=DateTime.strptime(hash['REWORK_AFTER_MQ_START_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['REWORK_AFTER_MQ_END_DATE']==""        hash.delete('REWORK_AFTER_MQ_END_DATE')      else        hash['REWORK_AFTER_MQ_END_DATE']=DateTime.strptime(hash['REWORK_AFTER_MQ_END_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['PRODUCTION_END_DATE']==""        hash.delete('PRODUCTION_END_DATE')      else        hash['PRODUCTION_END_DATE']=DateTime.strptime(hash['PRODUCTION_END_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['INSPECTION_START_DATE']==""        hash.delete('INSPECTION_START_DATE')      else        hash['INSPECTION_START_DATE']=DateTime.strptime(hash['INSPECTION_START_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['INSPECTION_END_DATE']==""        hash.delete('INSPECTION_END_DATE')      else        hash['INSPECTION_END_DATE']=DateTime.strptime(hash['INSPECTION_END_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['REWORK_DUR_INSP_START_DATE']==""        hash.delete('REWORK_DUR_INSP_START_DATE')      else        hash['REWORK_DUR_INSP_START_DATE']=DateTime.strptime(hash['REWORK_DUR_INSP_START_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['REWORK_DUR_INSP_END_DATE']==""        hash.delete('REWORK_DUR_INSP_END_DATE')      else        hash['REWORK_DUR_INSP_END_DATE']=DateTime.strptime(hash['REWORK_DUR_INSP_END_DATE'], '%Y-%m-%dT%H:%M:%S');      end            if hash['SHIPPING_STATUS']==""        hash.delete('SHIPPING_STATUS')      else        hash['SHIPPING_STATUS']=hash['SHIPPING_STATUS'].to_i(10);      end            if hash['SHIPPING_DATE']==""        hash.delete('SHIPPING_DATE')      else        hash['SHIPPING_DATE']=DateTime.strptime(hash['SHIPPING_DATE'], '%Y-%m-%dT%H:%M:%S');      end    rescue      log.fatal "rescue: Hash malformed"      log.fatal hash.inspect          ensure      log.info "ensure: cleanup enqueue"      #oc.commit    end # begin/rescue/ensure  end #unless had dml_type is deletelog.info hash.inspectbegin    if hash['dml_type'] == 'D'      col.delete_one({'ID_NO' => hash['ID_NO']})    else      hash.delete('dml_type')      col.update_one(                     {'ID_NO' => hash['ID_NO']},                     hash,                     {:upsert => true}                     )    end  rescue    log.fatal "rescue: hash malformed not deleted"  ensure    log.info "ensure: nothing to do"  end  # remove from AQ.  dequeue isn't complete until this happens  begin    oc.commit    log.info "Oracle commit OK"  rescue    log.info "Oracle commit failed"  endend
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+#**********************************************************************************************
+#* Title       : Production Ready Consumer service (use systemctrl to start | stop | status)
+#* Version     : 0.1
+#* Date        : 28-Jun-2017
+#* Last update : MSJ 28-June
+#* Description : Added ruby logging / added mongo log to file / added Oracle log to file - linked to .service file in /etc/systemd/system
+#**********************************************************************************************
+# coding: utf-8
+
+require 'oci8'
+require 'mongo'
+require 'yajl'
+require 'logger'
+
+log = Logger.new('/var/log/consumer.log','daily')
+log.level = Logger::INFO
+
+#reduce oci8 client logging verbosity and redirect to /var/log file
+
+oc = OCI8.new('HUBADMIN', 'HUBADMIN','//172.20.84.38:1521/PRDTST')
+log.info "Oracle connector OK"
+
+#Reduce Mongo client verbosity and send to log file
+Mongo::Logger.logger.level = Logger::FATAL
+Mongo::Logger.logger = Logger.new('/var/log/consumer_mongo.log')
+
+mongo_client =  Mongo::Client.new('mongodb://localhost:27017/production_kfm_db')
+log.info "MongoDB connector OK"
+
+mongo_db = mongo_client.database
+cols = mongo_db.collection_names
+col = mongo_db.collection('prod_monitor')
+
+oc.exec("alter session set NLS_DATE_FORMAT='yyyy-mm-dd\"T\"hh24:mi:ss'")
+cur = oc.parse('BEGIN dequeue_message(:p); END;')
+log.info "Oracle cursor OK "
+log.info cur
+
+#bind_param(key, param, type = nil, length = nil) ⇒ Object
+#:p is the param variable name expected by oci8 ruby gem
+
+cur.bind_param(':p', nil, String, 4000)
+#Bind the object returned back from Oracle as JSON simple String
+
+while true
+  # retrieve message
+  cur.exec()
+  json = Yajl::Parser.new
+
+  json.inspect
+
+  #this hash can fail if trailing white space comes across from Oracle - in the enqueue procedure ensure TRIM(string) is used
+  begin
+    hash = json.parse(cur[':p'])
+    hash.delete('_id')
+  rescue
+    log.fatal "rescue: cannot parse message into json object - check enqueue message_t content"
+    log.fatal cur[:p]
+  ensure
+    #create a hash from the Oracle JSON object as a String binding to param called :p
+    log.info "ensure: hash could not be created"
+  end
+
+  #if a dml_type of D delete is sent in JSON the CREATE/UPDATE_DATE will be null
+  #code updated to not fail on strptime. Add try/catch ruby equivalemt structure
+  #here begin/rescue/ensure
+
+  unless hash.nil? || hash['dml_type'] == 'D'     
+    hash['CREATE_DATE']=DateTime.strptime(hash['CREATE_DATE'], '%Y-%m-%dT%H:%M:%S');
+    hash['UPDATE_DATE']=DateTime.strptime(hash['UPDATE_DATE'], '%Y-%m-%dT%H:%M:%S');
+    begin # catch errors - note until an oc.commit is successful this could cause repeated attempts at begin/rescue/ensure loops
+      if hash['PLAN_PROD_FINISH_DATE']==""
+        hash.delete('PLAN_PROD_FINISH_DATE')
+      else
+        hash['PLAN_PROD_FINISH_DATE']=DateTime.strptime(hash['PLAN_PROD_FINISH_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      hash['LOCATION_STATUS']=hash['LOCATION_STATUS'].to_i(10);
+
+      if hash['PARTS_PREPARATION_STATUS']==""
+        hash.delete('PARTS_PREPARATION_STATUS')
+      else
+        hash['PARTS_PREPARATION_STATUS']=hash['PARTS_PREPARATION_STATUS'].to_i(10);
+      end
+
+      if hash['CHASSIS_LINE_START_DATE']==""
+        hash.delete('CHASSIS_LINE_START_DATE')
+      else
+        hash['CHASSIS_LINE_START_DATE']=DateTime.strptime(hash['CHASSIS_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S')
+      end
+      
+      if hash['CHASSIS_LINE_END_DATE']==""
+        hash.delete('CHASSIS_LINE_END_DATE')
+      else
+        hash['CHASSIS_LINE_END_DATE']=DateTime.strptime(hash['CHASSIS_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['PAINT_LINE_START_DATE']==""
+        hash.delete('PAINT_LINE_START_DATE')
+      else
+        hash['PAINT_LINE_START_DATE']=DateTime.strptime(hash['PAINT_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['PAINT_LINE_END_DATE']==""
+        hash.delete('PAINT_LINE_END_DATE')
+      else
+        hash['PAINT_LINE_END_DATE']=DateTime.strptime(hash['PAINT_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['TRACTOR_LINE_START_DATE']==""
+        hash.delete('TRACTOR_LINE_START_DATE')
+      else
+        hash['TRACTOR_LINE_START_DATE']=DateTime.strptime(hash['TRACTOR_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['TRACTOR_LINE_END_DATE']==""
+        hash.delete('TRACTOR_LINE_END_DATE')
+      else
+        hash['TRACTOR_LINE_END_DATE']=DateTime.strptime(hash['TRACTOR_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['REWORK_BEFORE_MQ_START_DATE']==""
+        hash.delete('REWORK_BEFORE_MQ_START_DATE')
+      else
+        hash['REWORK_BEFORE_MQ_START_DATE']=DateTime.strptime(hash['REWORK_BEFORE_MQ_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['REWORK_BEFORE_MQ_END_DATE']==""
+        hash.delete('REWORK_BEFORE_MQ_END_DATE')
+      else
+        hash['REWORK_BEFORE_MQ_END_DATE']=DateTime.strptime(hash['REWORK_BEFORE_MQ_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['MQ_LINE_START_DATE']==""
+        hash.delete('MQ_LINE_START_DATE')
+      else
+        hash['MQ_LINE_START_DATE']=DateTime.strptime(hash['MQ_LINE_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['MQ_LINE_END_DATE']==""
+        hash.delete('MQ_LINE_END_DATE')
+      else
+        hash['MQ_LINE_END_DATE']=DateTime.strptime(hash['MQ_LINE_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['REWORK_AFTER_MQ_START_DATE']==""
+        hash.delete('REWORK_AFTER_MQ_START_DATE')
+      else
+        hash['REWORK_AFTER_MQ_START_DATE']=DateTime.strptime(hash['REWORK_AFTER_MQ_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['REWORK_AFTER_MQ_END_DATE']==""
+        hash.delete('REWORK_AFTER_MQ_END_DATE')
+      else
+        hash['REWORK_AFTER_MQ_END_DATE']=DateTime.strptime(hash['REWORK_AFTER_MQ_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['PRODUCTION_END_DATE']==""
+        hash.delete('PRODUCTION_END_DATE')
+      else
+        hash['PRODUCTION_END_DATE']=DateTime.strptime(hash['PRODUCTION_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['INSPECTION_START_DATE']==""
+        hash.delete('INSPECTION_START_DATE')
+      else
+        hash['INSPECTION_START_DATE']=DateTime.strptime(hash['INSPECTION_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['INSPECTION_END_DATE']==""
+        hash.delete('INSPECTION_END_DATE')
+      else
+        hash['INSPECTION_END_DATE']=DateTime.strptime(hash['INSPECTION_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['REWORK_DUR_INSP_START_DATE']==""
+        hash.delete('REWORK_DUR_INSP_START_DATE')
+      else
+        hash['REWORK_DUR_INSP_START_DATE']=DateTime.strptime(hash['REWORK_DUR_INSP_START_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['REWORK_DUR_INSP_END_DATE']==""
+        hash.delete('REWORK_DUR_INSP_END_DATE')
+      else
+        hash['REWORK_DUR_INSP_END_DATE']=DateTime.strptime(hash['REWORK_DUR_INSP_END_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+      
+      if hash['SHIPPING_STATUS']==""
+        hash.delete('SHIPPING_STATUS')
+      else
+        hash['SHIPPING_STATUS']=hash['SHIPPING_STATUS'].to_i(10);
+      end
+      
+      if hash['SHIPPING_DATE']==""
+        hash.delete('SHIPPING_DATE')
+      else
+        hash['SHIPPING_DATE']=DateTime.strptime(hash['SHIPPING_DATE'], '%Y-%m-%dT%H:%M:%S');
+      end
+    rescue
+      log.fatal "rescue: Hash malformed"
+      log.fatal hash.inspect
+      
+    ensure
+      log.info "ensure: cleanup enqueue"
+      #oc.commit
+    end # begin/rescue/ensure
+  end #unless had dml_type is delete
+log.info hash.inspect
+begin
+    if hash['dml_type'] == 'D'
+      col.delete_one({'ID_NO' => hash['ID_NO']})
+    else
+      hash.delete('dml_type')
+      col.update_one(
+                     {'ID_NO' => hash['ID_NO']},
+                     hash,
+                     {:upsert => true}
+                     )
+    end
+  rescue
+    log.fatal "rescue: hash malformed not deleted"
+  ensure
+    log.info "ensure: nothing to do"
+  end
+
+  # remove from AQ.  dequeue isn't complete until this happens
+  begin
+    oc.commit
+    log.info "Oracle commit OK"
+  rescue
+    log.info "Oracle commit failed"
+  end
+end
 
 The contents of the systemd service Unit file /etc/systemd/system/consumer.service - 
 
@@ -834,7 +1068,28 @@ screen -r 1276.somescreentext
 
 Admin seed : by default the following user is added to the vanilla application - the password should be changed for the production environment VM
 
-db.users.insert({    "_id" : "2SLemX9BG28pnfkq2",    "createdAt" : ISODate("2017-06-08T00:26:03.123Z"),    "services" : {        "password" : {            "bcrypt" : "$2a$10$dCtBCzerFrMC.mbVteQw3ejP04B0X63/rs7inhkThGR92Jn0eTA1m"         },         "resume" : {             "loginTokens" : [                 {                     "when" : ISODate("2017-06-08T00:26:03.146Z"),                     "hashedToken" : "o1ufmD59kU4/6AGaQcV/H05BcM5Hm2H98JKiAA4JSj8="                 }             ]         }     },     "username" : "administrator",     "roles" : { "__global_roles__" : [ "Admin" ] } })
+
+db.users.insert(
+{
+    "_id" : "2SLemX9BG28pnfkq2",
+    "createdAt" : ISODate("2017-06-08T00:26:03.123Z"),
+    "services" : {
+        "password" : {
+            "bcrypt" : "$2a$10$dCtBCzerFrMC.mbVteQw3ejP04B0X63/rs7inhkThGR92Jn0eTA1m" 
+        }, 
+        "resume" : { 
+            "loginTokens" : [ 
+                { 
+                    "when" : ISODate("2017-06-08T00:26:03.146Z"), 
+                    "hashedToken" : "o1ufmD59kU4/6AGaQcV/H05BcM5Hm2H98JKiAA4JSj8=" 
+                } 
+            ] 
+        } 
+    }, 
+    "username" : "administrator", 
+    "roles" : { "__global_roles__" : [ "Admin" ] } 
+}
+)
 
         11. Production Installs
 
@@ -858,33 +1113,58 @@ sudo vi /etc/nginx/nginx.conf
 
 Replace the code block in nginx.conf 
 
-location / {}
+location / {
+}
 
-withlocation / {    /* proxy_pass [http://172.20.84.86:80](http://172.20.84.86:80)80; */    proxy_pass [http://prodmonnodejs](http://prodmonnodejs);
+with
+location / {
+    /* proxy_pass [http://172.20.84.86:80](http://172.20.84.86:80)80; */
+    proxy_pass [http://prodmonnodejs](http://prodmonnodejs);
 
     /* prodmonnodejs is the optional load balanced upstream group defined for load balancing below  - if only reverse proxy configured this will simply point to the node application online (from the pm2 manager) running on port 8080 at 172.20.84.86 comment out this line and re-instate the proxy_pass http://172.20.84.86:8080 */
 
-    proxy_http_version 1.1;    proxy_set_header Upgrade $http_upgrade;    proxy_set_header Connection 'upgrade';    proxy_set_header Host $host;   proxy_cache_bypass $http_upgrade;}
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+   proxy_cache_bypass $http_upgrade;
+}
 
 Activate the change and make sure nginx set to start on server start
 
-sudo systemctl restart nginxsudo systemctl enable nginx
+sudo systemctl restart nginx
+sudo systemctl enable nginx
 
         13. Configuring Basic Load Balancing with nginx (optional requires ssl certs)
 
-To configure load balancing, create a named "upstream group," to listen to the backend server(s). In KFM case the server is the same VM as the nginx instance but could be a complete different application server on a separte EXSi instance. Once the up stream group is created we pass this to the nginx reverse proxy and load balancer by referring to the upstream group in one or more proxy_pass directives as above.For the KFM environment configure an upstream group called prodmonnodejs with one (this could be two or more if running separate IP addressable VMs)  Node.js application servers listening on port 8080, one on IP address 172.20.84.86 (and the other on 172.20.84.xx. The servers in the upstream group handle only HTTP and HTTPS traffic, because we’re creating the upstream group in the http block. 
+To configure load balancing, create a named "upstream group," to listen to the backend server(s). In KFM case the server is the same VM as the nginx instance but could be a complete different application server on a separte EXSi instance. Once the up stream group is created we pass this to the nginx reverse proxy and load balancer by referring to the upstream group in one or more proxy_pass directives as above.
+
+For the KFM environment configure an upstream group called prodmonnodejs with one (this could be two or more if running separate IP addressable VMs)  Node.js application servers listening on port 8080, one on IP address 172.20.84.86 (and the other on 172.20.84.xx. The servers in the upstream group handle only HTTP and HTTPS traffic, because we’re creating the upstream group in the http block. 
 
 In the 'http' block of /etc/nginx/nginx.conf
 
-upstream prodmonnodejs {    server 172.20.84.86:8080;    //server 172.20.84.xx:8080; optional only need if load balancing across multiple VMs in the future}
 
-In the server block of the nginx.conf file include these two location blocks:The first one matches HTTPS requests in which the path starts with /webapp/, and proxies them to the nodejs upstream group we created in the previous step.
+upstream prodmonnodejs {
+    server 172.20.84.86:8080;
+    //server 172.20.84.xx:8080; optional only need if load balancing across multiple VMs in the future
+}
+
+
+In the server block of the nginx.conf file include these two location blocks:
+
+The first one matches HTTPS requests in which the path starts with /webapp/, and proxies them to the nodejs upstream group we created in the previous step.
 
 The second one funnels all traffic to the first location block, by doing a temporary redirect of all requests for [http://example.com/](http://example.com/).
 
 in the 'server' block for HTTPS traffic
 
-location /webapp/ {    proxy_pass http://prodmonnodejs;}location = / {   return 302 /webapp/;}
+location /webapp/ {
+    proxy_pass http://prodmonnodejs;
+}
+
+location = / {
+   return 302 /webapp/;
+}
 
 By default nginx uses the Round Robin algorithm for load balancing among servers. The load balancer runs through the list of servers in the upstream group in order, forwarding each new request to the next server. 
 
@@ -964,9 +1244,9 @@ pm2-meteor.json
 
     "PORT": "8080",
 
-    "MONGO_URL": "mongodb://localhost
+    "MONGO_URL": "mongodb://localhost:27017/production_kfm_db",
 
-t:27017/production_kfm_db",
+    "UNIVERSE_I18N_LOCALES": "all",
 
     "MAIL_URL": "smtp://localhost:25"
 
@@ -1014,75 +1294,48 @@ pm2 start pm2-env.json
 
 pm2 list
 
-┌──────────────────────┬────┬─────────┬───────┬────────┬─────────┬────────┬─────┬────────────┬──────────┐
+┌────────────────────────────┬─────────┬────────┬───┬─────┬────────────┐
+│ Name                       │ mode    │ status │ ↺ │ cpu │ memory     │
+├────────────────────────────┼─────────┼────────┼───┼─────┼────────────┤
+│ ProductionMonitoringSystem │ cluster │ online │ 0 │ 0%  │ 119.6 MB   │
+└────────────────────────────┴─────────┴────────┴───┴─────┴────────────┘
+ Use `pm2 show <id|name>` to get more details about an app
+[prodmon@KfmProdMonWS kfm_poc]$ 
 
-│ App name             │ id │ mode    │ pid   │ status │ restart │ uptime │ cpu │ mem        │ watching │
-
-├──────────────────────┼────┼─────────┼───────┼────────┼─────────┼────────┼─────┼────────────┼──────────┤
-
-│ ProdMonitoringSystem │ 0  │ cluster │ 31293 │ online │ 0       │ 44h    │ 0%  │ 106.3 MB   │ disabled │
-
-└──────────────────────┴────┴─────────┴───────┴────────┴─────────┴────────┴─────┴────────────┴──────────┘
 
 Use `pm2 show <id|name>` to get more details about an app
 
 pm2 show 0
-
- Describing process with id 0 - name ProductionMonitoringSystem
-
+[prodmon@KfmProdMonWS kfm_poc]$ pm2 show 0
+ Describing process with id 0 - name ProductionMonitoringSystem 
 ┌───────────────────┬─────────────────────────────────────────────────────────────────────┐
-
 │ status            │ online                                                              │
-
-│ name              │ ProdMonitoringSystem                                                │
-
+│ name              │ ProductionMonitoringSystem                                          │
 │ restarts          │ 0                                                                   │
-
-│ uptime            │ 44h                                                                 │
-
+│ uptime            │ 2h                                                                  │
 │ script path       │ /home/prodmon/meteor-apps/ProductionMonitoringSystem/bundle/main.js │
-
 │ script args       │ N/A                                                                 │
-
 │ error log path    │ /home/prodmon/.pm2/logs/ProductionMonitoringSystem-error-0.log      │
-
 │ out log path      │ /home/prodmon/.pm2/logs/ProductionMonitoringSystem-out-0.log        │
-
 │ pid path          │ /home/prodmon/.pm2/pids/ProductionMonitoringSystem-0.pid            │
-
 │ interpreter       │ node                                                                │
-
 │ interpreter args  │ N/A                                                                 │
-
 │ script id         │ 0                                                                   │
-
 │ exec cwd          │ /home/prodmon/meteor-apps/ProductionMonitoringSystem                │
-
 │ exec mode         │ cluster_mode                                                        │
-
-│ node.js version   │ 6.11.0                                                              │
-
+│ node.js version   │ 4.8.5                                                               │
 │ watch & reload    │ ✘                                                                   │
-
 │ unstable restarts │ 0                                                                   │
-
 │ created at        │ 2017-06-28T16:24:56.102Z                                            │
-
 └───────────────────┴─────────────────────────────────────────────────────────────────────┘
-
- Code metrics value
-
+ Code metrics value 
 ┌────────────┬────────┐
-
-│ Loop delay │ 1.21ms │
-
+│ Loop delay │ 8.17ms │
 └────────────┴────────┘
-
  Add your own code metrics: http://bit.ly/code-metrics
+ Use `pm2 logs ProductionMonitoringSystem [--lines 1000]` to display logs
+ Use `pm2 monit` to monitor CPU and Memory usage ProductionMonitoringSystem
 
- Use `pm2 logs ProdMonitoringSystem [--lines 1000]` to display logs
-
- Use `pm2 monit` to monitor CPU and Memory usage ProdMonitoringSystem
 
 To enable change watching - if the application is updated in the devops environment and pushed to either the QA nodejs app server instance of the production VM - this will cause an automatic reload of the application post deployment
 
@@ -2364,11 +2617,55 @@ CREATE OR REPLACE PUBLIC SYNONYM "DBMS_OUTPUT" FOR "SYS"."DBMS_OUTPUT";
 
             18. DDL HUBADMIN.PM_RFID_RAW_EVENTS
 
-----------------------------------------------------------  File created - Wednesday-July-05-2017   ------------------------------------------------------------------------------------------------------------------  DDL for Table PM_RFID_RAW_EVENTS--------------------------------------------------------  CREATE TABLE "HUBADMIN"."PM_RFID_RAW_EVENTS"    (	"SCAN_TIMESTAMP" DATE, 	"TAGID" VARCHAR2(24 BYTE), 	"IDNO" VARCHAR2(9 BYTE), 	"SCANNER_IP" VARCHAR2(15 BYTE), 	"RSSI" NUMBER(3,0), 	"SCANNER_ID" VARCHAR2(17 BYTE), 	"SCANNER_TYPE" NUMBER(1,0)   ) SEGMENT CREATION IMMEDIATE   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255  NOCOMPRESS LOGGING  STORAGE(INITIAL 6291456 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)  TABLESPACE "KBTDBDAT" ;   COMMENT ON COLUMN "HUBADMIN"."PM_RFID_RAW_EVENTS"."SCAN_TIMESTAMP" IS 'Scan Timestamp';   COMMENT ON COLUMN "HUBADMIN"."PM_RFID_RAW_EVENTS"."TAGID" IS 'Tag EPC';   COMMENT ON COLUMN "HUBADMIN"."PM_RFID_RAW_EVENTS"."IDNO" IS 'Tractor ID No';   COMMENT ON COLUMN "HUBADMIN"."PM_RFID_RAW_EVENTS"."SCANNER_IP" IS 'Scanner IP Address';   COMMENT ON COLUMN "HUBADMIN"."PM_RFID_RAW_EVENTS"."RSSI" IS 'Signal Strength';
+--------------------------------------------------------
+--  File created - Wednesday-July-05-2017   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Table PM_RFID_RAW_EVENTS
+--------------------------------------------------------
+
+  CREATE TABLE "HUBADMIN"."PM_RFID_RAW_EVENTS" 
+   (	"SCAN_TIMESTAMP" DATE, 
+	"TAGID" VARCHAR2(24 BYTE), 
+	"IDNO" VARCHAR2(9 BYTE), 
+	"SCANNER_IP" VARCHAR2(15 BYTE), 
+	"RSSI" NUMBER(3,0), 
+	"SCANNER_ID" VARCHAR2(17 BYTE), 
+	"SCANNER_TYPE" NUMBER(1,0)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 6291456 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "KBTDBDAT" ;
+
+   COMMENT ON COLUMN "HUBADMIN"."PM_RFID_RAW_EVENTS"."SCAN_TIMESTAMP" IS 'Scan Timestamp';
+   COMMENT ON COLUMN "HUBADMIN"."PM_RFID_RAW_EVENTS"."TAGID" IS 'Tag EPC';
+   COMMENT ON COLUMN "HUBADMIN"."PM_RFID_RAW_EVENTS"."IDNO" IS 'Tractor ID No';
+   COMMENT ON COLUMN "HUBADMIN"."PM_RFID_RAW_EVENTS"."SCANNER_IP" IS 'Scanner IP Address';
+   COMMENT ON COLUMN "HUBADMIN"."PM_RFID_RAW_EVENTS"."RSSI" IS 'Signal Strength';
 
             19. DDL HUBADMIN.PM_FSM_RULES
 
-----------------------------------------------------------  DDL for Table PM_FSM_RULES--------------------------------------------------------  CREATE TABLE "HUBADMIN"."PM_FSM_RULES"    (	"RULENO" NUMBER(*,0), 	"CURRENTSTATE" NUMBER(2,0), 	"NEXTSTATE" VARCHAR2(20 BYTE), 	"SCANNER_ID" VARCHAR2(20 BYTE), 	"EVENT_RAISED_DATECOLUMN" VARCHAR2(50 BYTE), 	"RULE_COMMENT" VARCHAR2(2001 BYTE)   ) SEGMENT CREATION IMMEDIATE   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255  NOCOMPRESS LOGGING  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)  TABLESPACE "KBTDBDAT" ;
+--------------------------------------------------------
+--  DDL for Table PM_FSM_RULES
+--------------------------------------------------------
+
+  CREATE TABLE "HUBADMIN"."PM_FSM_RULES" 
+   (	"RULENO" NUMBER(*,0), 
+	"CURRENTSTATE" NUMBER(2,0), 
+	"NEXTSTATE" VARCHAR2(20 BYTE), 
+	"SCANNER_ID" VARCHAR2(20 BYTE), 
+	"EVENT_RAISED_DATECOLUMN" VARCHAR2(50 BYTE), 
+	"RULE_COMMENT" VARCHAR2(2001 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "KBTDBDAT" ;
 
             20. DML PM_FSM_RULES
 
@@ -2788,9 +3085,14 @@ Insert into PM_FSM_RULES (RULENO,CURRENTSTATE,NEXTSTATE,SCANNER_ID,EVENT_RAISED_
 
   DBMS_OUTPUT.PUT_LINE('  ****ERROR - No data found**** ');
 
-**END**;ALTER TRIGGER "HUBADMIN"."UPDATE_PROD_MONITOR_STATE" ENABLE;
+**END**;
+ALTER TRIGGER "HUBADMIN"."UPDATE_PROD_MONITOR_STATE" ENABLE;
 
-----------------------------------------------------------  DDL for Trigger SCANNER_ID_LOOKUP--------------------------------------------------------create or replace TRIGGER "HUBADMIN"."SCANNER_ID_LOOKUP" 
+
+--------------------------------------------------------
+--  DDL for Trigger SCANNER_ID_LOOKUP
+--------------------------------------------------------
+create or replace TRIGGER "HUBADMIN"."SCANNER_ID_LOOKUP" 
 
 BEFORE INSERT ON PM_RFID_RAW_EVENTS 
 
@@ -2806,9 +3108,15 @@ BEGIN
 
   END IF;
 
-END;ALTER TRIGGER "HUBADMIN"."SCANNER_ID_LOOKUP" ENABLE;
+END;
+ALTER TRIGGER "HUBADMIN"."SCANNER_ID_LOOKUP" ENABLE;
 
-----------------------------------------------------------  DDL for Synonymn DBMS_OUTPUT--------------------------------------------------------  CREATE OR REPLACE PUBLIC SYNONYM "DBMS_OUTPUT" FOR "SYS"."DBMS_OUTPUT";
+
+--------------------------------------------------------
+--  DDL for Synonymn DBMS_OUTPUT
+--------------------------------------------------------
+
+  CREATE OR REPLACE PUBLIC SYNONYM "DBMS_OUTPUT" FOR "SYS"."DBMS_OUTPUT";
 
     7. Appendix B
 

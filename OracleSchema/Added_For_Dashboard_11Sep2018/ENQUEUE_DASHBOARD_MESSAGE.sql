@@ -1,4 +1,4 @@
-create or replace procedure enqueue_dashboard_message
+create or replace procedure HUBADMIN.enqueue_dashboard_message
 (
   payload in varchar2
 ) as
@@ -11,10 +11,12 @@ BEGIN
   msg.json := payload;
   message_properties.priority := 1;
   DBMS_AQ.ENQUEUE(
-queue_name => 'kfmqueue_dashboard',
+queue_name => 'HUBADMIN.kfmqueue_dashboard',
 enqueue_options => enqueue_options,
 message_properties => message_properties,
 payload => msg,
 msgid => msg_id);
 END enqueue_dashboard_message;
+/
+
 

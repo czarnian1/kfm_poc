@@ -56,14 +56,20 @@ export function updateLoginAccount(argv){
     // emails address
     if(argv.emails!=undefined && argv.emails[0]!=undefined && argv.emails[0].address!=undefined){
         // Remove existing email addresses
+
+		/* Commented out as Accounts.removeEmail() causes exception.	20180917 UKUS
         var u=Meteor.users.findOne({"_id":argv._id});
         if(u.emails!=undefined){
             u.emails.map(
                 (a)=>{
-                    Accounts.removeEmail(argv._id, a.address);
+
+                    //Accounts.removeEmail(argv._id, a.address);
                 }
             )
         }
+		*/
+		// Instead of map(){ Accounts.removeEmail() }, the following update{,$unset} is used.	20180917 UKUS
+		Meteor.users.update( {"_id":argv._id}, { $unset:{ emails: "" } } ,false, true);
         
         // Add email address.
         if(argv._id, argv.emails[0].address.trim()!='') Accounts.addEmail(argv._id, argv.emails[0].address);

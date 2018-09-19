@@ -75,24 +75,24 @@
 	"StackedColumnCharts": {
 		"chart": {
 			"type": "column",
-			"height": "60%"
+			"height": "70%"
 		},
-		"colors":["#7cb5ec","#434348"],
+		"colors":["#7cb5ec","#00ff00"],
 		"credits": {
 			"enabled": false
 		},
 		"title": {
 			"align": "left",
 			"useHTML": true,
-			"text": "<font style=\"font-size:30px\">Production monthly results</font>"
+			"text": "<font style=\"font-size:25px\">Production monthly results</font>"
 		},
 		"xAxis": {
 			"labels": {
 				"style": {
-					"fontSize": "30px"
+					"fontSize": "25px"
 				}
 			},
-			"categories": ["Tractor assembly", "MQ line", "Backflashed", "Shipped"]
+			"categories": ["Tractor assembly", "MQ line", "Backflushed", "Shipped"]
 		},
 		"yAxis": {
 			"min": 0,
@@ -110,7 +110,7 @@
 			"backgroundColor": "white",
 			"shadow": false,
 			"itemStyle": {
-				"fontSize": "30px"
+				"fontSize": "25px"
 			}
 		},
 		"plotOptions": {
@@ -120,7 +120,7 @@
 					"enabled": true,
 					"color": "black",
 					"style": {
-						"fontSize": "30px",
+						"fontSize": "25px",
 						"color": "black"
 					}
 				}
@@ -139,27 +139,33 @@
 	"ProductionTargetPieChart": {
 		"chart": {
 			"type": "pie",
-			"height": "100%"
+			"height": "140%"
 		},
-		"colors":["#434348","#7cb5ec"],
+		"colors":["#00ff00","#7cb5ec"],
 		"credits": {
 			"enabled": false
 		},
 		"title": {
 			"align": "center",
 			"useHTML": true,
-			"text": "<font style=\"font-size:30px\">Production Target</font>"
+			"text": "<font style=\"font-size:25px\">Production Target</font>"
 		},
 		"plotOptions": {
 			"pie": {
-				"size": "70%",
+				"size": "100%",
 				"dataLabels": {
 					"enabled": true,
 					"crop": false,
 					"overflow": "none",
 					"format": "{point.y}-{point.percentage:.1f}%",
+					"distance": -50,
+					"filter": {
+	                    "property": "y",
+	                    "operator": ">",
+	                    "value": 0
+    	            },
 					"style": {
-						"fontSize": "30px",
+						"fontSize": "20px",
 						"color": "black"
 					}
 				}
@@ -185,27 +191,33 @@
 	"ShippedTargetPieChart": {
 		"chart": {
 			"type": "pie",
-			"height": "100%"
+			"height": "140%"
 		},
-		"colors":["#434348","#7cb5ec"],
+		"colors":["#00ff00","#7cb5ec"],
 		"credits": {
 			"enabled": false
 		},
 		"title": {
 			"align": "center",
 			"useHTML": true,
-			"text": "<font style=\"font-size:30px\">Shipped Target</font>"
+			"text": "<font style=\"font-size:25px\">Shipped Target</font>"
 		},
 		"plotOptions": {
 			"pie": {
-				"size": "70%",
+				"size": "100%",
 				"dataLabels": {
 					"enabled": true,
 					"crop": false,
 					"overflow": "none",
 					"format": "{point.y}-{point.percentage:.1f}%",
+					"distance": -50,
+					"filter": {
+	                    "property": "y",
+	                    "operator": ">",
+	                    "value": 0
+    	            },
 					"style": {
-						"fontSize": "30px",
+						"fontSize": "20px",
 						"color": "black"
 					}
 				}

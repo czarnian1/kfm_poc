@@ -97,7 +97,7 @@ export class PanelDashboard extends Component {
             
         }
         
-        const cellStyle={'wordBreak':'keep-all','whiteSpace':'normal', 'font-size':'30px'};
+        const cellStyle={'wordBreak':'keep-all','whiteSpace':'normal', 'font-size':'25px'};
         
         
         console.log('PaneDashboard:render:return()');
@@ -108,35 +108,11 @@ export class PanelDashboard extends Component {
                         <div id="StackedColumnCharts"></div>
 					</div>
                 
-					<div className="col-md-6">
-                        <table width="100%">
-                            <tr>
-                                <td width="50%">
-                                    <div id="ProductionTargetPieChart"></div>
-                
-                                    <table width="100%" align="center" style={{"font-size":ij.StackedColumnCharts.legend.itemStyle.fontSize}}>
-                                        <tr>
-                                            <td style={{"color":ij.ProductionTargetPieChart.colors[0],"font-size":"200%"}}>●</td>
-                                            <td>Total produced<br/>tractors (Monthly)</td>
-                                            <td style={{"color":ij.ProductionTargetPieChart.colors[1],"font-size":"200%"}}>●</td>
-                                            <td>Not produced<br/>tractors (Monthly)</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td width="50%">
-                                    <div id="ShippedTargetPieChart"></div>
-                                                    
-                                    <table width="100%" align="center" style={{"font-size":ij.StackedColumnCharts.legend.itemStyle.fontSize}}>
-                                        <tr>
-                                            <td style={{"color":ij.ShippedTargetPieChart.colors[0],"font-size":"200%"}}>●</td>
-                                            <td>Total shipped<br/>tractors (Monthly)</td>
-                                            <td style={{"color":ij.ShippedTargetPieChart.colors[1],"font-size":"200%"}}>●</td>
-                                            <td>Not shipped<br/>tractors (Monthly)</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
+					<div className="col-md-3">
+                    	<div id="ProductionTargetPieChart"></div>
+					</div>
+					<div className="col-md-3">
+                    	<div id="ShippedTargetPieChart"></div>
 					</div>
 				</div>
 
@@ -151,6 +127,40 @@ export class PanelDashboard extends Component {
             </div>
         );
     }
+
+// The followings were removed by the KFM's request.  20180917 UKUS.
+/*
+                        <table width="100%">
+                            <tr>
+                                <td width="50%">
+                                    <div id="ProductionTargetPieChart"></div>
+                
+                                    <table width="100%" align="center" style={{"font-size":ij.StackedColumnCharts.legend.itemStyle.fontSize}}>
+                                        <tr>
+                                            <td style={{"color":ij.ProductionTargetPieChart.colors[0],"font-size":"125%"}}>●</td>
+                                            <td>Total produced<br/>tractors (Monthly)</td>
+                                            <td style={{"color":ij.ProductionTargetPieChart.colors[1],"font-size":"125%"}}>●</td>
+                                            <td>Not produced<br/>tractors (Monthly)</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="50%">
+                                    <div id="ShippedTargetPieChart"></div>
+                                                    
+                                    <table width="100%" align="center" style={{"font-size":ij.StackedColumnCharts.legend.itemStyle.fontSize}}>
+                                        <tr>
+                                            <td style={{"color":ij.ShippedTargetPieChart.colors[0],"font-size":"125%"}}>●</td>
+                                            <td>Total shipped<br/>tractors (Monthly)</td>
+                                            <td style={{"color":ij.ShippedTargetPieChart.colors[1],"font-size":"125%"}}>●</td>
+                                            <td>Not shipped<br/>tractors (Monthly)</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+*/
+
+
 
     componentDidMount() {
         console.log("PanelDashboard:componentDidMount");
@@ -190,12 +200,35 @@ export default PanelDashboard = createContainer(() => {
     
     Meteor.user();  // This require in the createContainer(). Unless this, this program does not react, componentDidUpdate() is not triggered.
 
+    var f={};
+    // Production status (means 1 hour limit)
+    Session.setDefault("productionStatus", {"$gte" : new Date(1)} );
+    f['$or']=[
+        {"CREATE_DATE":Session.get("productionStatus")},
+        {"UPDATE_DATE":Session.get("productionStatus")}
+    ];
+    
+    // Filter ID_NO
+    var u=Meteor.user();
+    if(u!=undefined && u.profile!=undefined && u.profile.IdNoFilter!=undefined){
+        if(u.profile.IdNoFilter.Start!=undefined && u.profile.IdNoFilter.End!=undefined){
+            f['ID_NO']={"$gte":u.profile.IdNoFilter.Start,"$lte":u.profile.IdNoFilter.End};
+        }
+        if(u.profile.IdNoFilter.Start!=undefined && u.profile.IdNoFilter.End==undefined){
+            f['ID_NO']={"$gte":u.profile.IdNoFilter.Start};
+        }
+        if(u.profile.IdNoFilter.Start==undefined && u.profile.IdNoFilter.End!=undefined){
+            f['ID_NO']={"$lte":u.profile.IdNoFilter.End};
+        }
+    }
+
+	// Count quantities 1 by 1.
     var now=new Date();
     var yyyymm=now.getFullYear()*100+now.getMonth()+1;
     var counts={TA:0, MQ:0, BF:0, PROD:0, SHIP:0};
     var delayingProducts=[];
 
-    prod_monitor.find().fetch().map((p)=>{
+    prod_monitor.find(f).fetch().map((p)=>{
         // Count TA.
         if(p.TRACTOR_LINE_END_DATE!=undefined){
             if(p.TRACTOR_LINE_END_DATE.getFullYear()*100+p.TRACTOR_LINE_END_DATE.getMonth()+1==yyyymm)  ++counts.TA;

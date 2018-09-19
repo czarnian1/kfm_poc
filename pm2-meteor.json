@@ -1,16 +1,17 @@
 {
   "appName": "ProductionMonitoringSystem",
   "appLocation": {
-    "local": "/home/mjackson/Development/meteor_projects/kfm_poc"
+    "local": "/home/prodmon/kfm_poc/"
   },
-  "meteorSettingsLocation": "/home/mjackson/Development/meteor_projects/kfm_poc/settings.json",
+  "meteorSettingsLocation": "/home/prodmon/kfm_poc/settings.json",
   "meteorSettingsInRepo": false,
   "prebuildScript": "",
   "meteorBuildFlags": "--architecture os.linux.x86_64",
   "env": {
-    "ROOT_URL": "http://172.29.1.169",
+    "ROOT_URL": "http://172.20.84.86",
     "PORT": "8080",
     "MONGO_URL": "mongodb://localhost:27017/production_kfm_db",
+    "UNIVERSE_I18N_LOCALES": "all",
     "MAIL_URL": "smtp://localhost:25"
   },
   "server": {

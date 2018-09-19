@@ -1,4 +1,4 @@
-create or replace TRIGGER "PM_DASHBOARD_QUEUE_TRIG"
+create or replace TRIGGER HUBADMIN.PM_DASHBOARD_QUEUE_TRIG
  AFTER INSERT OR UPDATE OR DELETE ON PM_DASHBOARD
 FOR EACH ROW
 DECLARE
@@ -18,4 +18,6 @@ json := '{"ID":' || :old.ID || ',"dml_type":"D"}';
 END IF;
 enqueue_dashboard_message(json);
 END;
+/
+
 
